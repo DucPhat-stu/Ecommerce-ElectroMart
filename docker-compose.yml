@@ -28,7 +28,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      - db
+      # - db
     
   nginx:
     build:
@@ -43,7 +43,7 @@ services:
       - app-network
     depends_on:
       - be
-      - db
+      # - db
     
 networks:
   app-network:
