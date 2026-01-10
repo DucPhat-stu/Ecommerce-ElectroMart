@@ -27,7 +27,7 @@ services:
       - app-network
     expose:
       - "8080"
-    depends_on:
+    # depends_on:
       # - db
     
   nginx:
