@@ -1,0 +1,47 @@
+services:
+  
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: demo_db
+  #     MYSQL_USER: user
+  #     MYSQL_PASSWORD: 123123
+  #   ports:
+  #     - "3307:3306"
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     interval: 5s
+  #     retries: 3
+  #   volumes:
+  #     - mysqldata:/var/lib/mysql
+  be:
+    build:
+      context: ./electro
+    container_name: backend
+    networks:
+      - app-network
+    expose:
+      - "8080"
+    depends_on:
+      - db
+    
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: nginx-service
+    ports:
+      - "80:80"
+    volumes:
+      - ./fe:/usr/share/nginx/html:ro
+    networks:
+      - app-network
+    depends_on:
+      - be
+      - db
+    
+networks:
+  app-network:
+    driver: bridge
