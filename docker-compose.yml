@@ -16,6 +16,9 @@ services:
   #     retries: 3
   #   volumes:
   #     - mysqldata:/var/lib/mysql
+  #   networks:
+  #     - app-network
+
   be:
     build:
       context: ./electro
@@ -35,7 +38,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./fe:/usr/share/nginx/html:ro
+      - ./fe:/usr/share/nginx/html:r
     networks:
       - app-network
     depends_on:
