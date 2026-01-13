@@ -2,7 +2,7 @@ package com.store.electro.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.store.electro.Models.User;
+import com.store.electro.Models.Entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
