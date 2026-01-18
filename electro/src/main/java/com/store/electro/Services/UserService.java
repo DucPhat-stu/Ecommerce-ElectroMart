@@ -14,16 +14,19 @@ import com.store.electro.Models.DTO.RegisterRequest;
 import com.store.electro.Models.DTO.UserRequest;
 import com.store.electro.Models.Entity.User;
 import com.store.electro.Repositories.UserRepository;
+import com.store.electro.Utils.JwtUtil;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.jwtUtil = jwtUtil;
     }
 
     // ==================== AUTH SERVICES ====================
@@ -89,9 +92,9 @@ public class UserService {
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
 
-        // Generate JWT token (simplified - in production use JWT library)
-        String token = generateToken(user);
-        long expiresIn = 86400; // 24 hours in seconds
+        // Generate JWT token using JwtUtil
+        String token = jwtUtil.generateToken(user.getId(), user.getUsername());
+        long expiresIn = jwtUtil.getTokenExpirationInSeconds(); // 24 hours in seconds
 
         return new LoginResponse(token, "Bearer", expiresIn, user.getId(), user.getUsername(),
                 user.getEmail());
@@ -182,29 +185,18 @@ public class UserService {
 
     // ==================== HELPER METHODS ====================
 
-    private String generateToken(User user) {
-        // Simplified token generation - in production use JWT (io.jsonwebtoken)
-        // This is just a placeholder implementation
-        return "token_" + user.getId() + "_" + System.currentTimeMillis();
-    }
-
     public boolean validateToken(String token) {
-        // Simplified token validation - in production use JWT library
-        return token != null && token.startsWith("token_");
+        // Validate JWT token using JwtUtil
+        return jwtUtil.validateToken(token);
     }
 
     public Long extractUserIdFromToken(String token) {
-        // Simplified user ID extraction - in production use JWT library
-        if (token != null && token.startsWith("token_")) {
-            String[] parts = token.split("_");
-            if (parts.length > 1) {
-                try {
-                    return Long.parseLong(parts[1]);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-        }
-        return null;
+        // Extract user ID from JWT token using JwtUtil
+        return jwtUtil.getUserIdFromToken(token);
+    }
+
+    public String extractUsernameFromToken(String token) {
+        // Extract username from JWT token using JwtUtil
+        return jwtUtil.getUsernameFromToken(token);
     }
 }
