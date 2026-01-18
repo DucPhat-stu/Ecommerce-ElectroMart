@@ -6,19 +6,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.store.electro.Services.UserService;
+import com.store.electro.Utils.ApiResponse;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
 	private final UserService userService;
+	private final ObjectMapper objectMapper;
 
 	public AuthenticationFilter(UserService userService) {
 		this.userService = userService;
+		this.objectMapper = new ObjectMapper();
 	}
 
 	@Override
@@ -37,7 +41,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.setContentType("application/json");
-			response.getWriter().write("{\"success\": false, \"message\": \"Missing or invalid token\"}");
+			String errorResponse = objectMapper.writeValueAsString(
+				ApiResponse.error("Missing or invalid token", "UNAUTHORIZED", "Bearer token is required")
+			);
+			response.getWriter().write(errorResponse);
 			return;
 		}
 
@@ -48,14 +55,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		if (!userService.validateToken(token)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.setContentType("application/json");
-			response.getWriter().write("{\"success\": false, \"message\": \"Invalid token\"}");
+			String errorResponse = objectMapper.writeValueAsString(
+				ApiResponse.error("Invalid or expired token", "INVALID_TOKEN", "Token validation failed")
+			);
+			response.getWriter().write(errorResponse);
 			return;
 		}
 
 		// Extract user ID and add to request attributes
 		Long userId = userService.extractUserIdFromToken(token);
+		String username = userService.extractUsernameFromToken(token);
 		if (userId != null) {
 			request.setAttribute("userId", userId);
+			request.setAttribute("username", username);
 		}
 
 		filterChain.doFilter(request, response);
