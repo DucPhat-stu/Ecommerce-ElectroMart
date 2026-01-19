@@ -29,7 +29,7 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         Product product = repo.findWithImages(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
-
+        
         // Trigger lazy load images
         product.getProductImages().size();
 
@@ -40,12 +40,11 @@ public class ProductController {
     @Transactional
     public ResponseEntity<List<Product>> getProducts(@PathVariable Long categoryId) {
         List<Product> products = repo.findByCategoryWithImages(categoryId);
-
         products.forEach(product -> {
             // Trigger lazy load Images
             product.getProductImages().size();
         });
-
         return ResponseEntity.ok(products);
     }
+
 }
