@@ -1,7 +1,6 @@
 package com.store.electro.Models.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,67 +12,41 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@JsonPropertyOrder({ "id", "productId", "imageUrl", "position", "isPrimary" })
 @Entity
 @Table(name = "product_images")
 public class ProductImage {
 
-    // Product Image ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Product ID
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "product_id", nullable = false)
     @JsonBackReference
     private Product product;
 
-    // Image URL
-    @Column(name = "imageUrl")
+    @Column(name = "image_url", nullable = false, length = 500)
     private String imageUrl;
 
-    // Position
-    @Column(name = "position")
-    private Integer position;
-
-    // Is Primary
-    @Column(name = "isPrimary")
-    private boolean isPrimary;
-
-    /*
-     * CONSTRUCTORS
-     */
+    @Column(name = "is_primary")
+    private Boolean isPrimary = false;
 
     public ProductImage() {
     }
 
-    /*
-     * GETTERS AND SETTERS
-     */
+    public ProductImage(Product product, String imageUrl, Boolean isPrimary) {
+        this.product = product;
+        this.imageUrl = imageUrl;
+        this.isPrimary = isPrimary;
+    }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public Integer getPosition() {
-        return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
     }
 
     public Product getProduct() {
@@ -84,21 +57,28 @@ public class ProductImage {
         this.product = product;
     }
 
-    public boolean isIsPrimary() {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Boolean getIsPrimary() {
         return isPrimary;
     }
 
-    public void setIsPrimary(boolean isPrimary) {
+    public void setIsPrimary(Boolean isPrimary) {
         this.isPrimary = isPrimary;
     }
 
-    /*
-     * toString Method
-     */
-
     @Override
     public String toString() {
-        return "ProductImage [id=" + id + ", product=" + product + ", imageUrl=" + imageUrl + ", position=" + position
-                + ", isPrimary=" + isPrimary + "]";
+        return "ProductImage{" +
+                "id=" + id +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", isPrimary=" + isPrimary +
+                '}';
     }
 }

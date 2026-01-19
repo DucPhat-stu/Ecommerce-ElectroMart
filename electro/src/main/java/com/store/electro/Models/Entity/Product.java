@@ -2,18 +2,12 @@ package com.store.electro.Models.Entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.store.electro.Models.Enums.ProductStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,81 +19,60 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
-@JsonPropertyOrder({ "id", "name", "price", "discountPercent", "shortDescription", "description", "stockQuantity",
-        "status", "createdAt", "updatedAt", "category", "productImages", "productDetails" })
 @Entity
 @Table(name = "products")
 public class Product {
 
-    // Product ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Product Name
     @Column(name = "name", nullable = false)
     private String name;
 
-    // Product Price
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    // Product Discount Percent
-    @Column(name = "discountPercent")
+    @Column(name = "discount_percent")
     private Integer discountPercent = 0;
 
-    // Product Short Description
-    @Column(name = "shortDescription")
-    private String shortDescription;
-
-    // Product Description
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    // Product Stock Quantity
-    @Column(name = "stockQuantity", nullable = false)
+    @Column(name = "stock_quantity")
     private Integer stockQuantity = 0;
 
-    // Product Status
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private ProductStatus status;
+    @Column(name = "rating")
+    private BigDecimal rating = BigDecimal.ZERO;
 
-    // Created At
-    @Column(name = "createdAt")
-    private LocalDateTime createdAt;
-
-    // Updated At
-    @Column(name = "updatedAt")
-    private LocalDateTime updatedAt;
-
-    // Product Category
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     @JsonManagedReference
     private Category category;
 
-    // Product Images
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<ProductImage> productImages = new HashSet<>();
+    private java.util.Set<ProductImage> productImages = new java.util.HashSet<>();
 
-    // Product Details
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private Set<ProductDetail> productDetails = new HashSet<>();
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    /*
-     * CONSTRUCTORS
-     */
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public Product() {
     }
 
-    /*
-     * GETTERS AND SETTERS
-     */
+    @PrePersist
+    @PreUpdate
+    public void onCreate() {
+        this.updatedAt = LocalDateTime.now();
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
+    }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -132,14 +105,6 @@ public class Product {
         this.discountPercent = discountPercent;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -156,12 +121,28 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public ProductStatus getStatus() {
-        return status;
+    public BigDecimal getRating() {
+        return rating;
     }
 
-    public void setStatus(ProductStatus status) {
-        this.status = status;
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public java.util.Set<ProductImage> getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(java.util.Set<ProductImage> productImages) {
+        this.productImages = productImages;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -180,33 +161,17 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Category getCategory() {
-        return category;
+    // Helper methods
+    public BigDecimal getFinalPrice() {
+        if (discountPercent != null && discountPercent > 0) {
+            return price.multiply(BigDecimal.valueOf(1 - discountPercent / 100.0));
+        }
+        return price;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public boolean hasDiscount() {
+        return discountPercent != null && discountPercent > 0;
     }
-
-    public Set<ProductImage> getProductImages() {
-        return productImages;
-    }
-
-    public void setProductImages(Set<ProductImage> productImages) {
-        this.productImages = productImages;
-    }
-
-    public Set<ProductDetail> getProductDetails() {
-        return productDetails;
-    }
-
-    public void setProductDetails(Set<ProductDetail> productDetails) {
-        this.productDetails = productDetails;
-    }
-
-    /*
-     * toString Method
-     */
 
     @Override
     public String toString() {
@@ -214,43 +179,9 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+                ", discountPercent=" + discountPercent +
                 ", stockQuantity=" + stockQuantity +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", rating=" + rating +
                 '}';
-    }
-
-    /*
-     * Methods
-     */
-    @PrePersist
-    @PreUpdate
-    public void onCreate() {
-        this.updatedAt = LocalDateTime.now();
-        if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();
-        }
-
-        if (this.stockQuantity == null || this.stockQuantity <= 0) {
-            this.status = ProductStatus.OUT_OF_STOCK;
-        } else if (this.status == null || this.status == ProductStatus.OUT_OF_STOCK) {
-            this.status = ProductStatus.ACTIVE;
-        }
-    }
-
-    // Check if the product is available for sale
-    public boolean isAvailable() {
-        return this.status == ProductStatus.ACTIVE;
-    }
-
-    // Check if the product is in stock
-    public boolean isInStock() {
-        return this.stockQuantity != null && this.stockQuantity > 0 && this.status != ProductStatus.OUT_OF_STOCK;
-    }
-
-    // Check if the product has a discount
-    public boolean hasDiscount() {
-        return this.discountPercent != null && this.discountPercent > 0;
     }
 }

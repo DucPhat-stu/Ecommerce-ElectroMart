@@ -30,19 +30,12 @@ public class ProductController {
         Product product = repo.findWithImages(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        // Trigger lazy load Details
-        product.getProductDetails().size();
-
         return ResponseEntity.ok(product);
     }
 
     @GetMapping("v1/products/category/{categoryId}")
     public ResponseEntity<List<Product>> getProducts(@PathVariable Long categoryId) {
         List<Product> products = repo.findByCategoryWithImages(categoryId);
-        products.forEach(product -> {
-            // Trigger lazy load Details
-            product.getProductDetails().size();
-        });
         return ResponseEntity.ok(products);
     }
 

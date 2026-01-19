@@ -2,36 +2,49 @@ package com.store.electro.Models.Entity;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
-@JsonPropertyOrder({ "id", "name", "createdAt" })
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "wishlist", uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "user_id", "product_id" })
+})
+public class Wishlist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonBackReference
+    private Product product;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public Category() {
+    public Wishlist() {
     }
 
-    public Category(String name) {
-        this.name = name;
+    public Wishlist(User user, Product product) {
+        this.user = user;
+        this.product = product;
     }
 
     @PrePersist
@@ -50,12 +63,20 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -68,9 +89,8 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "Wishlist{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }
