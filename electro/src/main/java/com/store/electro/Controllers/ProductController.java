@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.store.electro.Models.Entity.Product;
 import com.store.electro.Repositories.ProductRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @RestController
@@ -26,17 +27,25 @@ public class ProductController {
     @GetMapping("v1/products/{id}")
     @Transactional
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        // Lấy Product với Images
         Product product = repo.findWithImages(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+
+        // Trigger lazy load images
+        product.getProductImages().size();
 
         return ResponseEntity.ok(product);
     }
 
-    @GetMapping("v1/products/category/{categoryId}")
+    @GetMapping("v1/category/products/{categoryId}")
+    @Transactional
     public ResponseEntity<List<Product>> getProducts(@PathVariable Long categoryId) {
         List<Product> products = repo.findByCategoryWithImages(categoryId);
+
+        products.forEach(product -> {
+            // Trigger lazy load Images
+            product.getProductImages().size();
+        });
+
         return ResponseEntity.ok(products);
     }
-
 }
