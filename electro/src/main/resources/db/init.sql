@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
     address TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -23,8 +24,10 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS categories (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_category_name (name)
+    parent_id BIGINT NULL,
+    status VARCHAR(50),
+    created_at DATETIME,
+    INDEX (parent_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -35,15 +38,19 @@ CREATE TABLE IF NOT EXISTS products (
     name VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     discount_percent INT DEFAULT 0,
+    short_description VARCHAR(512),
     description TEXT,
     stock_quantity INT DEFAULT 0,
-    rating DECIMAL(2,1) DEFAULT 0.0 COMMENT 'Rating từ 0.0 đến 5.0',
+    status VARCHAR(50),
+    created_at DATETIME,
+    updated_at DATETIME,
     category_id BIGINT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_product_category (category_id),
-    INDEX idx_product_price (price),
-    CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL ON UPDATE CASCADE
+    INDEX (category_id),
+    CONSTRAINT fk_products_category 
+        FOREIGN KEY (category_id) 
+        REFERENCES categories(id) 
+        ON DELETE SET NULL 
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -51,11 +58,32 @@ CREATE TABLE IF NOT EXISTS products (
 -- ============================================
 CREATE TABLE IF NOT EXISTS product_images (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    product_id BIGINT NOT NULL,
-    image_url VARCHAR(500) NOT NULL,
+    product_id BIGINT,
+    image_url VARCHAR(255),
+    position INT,
     is_primary TINYINT(1) DEFAULT 0,
-    INDEX idx_product_images_product (product_id),
-    CONSTRAINT fk_product_images_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+    INDEX (product_id),
+    CONSTRAINT fk_product_images_product 
+        FOREIGN KEY (product_id) 
+        REFERENCES products(id) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- PRODUCT DETAILS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS product_details (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT,
+    attribute_name VARCHAR(255),
+    attribute_value VARCHAR(1024),
+    INDEX (product_id),
+    CONSTRAINT fk_product_details_product 
+        FOREIGN KEY (product_id) 
+        REFERENCES products(id) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -95,7 +123,7 @@ CREATE TABLE IF NOT EXISTS wishlist (
 CREATE TABLE IF NOT EXISTS orders (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
-    total_amount DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
     status VARCHAR(50) DEFAULT 'PENDING' COMMENT 'PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED',
     shipping_address TEXT NOT NULL,
     shipping_phone VARCHAR(20) NOT NULL,
@@ -110,7 +138,7 @@ CREATE TABLE IF NOT EXISTS orders (
 -- ============================================
 -- ORDER ITEMS TABLE
 -- ============================================
-CREATE TABLE IF NOT EXISTS order_items (
+CREATE TABLE IF NOT EXISTS order_details (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     order_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
@@ -119,10 +147,10 @@ CREATE TABLE IF NOT EXISTS order_items (
     quantity INT NOT NULL CHECK (quantity > 0),
     subtotal DECIMAL(10,2) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_order_items_order (order_id),
-    INDEX idx_order_items_product (product_id),
-    CONSTRAINT fk_order_items_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_order_items_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT ON UPDATE CASCADE
+    INDEX idx_order_details_order (order_id),
+    INDEX idx_order_details_product (product_id),
+    CONSTRAINT fk_order_details_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_order_details_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS=1;
