@@ -1,1 +1,39 @@
-.kombai/  
+.kombai/
+
+# Environment Variables
+.env
+*.env
+!.env.example
+
+# Maven
+electro/target/
+electro/pom.xml.tag
+electro/pom.xml.releaseBackup
+electro/pom.xml.versionsBackup
+electro/pom.xml.next
+electro/release.properties
+electro/dependency-reduced-pom.xml
+electro/buildNumber.properties
+electro/.mvn/timing.properties
+electro/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore

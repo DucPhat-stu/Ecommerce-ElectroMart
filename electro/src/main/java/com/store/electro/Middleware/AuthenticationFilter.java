@@ -2,7 +2,6 @@ package com.store.electro.Middleware;
 
 import java.io.IOException;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.store.electro.Services.UserService;
@@ -14,7 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component
+// NOTE: This filter is manually registered in WebFilterConfiguration
+// Do not add @Component annotation to avoid duplicate bean definition
 public class AuthenticationFilter extends OncePerRequestFilter {
 
 	private final UserService userService;
