@@ -1,13 +1,22 @@
 package com.store.electro.Models.Entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.store.electro.Models.Enums.ProductStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,60 +28,81 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+@JsonPropertyOrder({ "id", "name", "price", "discountPercent", "finalPrice", "shortDescription", "description",
+        "stockQuantity",
+        "status", "createdAt", "updatedAt", "categoryId", "productImages", "productDetails" })
 @Entity
 @Table(name = "products")
 public class Product {
 
+    // Product ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Product Name
     @Column(name = "name", nullable = false)
     private String name;
 
+    // Product Price
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    // Product Discount Percent
     @Column(name = "discount_percent")
     private Integer discountPercent = 0;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    // Product Short Description
+    @Column(name = "short_description")
+    private String shortDescription;
+
+    // Product Description
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "stock_quantity")
+    // Product Stock Quantity
+    @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity = 0;
 
-    @Column(name = "rating")
-    private BigDecimal rating = BigDecimal.ZERO;
+    // Product Status
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ProductStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    @JsonManagedReference
-    private Category category;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private java.util.Set<ProductImage> productImages = new java.util.HashSet<>();
-
+    // Created At
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    // Updated At
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // Product Category
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    // Product Images
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<ProductImage> productImages = new HashSet<>();
+
+    // Product Details
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<ProductDetail> productDetails = new HashSet<>();
+
+    /*
+     * CONSTRUCTORS
+     */
 
     public Product() {
     }
 
-    @PrePersist
-    @PreUpdate
-    public void onCreate() {
-        this.updatedAt = LocalDateTime.now();
-        if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();
-        }
-    }
+    /*
+     * GETTERS AND SETTERS
+     */
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -105,6 +135,14 @@ public class Product {
         this.discountPercent = discountPercent;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -121,28 +159,12 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public BigDecimal getRating() {
-        return rating;
+    public ProductStatus getStatus() {
+        return status;
     }
 
-    public void setRating(BigDecimal rating) {
-        this.rating = rating;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public java.util.Set<ProductImage> getProductImages() {
-        return productImages;
-    }
-
-    public void setProductImages(java.util.Set<ProductImage> productImages) {
-        this.productImages = productImages;
+    public void setStatus(ProductStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -161,17 +183,40 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    // Helper methods
-    public BigDecimal getFinalPrice() {
-        if (discountPercent != null && discountPercent > 0) {
-            return price.multiply(BigDecimal.valueOf(1 - discountPercent / 100.0));
-        }
-        return price;
+    @JsonIgnore
+    public Category getCategory() {
+        return category;
     }
 
-    public boolean hasDiscount() {
-        return discountPercent != null && discountPercent > 0;
+    public void setCategory(Category category) {
+        this.category = category;
     }
+
+    public Set<ProductImage> getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(Set<ProductImage> productImages) {
+        this.productImages = productImages;
+    }
+
+    public Set<ProductDetail> getProductDetails() {
+        return productDetails;
+    }
+
+    public void setProductDetails(Set<ProductDetail> productDetails) {
+        this.productDetails = productDetails;
+    }
+
+    // Json Property
+    @JsonProperty("categoryId")
+    public Long getCategoryId() {
+        return category != null ? category.getId() : null;
+    }
+
+    /*
+     * toString Method
+     */
 
     @Override
     public String toString() {
@@ -179,9 +224,67 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", discountPercent=" + discountPercent +
                 ", stockQuantity=" + stockQuantity +
-                ", rating=" + rating +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    /*
+     * Methods
+     */
+    @PrePersist
+    @PreUpdate
+    public void onCreate() {
+        this.updatedAt = LocalDateTime.now();
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
+
+        if (this.stockQuantity == null || this.stockQuantity <= 0) {
+            this.status = ProductStatus.OUT_OF_STOCK;
+        } else if (this.status == null || this.status == ProductStatus.OUT_OF_STOCK) {
+            this.status = ProductStatus.ACTIVE;
+        }
+    }
+
+    // Check if the product is available for sale
+    public boolean isAvailable() {
+        return this.status == ProductStatus.ACTIVE;
+    }
+
+    // Check if the product is in stock
+    public boolean isInStock() {
+        return this.stockQuantity != null && this.stockQuantity > 0 && this.status != ProductStatus.OUT_OF_STOCK;
+    }
+
+    // Check if the product has a discount
+    public boolean hasDiscount() {
+        return this.discountPercent != null && this.discountPercent > 0;
+    }
+
+    // Calculate the final price after applying discount
+    public BigDecimal calculatePrice() {
+        if (this.price == null || !isAvailable() || !isInStock()) {
+            return BigDecimal.ZERO;
+        }
+
+        if (!hasDiscount()) {
+            return this.price;
+        }
+
+        BigDecimal discountPer = BigDecimal.valueOf(discountPercent);
+        BigDecimal hundred = BigDecimal.valueOf(100);
+
+        return price
+                .multiply(hundred.subtract(discountPer))
+                .divide(hundred, 2, RoundingMode.HALF_UP);
+    }
+
+    // GETTER for applying discount for finalPrice
+    @JsonProperty("finalPrice")
+    public BigDecimal getFinalPrice() {
+        return calculatePrice();
     }
 }

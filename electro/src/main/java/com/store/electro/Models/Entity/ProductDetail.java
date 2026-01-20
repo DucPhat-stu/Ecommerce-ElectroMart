@@ -13,12 +13,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@JsonPropertyOrder({ "id", "productId", "imageUrl", "position", "isPrimary" })
+@JsonPropertyOrder({ "id", "productId", "attributeName", "attributeValue" })
 @Entity
-@Table(name = "product_images")
-public class ProductImage {
+@Table(name = "product_details")
+public class ProductDetail {
 
-    // Product Image ID
+    // Product Detail ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,23 +29,19 @@ public class ProductImage {
     @JsonBackReference
     private Product product;
 
-    // Image URL
-    @Column(name = "image_url")
-    private String imageUrl;
+    // Attribute Name
+    @Column(name = "attribute_name")
+    private String attributeName;
 
-    // Position
-    @Column(name = "position")
-    private Integer position;
-
-    // Is Primary
-    @Column(name = "is_primary")
-    private boolean isPrimary;
+    // Attribute Value
+    @Column(name = "attribute_value")
+    private String attributeValue;
 
     /*
      * CONSTRUCTORS
      */
 
-    public ProductImage() {
+    public ProductDetail() {
     }
 
     /*
@@ -60,20 +56,20 @@ public class ProductImage {
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getAttributeName() {
+        return attributeName;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
     }
 
-    public Integer getPosition() {
-        return position;
+    public String getAttributeValue() {
+        return attributeValue;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setAttributeValue(String attributeValue) {
+        this.attributeValue = attributeValue;
     }
 
     public Product getProduct() {
@@ -84,21 +80,13 @@ public class ProductImage {
         this.product = product;
     }
 
-    public boolean isIsPrimary() {
-        return isPrimary;
-    }
-
-    public void setIsPrimary(boolean isPrimary) {
-        this.isPrimary = isPrimary;
-    }
-
     /*
      * toString Method
      */
-
     @Override
     public String toString() {
-        return "ProductImage [id=" + id + ", imageUrl=" + imageUrl + ", position=" + position
-                + ", isPrimary=" + isPrimary + "]";
+        return "ProductDetail [id=" + id + ", attributeName=" + attributeName
+                + ", attributeValue=" + attributeValue + "]";
     }
+
 }

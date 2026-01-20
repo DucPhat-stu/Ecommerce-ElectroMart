@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,63 +18,59 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
+@JsonPropertyOrder({ "id", "productId", "productName", "productPrice", "discountPercent" ,"quantity", "subtotal", "createdAt" })
 @Entity
-@Table(name = "order_items")
-public class OrderItem {
+@Table(name = "order_details")
+public class OrderDetail {
 
+    // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Order ID Reference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
     private Order order;
 
+    // Product ID Reference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     @JsonBackReference
     private Product product;
 
+    // Product Name
     @Column(name = "product_name", nullable = false)
     private String productName;
 
+    // Product Price at the time of order
     @Column(name = "product_price", nullable = false)
     private BigDecimal productPrice;
 
+    // Quantity
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
+    // Subtotal
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
 
+    // Created At
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public OrderItem() {
+    /*
+     * CONSTRUCTORS
+     */
+
+    public OrderDetail() {
     }
 
-    public OrderItem(Order order, Product product, Integer quantity) {
-        this.order = order;
-        this.product = product;
-        this.productName = product.getName();
-        this.productPrice = product.getFinalPrice();
-        this.quantity = quantity;
-        this.subtotal = productPrice.multiply(BigDecimal.valueOf(quantity));
-    }
+    /*
+     * GETTERS AND SETTERS
+     */
 
-    @PrePersist
-    public void onCreate() {
-        if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();
-        }
-        // Tính lại subtotal nếu chưa có
-        if (this.subtotal == null && this.productPrice != null && this.quantity != null) {
-            this.subtotal = this.productPrice.multiply(BigDecimal.valueOf(this.quantity));
-        }
-    }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -111,6 +109,7 @@ public class OrderItem {
 
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
+        calculateSubtotal();
     }
 
     public Integer getQuantity() {
@@ -119,10 +118,7 @@ public class OrderItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        // Tự động tính lại subtotal khi quantity thay đổi
-        if (this.productPrice != null && quantity != null) {
-            this.subtotal = this.productPrice.multiply(BigDecimal.valueOf(quantity));
-        }
+        calculateSubtotal();
     }
 
     public BigDecimal getSubtotal() {
@@ -141,6 +137,20 @@ public class OrderItem {
         this.createdAt = createdAt;
     }
 
+    // Json Property
+    @JsonProperty("productId")
+    public Long getProductId() {
+        return product != null ? product.getId() : null;
+    }
+
+    @JsonProperty("discountPercent")
+    public Integer getDiscountPercent(){
+        return product != null ? product.getDiscountPercent() : null;
+    }
+
+    /*
+     * toString Method
+     */
     @Override
     public String toString() {
         return "OrderItem{" +
@@ -151,4 +161,23 @@ public class OrderItem {
                 ", subtotal=" + subtotal +
                 '}';
     }
+
+    /*
+     * Methods
+     */
+
+    @PrePersist
+    public void onCreate() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
+        calculateSubtotal();
+    }
+
+    private void calculateSubtotal() {
+        if (productPrice != null && quantity != null) {
+            this.subtotal = productPrice.multiply(BigDecimal.valueOf(quantity));
+        }
+    }
+
 }
