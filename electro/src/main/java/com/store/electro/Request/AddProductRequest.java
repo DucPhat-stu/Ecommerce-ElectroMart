@@ -28,9 +28,9 @@ public class AddProductRequest {
 
     private String description;
 
-    private ProductStatus status = ProductStatus.ACTIVE;
+    private ProductStatus status;
 
-    @NotNull(message = "Category ID is required")
+    @NotNull(message = "Category Name is required")
     private Category category;
 
 }

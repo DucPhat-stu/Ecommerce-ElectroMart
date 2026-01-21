@@ -2,8 +2,10 @@ package com.store.electro.Controllers;
 
 import java.util.List;
 
+import com.store.electro.Response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +23,15 @@ public class CategoryController {
         this.categoryRepo = categoryRepo;
     }
 
-    @GetMapping("/v1/category")
-    public ResponseEntity<List<Category>> getMethodName() {
-        List<Category> categories = categoryRepo.findAll();
-        return ResponseEntity.ok(categories);
+    @GetMapping("/v1/category/{categoryName}")
+    public ResponseEntity<ApiResponse> getCategoryName(@PathVariable String categoryName) {
+        try {
+            return ResponseEntity.ok(new ApiResponse("success", categoryRepo.findByName(categoryName)));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
     
 }

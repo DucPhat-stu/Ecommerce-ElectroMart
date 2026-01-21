@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.store.electro.Exceptions.ResourceNotFoundException;
+import com.store.electro.Models.Enums.ProductStatus;
+import com.store.electro.Repositories.CategoryRepository;
 import com.store.electro.Request.AddProductRequest;
 import com.store.electro.Response.ApiResponse;
+import com.store.electro.Services.CategoryService;
 import com.store.electro.Services.ICategoryService;
 import com.store.electro.Services.IProductService;
 import com.store.electro.Services.ProductService;
@@ -14,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.store.electro.Models.Entity.Product;
+
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
 @RequestMapping("/api")
@@ -26,9 +31,14 @@ public class ProductController {
     }
 
     @GetMapping("v1/category/products/{categoryId}")
-    public ResponseEntity<List<Product>> getProducts(@PathVariable Long categoryId) {
-        List<Product> products = productService.findByCategoryId(categoryId);
-        return ResponseEntity.ok(products);
+    public ResponseEntity<ApiResponse> getProducts(@PathVariable Long categoryId) {
+        try {
+            List<Product> products = productService.findByCategoryId(categoryId);
+            return ResponseEntity.ok(new ApiResponse("success", products));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 
     @GetMapping("v1/products")
@@ -50,6 +60,17 @@ public class ProductController {
             return ResponseEntity.ok(new ApiResponse("success", product));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @PostMapping("v1/product")
+    public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest addProductRequest) {
+        try {
+            Product newProduct = productService.addProduct(addProductRequest);
+            return ResponseEntity.ok(new ApiResponse("Created success", newProduct));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
         }
     }

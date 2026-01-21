@@ -29,7 +29,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @JsonPropertyOrder({ "id", "name", "price", "discountPercent", "finalPrice", "shortDescription", "description",
-        "status", "createdAt", "updatedAt", "categoryId", "productImages", "productDetails" })
+        "status", "createdAt", "updatedAt", "categoryName", "productImages", "productDetails" })
 @Entity
 @Table(name = "products")
 public class Product {
@@ -206,9 +206,9 @@ public class Product {
     }
 
     // Json Property
-    @JsonProperty("categoryId")
-    public Long getCategoryId() {
-        return category != null ? category.getId() : null;
+    @JsonProperty("categoryName")
+    public String getCategoryName() {
+        return category != null ? category.getName() : null;
     }
 
     // GETTER for applying discount for finalPrice
@@ -243,9 +243,10 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
         if (this.createdAt == null) {
             this.createdAt = LocalDateTime.now();
-            this.status = ProductStatus.ACTIVE;
+            if (this.status == null) {
+                this.status = ProductStatus.INACTIVE;
+            }
         }
-
     }
 
     // Check if the product is available for sale

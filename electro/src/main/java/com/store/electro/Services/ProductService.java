@@ -26,7 +26,7 @@ public class ProductService implements IProductService{
 
     @Override
     public Product addProduct(AddProductRequest newProduct) {
-        Category category = categoryRepository.findById(newProduct.getCategory().getId())
+        Category category = categoryRepository.findByName(newProduct.getCategory().getName())
                 .orElseGet(() -> {
                     Category newCategory = new Category(
                             newProduct.getCategory().getName()
