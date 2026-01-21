@@ -1,50 +1,56 @@
 package com.store.electro.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.store.electro.Exceptions.ResourceNotFoundException;
+import com.store.electro.Request.AddProductRequest;
+import com.store.electro.Response.ApiResponse;
+import com.store.electro.Services.ICategoryService;
+import com.store.electro.Services.IProductService;
+import com.store.electro.Services.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.store.electro.Models.Entity.Product;
-import com.store.electro.Repositories.ProductRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api")
 public class ProductController {
 
-    private final ProductRepository repo;
+    private final IProductService productService;
 
-    public ProductController(ProductRepository repo) {
-        this.repo = repo;
-    }
-
-    @GetMapping("v1/products/{id}")
-    @Transactional
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product product = repo.findWithImages(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
-        
-        // Trigger lazy load images
-        product.getProductImages().size();
-
-        return ResponseEntity.ok(product);
+    public ProductController(IProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("v1/category/products/{categoryId}")
-    @Transactional
     public ResponseEntity<List<Product>> getProducts(@PathVariable Long categoryId) {
-        List<Product> products = repo.findByCategoryWithImages(categoryId);
-        products.forEach(product -> {
-            // Trigger lazy load Images
-            product.getProductImages().size();
-        });
+        List<Product> products = productService.findByCategoryId(categoryId);
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("v1/products")
+    public ResponseEntity<ApiResponse> getAllProducts(){
+        try {
+            List<Product> products = productService.getAllProducts();
+            return ResponseEntity.ok(new ApiResponse("success", products));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("v1/product/{productId}")
+    public ResponseEntity<ApiResponse> getProductById(@PathVariable Long productId) {
+
+        try {
+            Product product = productService.getProductById(productId);
+            return ResponseEntity.ok(new ApiResponse("success", product));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 }

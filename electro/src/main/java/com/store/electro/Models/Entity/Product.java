@@ -94,6 +94,16 @@ public class Product {
     public Product() {
     }
 
+    public Product(String name, BigDecimal price, Integer discountPercent, String shortDescription, String description, ProductStatus status, Category category) {
+        this.name = name;
+        this.price = price;
+        this.discountPercent = discountPercent;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.status = status;
+        this.category = category;
+    }
+
     /*
      * GETTERS AND SETTERS
      */

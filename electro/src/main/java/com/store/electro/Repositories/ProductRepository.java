@@ -13,20 +13,12 @@ import com.store.electro.Models.Entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // Find products list by category ID with images
+    // Find products list by category ID with images and details
     @Query("""
             SELECT DISTINCT p FROM Product p
             LEFT JOIN FETCH p.productImages
+            LEFT JOIN FETCH p.productDetails
             WHERE p.category.id = :categoryId
             """)
-    List<Product> findByCategoryWithImages(@Param("categoryId") Long categoryId);
-
-    // Find product by ID with images
-    @Query("""
-            SELECT p FROM Product p
-            LEFT JOIN FETCH p.productImages
-            WHERE p.id = :id
-            """)
-    Optional<Product> findWithImages(@Param("id") Long id);
-
+    List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
 }
