@@ -2,18 +2,9 @@ package com.store.electro.Models.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@JsonPropertyOrder({ "id", "productId", "imageUrl", "position", "isPrimary" })
+@JsonPropertyOrder({"id", "productId", "imageName", "imageUrl", "position", "isPrimary"})
 @Entity
 @Table(name = "product_images")
 public class ProductImage {
@@ -28,6 +19,10 @@ public class ProductImage {
     @JoinColumn(name = "product_id")
     @JsonBackReference
     private Product product;
+
+    // Image Name
+    @Column(name = "image_name")
+    private String imageName;
 
     // Image URL
     @Column(name = "image_url")
@@ -90,6 +85,14 @@ public class ProductImage {
 
     public void setIsPrimary(boolean isPrimary) {
         this.isPrimary = isPrimary;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     /*

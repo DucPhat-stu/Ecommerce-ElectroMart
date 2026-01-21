@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS inventories (
 CREATE TABLE IF NOT EXISTS product_images (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     product_id BIGINT,
+    image_name VARCHAR(255),
     image_url VARCHAR(255),
     position INT,
     is_primary TINYINT(1) DEFAULT 0,
