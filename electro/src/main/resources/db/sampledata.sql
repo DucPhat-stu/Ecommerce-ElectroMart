@@ -51,7 +51,6 @@ INSERT INTO products (
     discount_percent,
     short_description,
     description,
-    stock_quantity,
     status,
     created_at,
     updated_at,
@@ -62,256 +61,256 @@ VALUES
 (1, 'Apple iPhone 14 Pro', 999.00, 10,
  '6.1" Pro display · A16 Bionic · 48MP main camera',
  'The iPhone 14 Pro delivers fast performance with the A16 Bionic chip, a 6.1-inch Super Retina XDR display and a 48MP main camera for pro-grade photos and video.',
- 35, 'ACTIVE', '2023-09-01 09:00:00', '2023-12-01 12:00:00', 1),
+ 'ACTIVE', '2023-09-01 09:00:00', '2023-12-01 12:00:00', 1),
 
 (2, 'Samsung Galaxy S23', 849.00, 5,
  '6.1" Dynamic AMOLED · Snapdragon 8 Gen 2 · 50MP camera',
  'Samsung Galaxy S23 combines premium materials with flagship performance, offering a crisp Dynamic AMOLED display and pro-level camera features.',
- 42, 'ACTIVE', '2023-02-15 10:00:00', '2023-12-05 11:00:00', 1),
+ 'ACTIVE', '2023-02-15 10:00:00', '2023-12-05 11:00:00', 1),
 
 (3, 'Google Pixel 7', 599.00, 15,
  '6.3" OLED · Google Tensor G2 · 50MP camera',
  'Pixel 7 focuses on AI-powered features, clean Android experience and strong camera results even in low light.',
- 28, 'ACTIVE', '2022-10-13 09:00:00', '2023-11-15 14:00:00', 1),
+ 'ACTIVE', '2022-10-13 09:00:00', '2023-11-15 14:00:00', 1),
 
 (4, 'Xiaomi 13', 699.00, 10,
  '6.36" AMOLED · Snapdragon 8 Gen 2 · Leica optics',
  'Xiaomi 13 offers flagship hardware with Leica-tuned cameras, fast charging and a high-refresh AMOLED panel.',
- 50, 'ACTIVE', '2023-01-10 09:00:00', '2023-12-01 09:00:00', 1),
+ 'ACTIVE', '2023-01-10 09:00:00', '2023-12-01 09:00:00', 1),
 
 (5, 'OnePlus 11', 699.00, 8,
  '6.7" Fluid AMOLED · Snapdragon 8 Gen 2 · 100W charging',
  'OnePlus 11 delivers smooth performance with fast charging and a clean OxygenOS experience.',
- 22, 'ACTIVE', '2023-02-01 08:00:00', '2023-12-03 10:00:00', 1),
+ 'ACTIVE', '2023-02-01 08:00:00', '2023-12-03 10:00:00', 1),
 
 (6, 'Sony Xperia 1 IV', 1199.00, 12,
  '6.5" 4K HDR OLED · Cinematography-focused camera',
  'Sony Xperia 1 IV is tailored for creators, offering a 4K HDR display and pro camera controls for photo/video.',
- 8, 'ACTIVE', '2022-05-25 09:00:00', '2023-12-10 09:00:00', 1),
+ 'ACTIVE', '2022-05-25 09:00:00', '2023-12-10 09:00:00', 1),
 
 (7, 'OPPO Find X6 Pro', 1099.00, 10,
  '6.8" LTPO AMOLED · Snapdragon 8 Gen 2 · 80W charging',
  'Find X6 Pro brings flagship specs, long battery life and top-tier imaging performance.',
- 18, 'ACTIVE', '2023-04-15 09:00:00', '2023-12-08 09:00:00', 1),
+ 'ACTIVE', '2023-04-15 09:00:00', '2023-12-08 09:00:00', 1),
 
 (8, 'vivo X90 Pro', 999.00, 7,
  '6.78" AMOLED · MediaTek Dimensity 9200 · Zeiss optics',
  'vivo X90 Pro focuses on camera quality with Zeiss collaboration and high-performance chipset.',
- 14, 'ACTIVE', '2023-09-01 09:00:00', '2023-12-12 10:00:00', 1),
+ 'ACTIVE', '2023-09-01 09:00:00', '2023-12-12 10:00:00', 1),
 
 (9, 'Motorola Edge 40', 499.00, 10,
  '6.55" pOLED · Snapdragon 7 Gen 1 · 68W fast charge',
  'Motorola Edge 40 offers balanced performance, long battery life and a clean Android experience.',
- 60, 'ACTIVE', '2023-06-20 09:00:00', '2023-12-06 10:00:00', 1),
+ 'ACTIVE', '2023-06-20 09:00:00', '2023-12-06 10:00:00', 1),
 
 (10, 'ASUS ROG Phone 7', 899.00, 5,
  '6.78" AMOLED · Snapdragon 8 Gen 2 · Gaming features',
  'ROG Phone 7 is optimized for gaming with high refresh rate display, advanced cooling and gamer-centric accessories.',
- 12, 'ACTIVE', '2023-09-01 09:00:00', '2023-12-07 09:00:00', 1),
+ 'ACTIVE', '2023-09-01 09:00:00', '2023-12-07 09:00:00', 1),
 
 -- Laptops (id 11-20)
 (11, 'Apple MacBook Air M2 (13-inch)', 1199.00, 0,
  'M2 chip · 8/16GB unified RAM · 256/512GB SSD',
  'MacBook Air with M2 chip provides great battery life and a fanless design ideal for everyday use and productivity.',
- 25, 'ACTIVE', '2022-06-05 09:00:00', '2023-11-20 12:00:00', 2),
+ 'ACTIVE', '2022-06-05 09:00:00', '2023-11-20 12:00:00', 2),
 
 (12, 'Apple MacBook Pro 14 (M2 Pro)', 1999.00, 5,
  'M2 Pro · 14-inch Liquid Retina · Pro performance',
  'MacBook Pro 14 offers high-end performance with M2 Pro for creative professionals and developers.',
- 10, 'ACTIVE', '2023-01-24 09:00:00', '2023-12-02 12:30:00', 2),
+ 'ACTIVE', '2023-01-24 09:00:00', '2023-12-02 12:30:00', 2),
 
 (13, 'Dell XPS 13 Plus', 1099.00, 7,
  '13.4" OLED option · 12th Gen Intel · compact',
  'XPS 13 Plus merges a sleek design with powerful internals, excellent display options and long battery life.',
- 20, 'ACTIVE', '2023-03-10 09:00:00', '2023-11-30 10:00:00', 2),
+ 'ACTIVE', '2023-03-10 09:00:00', '2023-11-30 10:00:00', 2),
 
 (14, 'HP Spectre x360 14', 1299.00, 10,
  'Convertible · 12th Gen Intel · OLED option',
  'Spectre x360 is a premium convertible offering touchscreen versatility, strong performance and an elegant design.',
- 15, 'ACTIVE', '2023-05-10 09:00:00', '2023-12-04 09:00:00', 2),
+ 'ACTIVE', '2023-05-10 09:00:00', '2023-12-04 09:00:00', 2),
 
 (15, 'Lenovo ThinkPad X1 Carbon Gen 11', 1499.00, 0,
  'Lightweight · Intel Evo · Business features',
  'ThinkPad X1 Carbon remains a top choice for business users with robust build, excellent keyboard and manageability features.',
- 18, 'ACTIVE', '2023-01-10 09:00:00', '2023-12-01 09:00:00', 2),
+ 'ACTIVE', '2023-01-10 09:00:00', '2023-12-01 09:00:00', 2),
 
 (16, 'ASUS ZenBook 14', 899.00, 12,
  '14" display · Ryzen 7 or Intel options · portable',
  'ZenBook 14 balances portability with solid performance and long battery life for mobile professionals.',
- 30, 'ACTIVE', '2023-06-15 09:00:00', '2023-12-07 09:00:00', 2),
+ 'ACTIVE', '2023-06-15 09:00:00', '2023-12-07 09:00:00', 2),
 
 (17, 'Acer Swift 3', 649.00, 15,
  'Thin & light · Ryzen/Intel options · value laptop',
  'Swift 3 provides great value with capable processors and good battery life for students and professionals.',
- 40, 'ACTIVE', '2023-03-20 09:00:00', '2023-12-08 09:00:00', 2),
+ 'ACTIVE', '2023-03-20 09:00:00', '2023-12-08 09:00:00', 2),
 
 (18, 'Razer Blade 15', 1799.00, 10,
  'Gaming laptop · RTX 40-series options · 240Hz',
  'Razer Blade 15 is a premium gaming laptop with thin chassis and high-refresh displays for esports-grade performance.',
- 6, 'ACTIVE', '2023-09-01 09:00:00', '2023-12-09 09:00:00', 2),
+ 'ACTIVE', '2023-09-01 09:00:00', '2023-12-09 09:00:00', 2),
 
 (19, 'MSI GS66 Stealth', 1599.00, 8,
  'Gaming · RTX 40-series · high-performance cooling',
  'GS66 Stealth focuses on delivering high frame rates and sustained performance in a portable chassis.',
- 9, 'ACTIVE', '2023-01-15 09:00:00', '2023-11-30 09:00:00', 2),
+ 'ACTIVE', '2023-01-15 09:00:00', '2023-11-30 09:00:00', 2),
 
 (20, 'Microsoft Surface Laptop 5', 1299.00, 0,
  'Touchscreen · Intel Core H-Series · premium build',
  'Surface Laptop 5 offers a clean Windows experience with a lightweight premium design, ideal for office productivity.',
- 22, 'ACTIVE', '2023-06-01 09:00:00', '2023-12-02 09:00:00', 2),
+ 'ACTIVE', '2023-06-01 09:00:00', '2023-12-02 09:00:00', 2),
 
 -- Tablets (id 21-30)
 (21, 'Apple iPad Pro 11 (M2)', 799.00, 5,
  '11" Liquid Retina · M2 chip · pro performance',
  'iPad Pro brings desktop-class performance in a tablet form factor with support for Apple Pencil and Magic Keyboard.',
- 16, 'ACTIVE', '2022-10-18 09:00:00', '2023-12-01 09:00:00', 3),
+ 'ACTIVE', '2022-10-18 09:00:00', '2023-12-01 09:00:00', 3),
 
 (22, 'Apple iPad Air (5th gen)', 599.00, 10,
  '10.9" Liquid Retina · M1 chip · lightweight',
  'iPad Air balances performance and portability for content creation and everyday use.',
- 28, 'ACTIVE', '2022-03-08 09:00:00', '2023-12-10 09:00:00', 3),
+ 'ACTIVE', '2022-03-08 09:00:00', '2023-12-10 09:00:00', 3),
 
 (23, 'Samsung Galaxy Tab S8', 699.00, 7,
  '11" LCD · Snapdragon 8 Gen 1 · S Pen included',
  'Galaxy Tab S8 is optimized for productivity with S Pen support and a vivid display.',
- 20, 'ACTIVE', '2022-02-25 09:00:00', '2023-12-05 09:00:00', 3),
+ 'ACTIVE', '2022-02-25 09:00:00', '2023-12-05 09:00:00', 3),
 
 (24, 'Lenovo Tab P12 Pro', 649.00, 15,
  '12.6" AMOLED · Snapdragon 870 · premium display',
  'Tab P12 Pro offers a large AMOLED display and strong battery life, great for media consumption and multitasking.',
- 10, 'ACTIVE', '2022-12-01 09:00:00', '2023-11-28 09:00:00', 3),
+ 'ACTIVE', '2022-12-01 09:00:00', '2023-11-28 09:00:00', 3),
 
 (25, 'Huawei MatePad Pro', 599.00, 20,
  '12.6" display · Kirin/Qualcomm options · sleek',
  'MatePad Pro focuses on design and screen quality for creative users and professionals.',
- 5, 'ACTIVE', '2022-05-10 09:00:00', '2023-11-30 09:00:00', 3),
+ 'ACTIVE', '2022-05-10 09:00:00', '2023-11-30 09:00:00', 3),
 
 (26, 'Amazon Fire HD 10', 149.99, 25,
  '10.1" display · affordable tablet · media-first',
  'Fire HD 10 is an affordable tablet geared towards reading, streaming and light productivity.',
- 75, 'ACTIVE', '2023-01-05 09:00:00', '2023-12-01 09:00:00', 3),
+ 'ACTIVE', '2023-01-05 09:00:00', '2023-12-01 09:00:00', 3),
 
 (27, 'Samsung Galaxy Tab A8', 229.99, 10,
  '10.5" display · budget-friendly · long battery life',
  'Tab A8 is a value-oriented tablet suitable for family use and media consumption.',
- 60, 'ACTIVE', '2023-03-01 09:00:00', '2023-12-06 09:00:00', 3),
+ 'ACTIVE', '2023-03-01 09:00:00', '2023-12-06 09:00:00', 3),
 
 (28, 'Microsoft Surface Pro 9', 999.00, 5,
  '2-in-1 · Intel or ARM options · touchscreen',
  'Surface Pro 9 is a versatile 2-in-1 device offering laptop performance with tablet portability and detachable keyboard support.',
- 12, 'ACTIVE', '2023-02-10 09:00:00', '2023-12-09 09:00:00', 3),
+ 'ACTIVE', '2023-02-10 09:00:00', '2023-12-09 09:00:00', 3),
 
 (29, 'Xiaomi Pad 6', 399.00, 15,
  '11" IPS · Snapdragon 870 · great battery',
  'Xiaomi Pad 6 offers strong performance and a clean Android experience at a competitive price.',
- 30, 'ACTIVE', '2023-04-15 09:00:00', '2023-12-03 09:00:00', 3),
+ 'ACTIVE', '2023-04-15 09:00:00', '2023-12-03 09:00:00', 3),
 
 (30, 'OPPO Pad', 349.00, 20,
  '11.5" display · MediaTek chipset · lightweight',
  'OPPO Pad is an affordable tablet with solid display and battery life for media and productivity.',
- 20, 'ACTIVE', '2023-06-10 09:00:00', '2023-12-02 09:00:00', 3),
+ 'ACTIVE', '2023-06-10 09:00:00', '2023-12-02 09:00:00', 3),
 
 -- Audio & Headphones (id 31-40)
 (31, 'Sony WH-1000XM5', 399.00, 10,
  'Over-ear · Industry-leading noise cancellation · long battery',
  'WH-1000XM5 features best-in-class ANC, excellent audio tuning and long battery life for travelers and commuters.',
- 40, 'ACTIVE', '2022-05-20 09:00:00', '2023-12-01 09:00:00', 4),
+ 'ACTIVE', '2022-05-20 09:00:00', '2023-12-01 09:00:00', 4),
 
 (32, 'Bose QuietComfort 45', 329.00, 5,
  'Over-ear · Balanced sound · comfort-focused',
  'QuietComfort 45 offers comfortable fit with reliable noise cancellation and a neutral sound profile.',
- 35, 'ACTIVE', '2022-09-10 09:00:00', '2023-12-02 09:00:00', 4),
+ 'ACTIVE', '2022-09-10 09:00:00', '2023-12-02 09:00:00', 4),
 
 (33, 'Sennheiser Momentum 4', 349.00, 8,
  'Over-ear · High-res audio · adaptive ANC',
  'Momentum 4 delivers detailed sound with adaptive noise cancellation and a comfortable design for long listening sessions.',
- 18, 'ACTIVE', '2022-11-15 09:00:00', '2023-12-03 09:00:00', 4),
+ 'ACTIVE', '2022-11-15 09:00:00', '2023-12-03 09:00:00', 4),
 
 (34, 'Apple AirPods Pro (2nd gen)', 249.00, 10,
  'In-ear · Active Noise Cancellation · Spatial Audio',
  'AirPods Pro 2 add improved ANC, better battery life and Spatial Audio for immersive listening.',
- 55, 'ACTIVE', '2022-09-23 09:00:00', '2023-12-05 09:00:00', 4),
+ 'ACTIVE', '2022-09-23 09:00:00', '2023-12-05 09:00:00', 4),
 
 (35, 'Bowers & Wilkins PX7 S2', 399.00, 12,
  'Over-ear · Premium sound · Adaptive ANC',
  'PX7 S2 aims for audiophiles with refined tuning, strong build and comfortable earcups.',
- 9, 'ACTIVE', '2023-03-01 09:00:00', '2023-12-06 09:00:00', 4),
+ 'ACTIVE', '2023-03-01 09:00:00', '2023-12-06 09:00:00', 4),
 
 (36, 'Jabra Elite 85t', 179.00, 15,
  'True wireless · customizable sound · ANC',
  'Jabra Elite 85t provides customizable EQ and reliable call performance in a compact case.',
- 45, 'ACTIVE', '2021-09-30 09:00:00', '2023-12-07 09:00:00', 4),
+ 'ACTIVE', '2021-09-30 09:00:00', '2023-12-07 09:00:00', 4),
 
 (37, 'Beats Studio3 Wireless', 299.00, 20,
  'Over-ear · Apple W1/H1 integration · bass-forward sound',
  'Studio3 offers seamless Apple device connectivity and robust low-end for bass lovers.',
- 22, 'ACTIVE', '2020-09-01 09:00:00', '2023-12-08 09:00:00', 4),
+ 'ACTIVE', '2020-09-01 09:00:00', '2023-12-08 09:00:00', 4),
 
 (38, 'Anker Soundcore Liberty Air 2 Pro', 129.99, 25,
  'True wireless · ANC · value performance',
  'Liberty Air 2 Pro gives strong value with good noise cancellation and customizable sound at a friendly price.',
- 100, 'ACTIVE', '2021-08-20 09:00:00', '2023-12-09 09:00:00', 4),
+ 'ACTIVE', '2021-08-20 09:00:00', '2023-12-09 09:00:00', 4),
 
 (39, 'Samsung Galaxy Buds2 Pro', 199.00, 10,
  'In-ear · Hi-Fi sound · ANC',
  'Buds2 Pro are tuned for clarity and fit well for extended listening with Samsung device integration.',
- 30, 'ACTIVE', '2022-08-10 09:00:00', '2023-12-01 09:00:00', 4),
+ 'ACTIVE', '2022-08-10 09:00:00', '2023-12-01 09:00:00', 4),
 
 (40, 'Sennheiser CX Plus True Wireless', 129.00, 20,
  'In-ear · great clarity · long battery',
  'CX Plus combines Sennheiser tuning with wireless convenience for clear audio and comfortable fit.',
- 48, 'ACTIVE', '2022-04-01 09:00:00', '2023-12-02 09:00:00', 4),
+ 'ACTIVE', '2022-04-01 09:00:00', '2023-12-02 09:00:00', 4),
 
 -- Wearables (id 41-50)
 (41, 'Apple Watch Series 8', 399.00, 0,
  'Latest Apple watch · health & fitness features',
  'Series 8 includes advanced health sensors, robust fitness tracking and seamless iPhone integration.',
- 60, 'ACTIVE', '2022-09-07 09:00:00', '2023-12-01 09:00:00', 5),
+ 'ACTIVE', '2022-09-07 09:00:00', '2023-12-01 09:00:00', 5),
 
 (42, 'Samsung Galaxy Watch5', 279.00, 10,
  'Health tracking · wear OS · long battery',
  'Galaxy Watch5 blends solid hardware with Samsung health ecosystem and long battery life.',
- 40, 'ACTIVE', '2022-08-10 09:00:00', '2023-12-02 09:00:00', 5),
+ 'ACTIVE', '2022-08-10 09:00:00', '2023-12-02 09:00:00', 5),
 
 (43, 'Garmin Forerunner 955', 499.99, 5,
  'Sport watch · multisport tracking · long GPS battery',
  'Forerunner 955 is designed for serious athletes with detailed performance metrics and long battery life.',
- 12, 'ACTIVE', '2022-04-20 09:00:00', '2023-12-05 09:00:00', 5),
+ 'ACTIVE', '2022-04-20 09:00:00', '2023-12-05 09:00:00', 5),
 
 (44, 'Fitbit Sense 2', 299.95, 15,
  'Health-first smartwatch · stress & heart metrics',
  'Sense 2 focuses on health insights, stress management and advanced sleep tracking.',
- 25, 'ACTIVE', '2022-10-01 09:00:00', '2023-11-30 09:00:00', 5),
+ 'ACTIVE', '2022-10-01 09:00:00', '2023-11-30 09:00:00', 5),
 
 (45, 'Huawei Watch GT 3', 229.00, 20,
  'Long battery · health features · elegant design',
  'Watch GT 3 emphasizes long battery life with comprehensive health tracking.',
- 30, 'ACTIVE', '2022-06-10 09:00:00', '2023-12-01 09:00:00', 5),
+ 'ACTIVE', '2022-06-10 09:00:00', '2023-12-01 09:00:00', 5),
 
 (46, 'Amazfit GTR 3 Pro', 179.00, 25,
  'Value smartwatch · long battery · AMOLED',
  'GTR 3 Pro offers premium looks and long battery for users wanting smartwatch features at lower cost.',
- 50, 'ACTIVE', '2022-09-01 09:00:00', '2023-12-06 09:00:00', 5),
+ 'ACTIVE', '2022-09-01 09:00:00', '2023-12-06 09:00:00', 5),
 
 (47, 'Polar Vantage V2', 499.00, 10,
  'Pro sports watch · advanced metrics · lightweight',
  'Polar Vantage V2 provides pro-level training features in a sleek, lightweight package.',
- 8, 'ACTIVE', '2021-09-01 09:00:00', '2023-12-07 09:00:00', 5),
+ 'ACTIVE', '2021-09-01 09:00:00', '2023-12-07 09:00:00', 5),
 
 (48, 'Suunto 9 Peak', 449.00, 15,
  'Rugged sports watch · long battery life · accuracy',
  'Suunto 9 Peak is built for outdoor endurance sports and offers accurate GPS and long battery.',
- 7, 'ACTIVE', '2021-07-01 09:00:00', '2023-12-08 09:00:00', 5),
+ 'ACTIVE', '2021-07-01 09:00:00', '2023-12-08 09:00:00', 5),
 
 (49, 'TicWatch Pro 3', 299.00, 20,
  'Wear OS · dual-layer display · long battery',
  'TicWatch Pro 3 delivers Wear OS flexibility along with a battery-saving dual-display design.',
- 20, 'ACTIVE', '2021-11-01 09:00:00', '2023-12-09 09:00:00', 5),
+ 'ACTIVE', '2021-11-01 09:00:00', '2023-12-09 09:00:00', 5),
 
 (50, 'Fitbit Versa 4', 199.95, 15,
  'Fitness-first smartwatch · sleep & activity tracking',
  'Versa 4 is an approachable fitness smartwatch with simplified interface and good battery life.',
- 65, 'ACTIVE', '2022-09-20 09:00:00', '2023-12-10 09:00:00', 5);
+ 'ACTIVE', '2022-09-20 09:00:00', '2023-12-10 09:00:00', 5);
 
 -- Product Images (2 images per product, id 1-100)
 INSERT INTO product_images (
@@ -713,3 +712,69 @@ VALUES
 (3, 34, 'Apple AirPods Pro (2nd gen)', 249.00, 2, 448.20, '2024-01-17 10:06:00'),
 -- Order 4: Apple Watch Series 8
 (4, 41, 'Apple Watch Series 8', 399.00, 1, 399.00, '2024-01-18 17:05:00');
+
+-- ============================================
+-- INVENTORIES DATA
+-- ============================================
+INSERT INTO inventories (
+    product_id,
+    total_quantity,
+    reserved_quantity
+)
+VALUES
+-- Smartphones (id 1-10)
+(1, 35, 0),
+(2, 42, 0),
+(3, 28, 0),
+(4, 50, 0),
+(5, 22, 0),
+(6, 8, 0),
+(7, 18, 0),
+(8, 14, 0),
+(9, 60, 0),
+(10, 12, 0),
+-- Laptops (id 11-20)
+(11, 25, 0),
+(12, 10, 0),
+(13, 20, 0),
+(14, 15, 0),
+(15, 18, 0),
+(16, 30, 0),
+(17, 40, 0),
+(18, 6, 0),
+(19, 9, 0),
+(20, 22, 0),
+-- Tablets (id 21-30)
+(21, 16, 0),
+(22, 28, 0),
+(23, 20, 0),
+(24, 10, 0),
+(25, 5, 0),
+(26, 75, 0),
+(27, 60, 0),
+(28, 12, 0),
+(29, 30, 0),
+(30, 20, 0),
+-- Audio & Headphones (id 31-40)
+(31, 40, 0),
+(32, 35, 0),
+(33, 18, 0),
+(34, 55, 0),
+(35, 9, 0),
+(36, 45, 0),
+(37, 22, 0),
+(38, 100, 0),
+(39, 30, 0),
+(40, 48, 0),
+-- Wearables (id 41-50)
+(41, 60, 0),
+(42, 40, 0),
+(43, 12, 0),
+(44, 25, 0),
+(45, 30, 0),
+(46, 50, 0),
+(47, 8, 0),
+(48, 7, 0),
+(49, 20, 0),
+(50, 65, 0);
+

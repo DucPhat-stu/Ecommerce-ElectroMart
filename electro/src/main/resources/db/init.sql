@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS products (
     discount_percent INT DEFAULT 0,
     short_description VARCHAR(512),
     description TEXT,
-    stock_quantity INT DEFAULT 0,
     status VARCHAR(50),
     created_at DATETIME,
     updated_at DATETIME,
@@ -50,6 +49,20 @@ CREATE TABLE IF NOT EXISTS products (
         FOREIGN KEY (category_id) 
         REFERENCES categories(id) 
         ON DELETE SET NULL 
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- INVENTORIES TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS inventories (
+    product_id BIGINT PRIMARY KEY,
+    total_quantity INT NOT NULL DEFAULT 0,
+    reserved_quantity INT NOT NULL DEFAULT 0,
+    CONSTRAINT fk_inventories_product 
+        FOREIGN KEY (product_id) 
+        REFERENCES products(id) 
+        ON DELETE CASCADE 
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

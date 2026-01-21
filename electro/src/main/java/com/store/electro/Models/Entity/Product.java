@@ -29,7 +29,6 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @JsonPropertyOrder({ "id", "name", "price", "discountPercent", "finalPrice", "shortDescription", "description",
-        "stockQuantity",
         "status", "createdAt", "updatedAt", "categoryId", "productImages", "productDetails" })
 @Entity
 @Table(name = "products")
@@ -59,10 +58,6 @@ public class Product {
     // Product Description
     @Column(name = "description")
     private String description;
-
-    // Product Stock Quantity
-    @Column(name = "stock_quantity", nullable = false)
-    private Integer stockQuantity = 0;
 
     // Product Status
     @Enumerated(EnumType.STRING)
@@ -151,14 +146,6 @@ public class Product {
         this.description = description;
     }
 
-    public Integer getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(Integer stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
-
     public ProductStatus getStatus() {
         return status;
     }
@@ -214,6 +201,12 @@ public class Product {
         return category != null ? category.getId() : null;
     }
 
+    // GETTER for applying discount for finalPrice
+    @JsonProperty("finalPrice")
+    public BigDecimal getFinalPrice() {
+        return calculatePrice();
+    }
+
     /*
      * toString Method
      */
@@ -224,7 +217,6 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", stockQuantity=" + stockQuantity +
                 ", status=" + status +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
@@ -234,29 +226,21 @@ public class Product {
     /*
      * Methods
      */
+
     @PrePersist
     @PreUpdate
     public void onCreate() {
         this.updatedAt = LocalDateTime.now();
         if (this.createdAt == null) {
             this.createdAt = LocalDateTime.now();
-        }
-
-        if (this.stockQuantity == null || this.stockQuantity <= 0) {
-            this.status = ProductStatus.OUT_OF_STOCK;
-        } else if (this.status == null || this.status == ProductStatus.OUT_OF_STOCK) {
             this.status = ProductStatus.ACTIVE;
         }
+
     }
 
     // Check if the product is available for sale
     public boolean isAvailable() {
         return this.status == ProductStatus.ACTIVE;
-    }
-
-    // Check if the product is in stock
-    public boolean isInStock() {
-        return this.stockQuantity != null && this.stockQuantity > 0 && this.status != ProductStatus.OUT_OF_STOCK;
     }
 
     // Check if the product has a discount
@@ -266,7 +250,7 @@ public class Product {
 
     // Calculate the final price after applying discount
     public BigDecimal calculatePrice() {
-        if (this.price == null || !isAvailable() || !isInStock()) {
+        if (this.price == null || !isAvailable()) {
             return BigDecimal.ZERO;
         }
 
@@ -282,9 +266,4 @@ public class Product {
                 .divide(hundred, 2, RoundingMode.HALF_UP);
     }
 
-    // GETTER for applying discount for finalPrice
-    @JsonProperty("finalPrice")
-    public BigDecimal getFinalPrice() {
-        return calculatePrice();
-    }
 }
