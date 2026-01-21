@@ -35,7 +35,7 @@ public class Inventory {
     private Integer reservedQuantity;
 
     @Version
-    private Integer version;
+    private Long version;
 
     /*
      * CONSTRUCTORS
