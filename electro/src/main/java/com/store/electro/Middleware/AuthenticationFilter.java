@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.store.electro.Services.UserService;
 import com.store.electro.Utils.ApiResponse;
 
@@ -11,7 +12,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 // NOTE: This filter is manually registered in WebFilterConfiguration
 // Do not add @Component annotation to avoid duplicate bean definition
