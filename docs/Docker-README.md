@@ -5,7 +5,7 @@ Hệ thống gồm Spring Boot cho backend, MySQL cho cơ sở dữ liệu và N
 
 Mục tiêu của tài liệu này là hướng dẫn chạy project từ đầu đến cuối, giải thích rõ từng câu lệnh Docker/Docker Compose và đảm bảo tất cả thành viên trong nhóm có môi trường giống nhau.
 
----
+
 
 ## Architecture
 
@@ -19,7 +19,7 @@ Expose ra host:
 - Backend API: 8080  
 - MySQL: 3307  
 
----
+
 
 ## Services
 
@@ -27,7 +27,7 @@ Expose ra host:
 - be: Spring Boot backend, xử lý nghiệp vụ
 - nginx: Reverse proxy + frontend tĩnh
 
----
+
 
 ## Requirements
 
@@ -41,14 +41,14 @@ docker --version
 docker compose version
 ```
 
----
+
 
 ## Access URLs
 Nếu chạy container thành công thì truy cập vào các url sau:
 ### Frontend: http://localhost
 ### Backend API: http://localhost/api/........ (api path)
 
----
+
 
 ## Commands
 ```bash
