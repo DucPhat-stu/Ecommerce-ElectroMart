@@ -1,0 +1,83 @@
+package com.store.electro.Middleware;
+
+import java.io.IOException;
+
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.store.electro.Services.UserService;
+import com.store.electro.Utils.ApiResponse;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+// NOTE: This filter is manually registered in WebFilterConfiguration
+// Do not add @Component annotation to avoid duplicate bean definition
+public class AuthenticationFilter extends OncePerRequestFilter {
+
+	private final UserService userService;
+	private final ObjectMapper objectMapper;
+
+	public AuthenticationFilter(UserService userService) {
+		this.userService = userService;
+		this.objectMapper = new ObjectMapper();
+	}
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
+
+		// Skip authentication for public endpoints
+		String requestPath = request.getRequestURI();
+		if (isPublicEndpoint(requestPath)) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		// Get Authorization header
+		String authHeader = request.getHeader("Authorization");
+		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.setContentType("application/json");
+			String errorResponse = objectMapper.writeValueAsString(
+				ApiResponse.error("Missing or invalid token", "UNAUTHORIZED", "Bearer token is required")
+			);
+			response.getWriter().write(errorResponse);
+			return;
+		}
+
+		// Extract token
+		String token = authHeader.substring(7);
+
+		// Validate token
+		if (!userService.validateToken(token)) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.setContentType("application/json");
+			String errorResponse = objectMapper.writeValueAsString(
+				ApiResponse.error("Invalid or expired token", "INVALID_TOKEN", "Token validation failed")
+			);
+			response.getWriter().write(errorResponse);
+			return;
+		}
+
+		// Extract user ID and add to request attributes
+		Long userId = userService.extractUserIdFromToken(token);
+		String username = userService.extractUsernameFromToken(token);
+		if (userId != null) {
+			request.setAttribute("userId", userId);
+			request.setAttribute("username", username);
+		}
+
+		filterChain.doFilter(request, response);
+	}
+
+	private boolean isPublicEndpoint(String path) {
+		// Public endpoints that don't require authentication
+		return path.contains("/api/v1/auth/login") || 
+		       path.contains("/api/v1/auth/register") ||
+		       path.contains("/api/v1/products") ||
+		       path.contains("/api/v1/reviews");
+	}
+}

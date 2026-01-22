@@ -10,6 +10,7 @@ services:
       MYSQL_PASSWORD: 123123
     ports:
       - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password   
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -uuser -p123123"]
       interval: 5s
@@ -37,8 +38,8 @@ services:
       SPRING_JPA_SHOW_SQL: true
     networks:
       - app-network
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080"
     depends_on:
       db:
         condition: service_healthy
