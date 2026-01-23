@@ -1,10 +1,10 @@
 package com.store.electro.Services;
 
-import com.store.electro.Models.Entity.Product;
-import com.store.electro.Request.AddProductRequest;
-import com.store.electro.Request.ProductUpdateRequest;
-
 import java.util.List;
+
+import com.store.electro.Models.Entity.Product;
+import com.store.electro.Models.DTOs.Request.AddProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductUpdateRequest;
 
 public interface IProductService {
     Product addProduct(AddProductRequest product);
@@ -17,7 +17,7 @@ public interface IProductService {
 
     List<Product> getAllProducts();
 
-    List<Product> findByCategoryId(Long categoryId);
+    List<Product> getProductsByCategory(Long categoryId);
 
     Product findProductByName(String productName);
 }
