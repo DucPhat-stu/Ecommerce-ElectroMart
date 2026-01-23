@@ -1,6 +1,7 @@
 package com.store.electro.Services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.store.electro.Exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -99,6 +100,9 @@ public class ProductService implements IProductService{
 
     @Override
     public Product findProductByName(String productName) {
-        return productRepository.findByName(productName);
+        return Optional.ofNullable(productRepository.findByName(productName))
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Product not found")
+                );
     }
 }
