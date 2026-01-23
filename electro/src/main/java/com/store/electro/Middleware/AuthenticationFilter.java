@@ -1,17 +1,16 @@
 package com.store.electro.Middleware;
 
-import java.io.IOException;
-
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.store.electro.Services.UserService;
 import com.store.electro.Utils.ApiResponse;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
 
@@ -21,6 +20,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	public AuthenticationFilter(UserService userService) {
 		this.userService = userService;
 		this.objectMapper = new ObjectMapper();
+		this.objectMapper.registerModule(new JavaTimeModule());
 	}
 
 	@Override
@@ -76,6 +76,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		return path.contains("/api/v1/auth/login") || 
 		       path.contains("/api/v1/auth/register") ||
 		       path.contains("/api/v1/products") ||
+				path.contains("/api/v1/product") ||
 		       path.contains("/api/v1/reviews");
 	}
 }
