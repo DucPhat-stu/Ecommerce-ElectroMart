@@ -58,6 +58,16 @@ public class Cart {
     public Cart() {
     }
 
+    public Cart(Long userId, Product product, Integer quantity) {
+        if (userId != null) {
+            User user = new User();
+            user.setId(userId);
+            this.user = user;
+        }
+        this.product = product;
+        this.quantity = quantity != null ? quantity : 1;
+    }
+
     /*
      * GETTERS AND SETTERS
      */
