@@ -1,4 +1,4 @@
-package com.store.electro.Models.DTO;
+package com.store.electro.Models.DTOs.Request;
 
 import java.math.BigDecimal;
 
@@ -8,7 +8,6 @@ public class ProductRequest {
     private Integer discountPercent;
     private String shortDescription;
     private String description;
-    private Integer stockQuantity;
     private Long categoryId;
 
     public ProductRequest() {
@@ -52,14 +51,6 @@ public class ProductRequest {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Integer getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(Integer stockQuantity) {
-        this.stockQuantity = stockQuantity;
     }
 
     public Long getCategoryId() {

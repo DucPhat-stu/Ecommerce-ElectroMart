@@ -1,16 +1,18 @@
-package com.store.electro.Request;
+package com.store.electro.Models.DTOs.Request;
 
 import java.math.BigDecimal;
 
-
-import com.store.electro.Models.Entity.Category;
 import com.store.electro.Models.Enums.ProductStatus;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AddProductRequest {
+public class ProductUpdateRequest {
 
     @NotBlank(message = "Product name is required")
     private String name;
@@ -32,5 +34,4 @@ public class AddProductRequest {
     @NotNull(message = "Category ID is required")
     @Min(value = 1)
     private Long categoryId;
-
 }

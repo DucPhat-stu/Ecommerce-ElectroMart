@@ -1,14 +1,18 @@
-package com.store.electro.Request;
-
-import com.store.electro.Models.Entity.Category;
-import com.store.electro.Models.Enums.ProductStatus;
-import jakarta.validation.constraints.*;
-import lombok.Data;
+package com.store.electro.Models.DTOs.Request;
 
 import java.math.BigDecimal;
 
+import com.store.electro.Models.Enums.ProductStatus;
+
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
 @Data
-public class ProductUpdateRequest {
+public class AddProductRequest {
 
     @NotBlank(message = "Product name is required")
     private String name;

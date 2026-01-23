@@ -1,4 +1,4 @@
-package com.store.electro.Models.DTO;
+package com.store.electro.Models.DTOs.Response;
 
 import java.math.BigDecimal;
 import java.util.List;

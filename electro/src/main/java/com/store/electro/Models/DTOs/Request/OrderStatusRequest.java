@@ -1,4 +1,4 @@
-package com.store.electro.Models.DTO;
+package com.store.electro.Models.DTOs.Request;
 
 public class OrderStatusRequest {
     private String status;

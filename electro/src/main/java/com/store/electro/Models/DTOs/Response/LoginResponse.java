@@ -1,4 +1,4 @@
-package com.store.electro.Models.DTO;
+package com.store.electro.Models.DTOs.Response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
