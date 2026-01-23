@@ -1,8 +1,8 @@
 package com.store.electro.Services;
 
-import com.store.electro.Models.Entity.Category;
-
 import java.util.List;
+
+import com.store.electro.Models.Entity.Category;
 
 public interface ICategoryService {
 
@@ -15,5 +15,4 @@ public interface ICategoryService {
     Category updateCategory(Category category, Long categoryId);
 
     void deleteCategory(Long categoryId);
-
 }

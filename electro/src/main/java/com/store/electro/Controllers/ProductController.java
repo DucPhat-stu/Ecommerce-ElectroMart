@@ -1,70 +1,105 @@
 package com.store.electro.Controllers;
 
-import com.store.electro.Models.Entity.Product;
-import com.store.electro.Request.AddProductRequest;
-import com.store.electro.Request.ProductUpdateRequest;
-import com.store.electro.Response.ApiResponse;
-import com.store.electro.Services.IProductService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.store.electro.Models.DTO.ProductRequest;
+import com.store.electro.Models.Entity.Product;
+import com.store.electro.Services.ProductService;
+import com.store.electro.Utils.ApiResponse;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class ProductController {
 
-    private final IProductService productService;
+    private final ProductService productService;
 
-    public ProductController(IProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    // Lists of products by category ID
-    @GetMapping("v1/category/products/{categoryId}")
-    public ResponseEntity<ApiResponse> getAllProductByCategory(@PathVariable Long categoryId) {
-        List<Product> products = productService.findByCategoryId(categoryId);
-        return ResponseEntity.ok(new ApiResponse("success", products));
+    @GetMapping("/products")
+    public ResponseEntity<ApiResponse<List<Product>>> getAllProducts() {
+        try {
+            List<Product> products = productService.getAllProducts();
+            return ResponseEntity.ok(ApiResponse.success("Products retrieved successfully", products));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Failed to retrieve products", "INTERNAL_ERROR", e.getMessage()));
+        }
     }
 
-    // Get a lists of all products
-    @GetMapping("v1/products")
-    public ResponseEntity<ApiResponse> getAllProducts(){
-        List<Product> products = productService.getAllProducts();
-        return ResponseEntity.ok(new ApiResponse("success", products));
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ApiResponse<Product>> getProduct(@PathVariable Long id) {
+        try {
+            Product product = productService.getProductById(id);
+            return ResponseEntity.ok(ApiResponse.success("Product found", product));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.error("Product not found", "PRODUCT_NOT_FOUND", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Failed to retrieve product", "INTERNAL_ERROR", e.getMessage()));
+        }
     }
 
-    // Find a product by product ID
-    @GetMapping("v1/product/{productId}")
-    public ResponseEntity<ApiResponse> getProductById(@PathVariable Long productId) {
-        Product product = productService.getProductById(productId);
-        return ResponseEntity.ok(new ApiResponse("success", product));
+    @GetMapping("/products/category/{categoryId}")
+    public ResponseEntity<ApiResponse<List<Product>>> getProductsByCategory(@PathVariable Long categoryId) {
+        try {
+            List<Product> products = productService.getProductsByCategory(categoryId);
+            return ResponseEntity.ok(ApiResponse.success("Products retrieved successfully", products));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Failed to retrieve products", "INTERNAL_ERROR", e.getMessage()));
+        }
     }
 
-    // Creating a new product
-    @PostMapping("v1/product")
-    public ResponseEntity<ApiResponse> addProduct(@Valid @RequestBody AddProductRequest addProductRequest) {
-        Product newProduct = productService.addProduct(addProductRequest);
-        return ResponseEntity.ok(new ApiResponse("Created success", newProduct));
+    @PostMapping("/products")
+    public ResponseEntity<ApiResponse<Product>> createProduct(@RequestBody ProductRequest request) {
+        try {
+            Product product = productService.createProduct(request);
+            return ResponseEntity.status(201).body(ApiResponse.success("Product created successfully", product));
+        } catch (Exception e) {
+            return ResponseEntity.status(400)
+                    .body(ApiResponse.error("Failed to create product", "VALIDATION_ERROR", e.getMessage()));
+        }
     }
 
-    // Deleting a product
-    @DeleteMapping("v1/product/{productId}")
-    public ResponseEntity<ApiResponse> deleteProductById(@PathVariable Long productId) {
-        productService.deleteProduct(productId);
-        return ResponseEntity.ok(new ApiResponse("Deleted success", null));
+    @PutMapping("/products/{id}")
+    public ResponseEntity<ApiResponse<Product>> updateProduct(@PathVariable Long id,
+            @RequestBody ProductRequest request) {
+        try {
+            Product product = productService.updateProduct(id, request);
+            return ResponseEntity.ok(ApiResponse.success("Product updated successfully", product));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.error("Product not found", "PRODUCT_NOT_FOUND", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(400)
+                    .body(ApiResponse.error("Failed to update product", "VALIDATION_ERROR", e.getMessage()));
+        }
     }
 
-    // Updating a existing product
-    @PutMapping("v1/product/{productId}")
-    public ResponseEntity<ApiResponse> updateProduct
-    (
-            @Valid
-            @RequestBody ProductUpdateRequest updateRequest,
-            @PathVariable("productId") Long productId
-    ) {
-        productService.updateProduct(updateRequest, productId);
-        return ResponseEntity.ok(new ApiResponse("Updated success", null));
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok(ApiResponse.success("Product deleted successfully", null));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404)
+                    .body(ApiResponse.error("Product not found", "PRODUCT_NOT_FOUND", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(ApiResponse.error("Failed to delete product", "INTERNAL_ERROR", e.getMessage()));
+        }
     }
 }

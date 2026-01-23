@@ -51,6 +51,10 @@ public class Product {
     @Column(name = "discount_percent")
     private Integer discountPercent = 0;
 
+    // Stock Quantity
+    @Column(name = "stock_quantity")
+    private Integer stockQuantity = 0;
+
     // Product Short Description
     @Column(name = "short_description")
     private String shortDescription;
@@ -138,6 +142,14 @@ public class Product {
 
     public void setDiscountPercent(Integer discountPercent) {
         this.discountPercent = discountPercent;
+    }
+
+    public Integer getStockQuantity() {
+        return stockQuantity != null ? stockQuantity : 0;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public String getShortDescription() {
