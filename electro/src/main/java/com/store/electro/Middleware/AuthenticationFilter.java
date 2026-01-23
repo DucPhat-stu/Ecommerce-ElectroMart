@@ -2,9 +2,9 @@ package com.store.electro.Middleware;
 
 import java.io.IOException;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.store.electro.Services.UserService;
 import com.store.electro.Utils.ApiResponse;
 
@@ -12,9 +12,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
 	private final UserService userService;
