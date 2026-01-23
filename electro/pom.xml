@@ -95,6 +95,12 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
+		<!-- Jackson Java 8 Date/Time Support -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
 		<!-- Spring Security Crypto for BCryptPasswordEncoder -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
