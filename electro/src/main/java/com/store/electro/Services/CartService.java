@@ -8,10 +8,11 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.store.electro.Models.DTO.CartRequest;
-import com.store.electro.Models.DTO.CartResponse;
-import com.store.electro.Models.DTO.CartResponse.CartItemDTO;
-import com.store.electro.Models.DTO.CartResponse.ProductInfo;
+import com.store.electro.Exceptions.ResourceNotFoundException;
+import com.store.electro.Models.DTOs.Request.CartRequest;
+import com.store.electro.Models.DTOs.Response.CartResponse;
+import com.store.electro.Models.DTOs.Response.CartResponse.CartItemDTO;
+import com.store.electro.Models.DTOs.Response.CartResponse.ProductInfo;
 import com.store.electro.Models.Entity.Cart;
 import com.store.electro.Models.Entity.Product;
 import com.store.electro.Repositories.CartRepository;
@@ -28,6 +29,7 @@ public class CartService implements ICartService {
         this.productRepository = productRepository;
     }
 
+    @Override
     @Transactional
     public CartResponse getUserCart(Long userId) {
         List<Cart> cartItems = cartRepository.findByUserId(userId);
@@ -73,19 +75,14 @@ public class CartService implements ICartService {
 
         return new CartResponse(userId, items, totalItems, totalAmount);
     }
-
+    
+    @Override
     @Transactional
     public Cart addToCart(CartRequest request) {
         // Validate product exists
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + request.getProductId()));
-
-        // Check stock
-        if (product.getStockQuantity() < request.getQuantity()) {
-            throw new RuntimeException(
-                    "Insufficient stock. Available: " + product.getStockQuantity() + ", Requested: "
-                            + request.getQuantity());
-        }
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Product not found with id: " + request.getProductId()));
 
         // Check if product already in cart
         Optional<Cart> existingCart = cartRepository.findByUserIdAndProductId(request.getUserId(),
@@ -96,12 +93,6 @@ public class CartService implements ICartService {
             Cart cart = existingCart.get();
             int newQuantity = cart.getQuantity() + request.getQuantity();
 
-            if (product.getStockQuantity() < newQuantity) {
-                throw new RuntimeException(
-                        "Insufficient stock. Available: " + product.getStockQuantity() + ", Requested: "
-                                + newQuantity);
-            }
-
             cart.setQuantity(newQuantity);
             return cartRepository.save(cart);
         } else {
@@ -111,30 +102,28 @@ public class CartService implements ICartService {
         }
     }
 
+    @Override
     @Transactional
     public Cart updateCartItem(Long cartId, Integer quantity) {
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart item not found with id: " + cartId));
+                .orElseThrow(() -> new ResourceNotFoundException("Cart item not found with id: " + cartId));
 
         Product product = cart.getProduct();
-
-        if (product.getStockQuantity() < quantity) {
-            throw new RuntimeException(
-                    "Insufficient stock. Available: " + product.getStockQuantity() + ", Requested: " + quantity);
-        }
 
         cart.setQuantity(quantity);
         return cartRepository.save(cart);
     }
 
+    @Override
     @Transactional
     public void removeFromCart(Long cartId) {
         if (!cartRepository.existsById(cartId)) {
-            throw new RuntimeException("Cart item not found with id: " + cartId);
+            throw new ResourceNotFoundException("Cart item not found with id: " + cartId);
         }
         cartRepository.deleteById(cartId);
     }
 
+    @Override
     @Transactional
     public void clearUserCart(Long userId) {
         cartRepository.deleteByUserId(userId);

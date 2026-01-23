@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.store.electro.Models.DTO.CartRequest;
-import com.store.electro.Models.DTO.CartResponse;
+import com.store.electro.Models.DTOs.Request.CartRequest;
+import com.store.electro.Models.DTOs.Response.CartResponse;
 import com.store.electro.Models.Entity.Cart;
 import com.store.electro.Services.CartService;
 import com.store.electro.Utils.ApiResponse;

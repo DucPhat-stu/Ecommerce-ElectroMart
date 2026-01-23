@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.store.electro.Models.DTO.ReviewRequest;
+import com.store.electro.Models.DTOs.Request.ReviewRequest;
 import com.store.electro.Models.Entity.Review;
 import com.store.electro.Services.ReviewService;
 import com.store.electro.Utils.ApiResponse;

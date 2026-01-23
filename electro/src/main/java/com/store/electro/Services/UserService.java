@@ -8,10 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.store.electro.Models.DTO.LoginRequest;
-import com.store.electro.Models.DTO.LoginResponse;
-import com.store.electro.Models.DTO.RegisterRequest;
-import com.store.electro.Models.DTO.UserRequest;
+import com.store.electro.Models.DTOs.Request.LoginRequest;
+import com.store.electro.Models.DTOs.Response.LoginResponse;
+import com.store.electro.Models.DTOs.Request.RegisterRequest;
+import com.store.electro.Models.DTOs.Request.UserRequest;
 import com.store.electro.Models.Entity.User;
 import com.store.electro.Repositories.UserRepository;
 import com.store.electro.Utils.JwtUtil;

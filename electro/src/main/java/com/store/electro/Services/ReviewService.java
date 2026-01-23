@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.store.electro.Models.DTO.ReviewRequest;
+import com.store.electro.Models.DTOs.Request.ReviewRequest;
 import com.store.electro.Models.Entity.Review;
 import com.store.electro.Repositories.ReviewRepository;
 
