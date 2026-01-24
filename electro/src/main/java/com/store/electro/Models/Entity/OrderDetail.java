@@ -38,7 +38,7 @@ public class OrderDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     @JsonBackReference
-    private Product product;
+    private ProductVariant product;
 
     // Product Name
     @Column(name = "product_name", nullable = false)
@@ -87,11 +87,11 @@ public class OrderDetail {
         this.order = order;
     }
 
-    public Product getProduct() {
+    public ProductVariant getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductVariant product) {
         this.product = product;
     }
 

@@ -14,19 +14,19 @@ import com.store.electro.Models.DTOs.Response.CartResponse;
 import com.store.electro.Models.DTOs.Response.CartResponse.CartItemDTO;
 import com.store.electro.Models.DTOs.Response.CartResponse.ProductInfo;
 import com.store.electro.Models.Entity.Cart;
-import com.store.electro.Models.Entity.Product;
+import com.store.electro.Models.Entity.ProductVariant;
 import com.store.electro.Repositories.CartRepository;
-import com.store.electro.Repositories.ProductRepository;
+import com.store.electro.Repositories.ProductVariantRepository;
 
 @Service
 public class CartService implements ICartService {
 
     private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
+    private final ProductVariantRepository productVariantRepository;
 
-    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
+    public CartService(CartRepository cartRepository, ProductVariantRepository productVariantRepository) {
         this.cartRepository = cartRepository;
-        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
     }
 
     @Override
@@ -35,18 +35,13 @@ public class CartService implements ICartService {
         List<Cart> cartItems = cartRepository.findByUserId(userId);
 
         List<CartItemDTO> items = cartItems.stream().map(cart -> {
-            Product product = cart.getProduct();
+            ProductVariant product = cart.getProduct();
 
             // Calculate final price
-            BigDecimal finalPrice = product.getPrice();
-            if (product.getDiscountPercent() != null && product.getDiscountPercent() > 0) {
-                BigDecimal discount = BigDecimal.valueOf(product.getDiscountPercent())
-                        .divide(BigDecimal.valueOf(100));
-                finalPrice = product.getPrice().multiply(BigDecimal.ONE.subtract(discount));
-            }
+            BigDecimal finalPrice = product.calculatePrice();
 
-            // Get primary image
-            String imageUrl = product.getProductImages().stream()
+            // Get primary image from the related product
+            String imageUrl = product.getProduct().getProductImages().stream()
                     .filter(img -> img.isIsPrimary())
                     .findFirst()
                     .map(img -> img.getImageUrl())
@@ -54,7 +49,7 @@ public class CartService implements ICartService {
 
             ProductInfo productInfo = new ProductInfo();
             productInfo.setId(product.getId());
-            productInfo.setName(product.getName());
+            productInfo.setName(product.getProduct().getName());
             productInfo.setPrice(product.getPrice());
             productInfo.setDiscountPercent(product.getDiscountPercent());
             productInfo.setFinalPrice(finalPrice);
@@ -79,10 +74,10 @@ public class CartService implements ICartService {
     @Override
     @Transactional
     public Cart addToCart(CartRequest request) {
-        // Validate product exists
-        Product product = productRepository.findById(request.getProductId())
+        // Validate product variant exists
+        ProductVariant productVariant = productVariantRepository.findById(request.getProductId())
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Product not found with id: " + request.getProductId()));
+                        () -> new ResourceNotFoundException("Product variant not found with id: " + request.getProductId()));
 
         // Check if product already in cart
         Optional<Cart> existingCart = cartRepository.findByUserIdAndProductId(request.getUserId(),
@@ -97,7 +92,7 @@ public class CartService implements ICartService {
             return cartRepository.save(cart);
         } else {
             // Create new cart item
-            Cart cart = new Cart(request.getUserId(), product, request.getQuantity());
+            Cart cart = new Cart(request.getUserId(), productVariant, request.getQuantity());
             return cartRepository.save(cart);
         }
     }
@@ -107,8 +102,6 @@ public class CartService implements ICartService {
     public Cart updateCartItem(Long cartId, Integer quantity) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart item not found with id: " + cartId));
-
-        Product product = cart.getProduct();
 
         cart.setQuantity(quantity);
         return cartRepository.save(cart);

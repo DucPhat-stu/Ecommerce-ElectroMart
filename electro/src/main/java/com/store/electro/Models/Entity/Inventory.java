@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -15,18 +16,18 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.Version;
 
-@JsonPropertyOrder({ "id", "totalQuantity", "reservedQuantity" })
+@JsonPropertyOrder({ "id", "productId", "totalQuantity", "reservedQuantity", "availableQuantity" })
 @Entity
 @Table(name = "inventories")
 public class Inventory {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_variant_id", nullable = false)
+    private ProductVariant productVariant;
 
     @Column(name = "total_quantity", nullable = false)
     private Integer totalQuantity;
@@ -77,13 +78,23 @@ public class Inventory {
         this.reservedQuantity = reservedQuantity;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductVariant getProductVariant() {
+        return productVariant;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductVariant(ProductVariant productVariant) {
+        this.productVariant = productVariant;
     }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    
 
     /*
      * toString Method
@@ -91,7 +102,7 @@ public class Inventory {
 
     @Override
     public String toString() {
-        return "Inventory [id=" + id + ", product=" + product + ", totalQuantity=" + totalQuantity
+        return "Inventory [id=" + id + ", productVariant=" + productVariant + ", totalQuantity=" + totalQuantity
                 + ", reservedQuantity=" + reservedQuantity + "]";
     }
 

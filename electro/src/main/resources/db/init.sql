@@ -31,24 +31,67 @@ CREATE TABLE IF NOT EXISTS categories (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
+-- BRANDS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS brands (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    logo_url VARCHAR(255),
+    category_id BIGINT NOT NULL,
+    INDEX (category_id),
+    CONSTRAINT fk_brands_category
+        FOREIGN KEY (category_id)
+        REFERENCES categories(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
 -- PRODUCTS TABLE
 -- ============================================
 CREATE TABLE IF NOT EXISTS products (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    discount_percent INT DEFAULT 0,
     short_description VARCHAR(512),
     description TEXT,
     status VARCHAR(50),
     created_at DATETIME,
     updated_at DATETIME,
     category_id BIGINT,
+    brand_id BIGINT,
     INDEX (category_id),
+    INDEX (brand_id),
     CONSTRAINT fk_products_category 
         FOREIGN KEY (category_id) 
         REFERENCES categories(id) 
         ON DELETE SET NULL 
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_products_brand
+        FOREIGN KEY (brand_id)
+        REFERENCES brands(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- PRODUCT VARIANTS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS product_variants (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT NOT NULL,
+    storage_size VARCHAR(50),
+    color VARCHAR(50),
+    price DECIMAL(10,2) NOT NULL,
+    discount_percent INT DEFAULT 0,
+    status VARCHAR(50) NOT NULL,
+    created_at DATETIME,
+    updated_at DATETIME,
+    version BIGINT DEFAULT 0,
+    INDEX (product_id),
+    CONSTRAINT fk_product_variants_product 
+        FOREIGN KEY (product_id) 
+        REFERENCES products(id) 
+        ON DELETE CASCADE 
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -61,7 +104,7 @@ CREATE TABLE IF NOT EXISTS inventories (
     reserved_quantity INT NOT NULL DEFAULT 0,
     CONSTRAINT fk_inventories_product 
         FOREIGN KEY (product_id) 
-        REFERENCES products(id) 
+        REFERENCES product_variants(id) 
         ON DELETE CASCADE 
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -113,7 +156,7 @@ CREATE TABLE IF NOT EXISTS cart (
     INDEX idx_cart_user (user_id),
     INDEX idx_cart_product (product_id),
     CONSTRAINT fk_cart_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_cart_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_cart_product FOREIGN KEY (product_id) REFERENCES product_variants(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -164,7 +207,7 @@ CREATE TABLE IF NOT EXISTS order_details (
     INDEX idx_order_details_order (order_id),
     INDEX idx_order_details_product (product_id),
     CONSTRAINT fk_order_details_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_order_details_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT fk_order_details_product FOREIGN KEY (product_id) REFERENCES product_variants(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS=1;

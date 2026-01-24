@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.store.electro.Exceptions.ResourceNotFoundException;
+import com.store.electro.Models.DTOs.Request.AddProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductUpdateRequest;
 import com.store.electro.Models.Entity.Category;
 import com.store.electro.Models.Entity.Product;
 import com.store.electro.Repositories.CategoryRepository;
 import com.store.electro.Repositories.ProductRepository;
-import com.store.electro.Models.DTOs.Request.AddProductRequest;
-import com.store.electro.Models.DTOs.Request.ProductUpdateRequest;
 
 @Service
 public class ProductService implements IProductService {
@@ -32,8 +32,6 @@ public class ProductService implements IProductService {
 
         Product product = new Product(
                 request.getName(),
-                request.getPrice(),
-                request.getDiscountPercent(),
                 request.getShortDescription(),
                 request.getDescription(),
                 request.getStatus(),
@@ -46,8 +44,6 @@ public class ProductService implements IProductService {
         return productRepository.findById(productId)
                 .map(existingProduct -> {
                     existingProduct.setName(request.getName());
-                    existingProduct.setPrice(request.getPrice());
-                    existingProduct.setDiscountPercent(request.getDiscountPercent());
                     existingProduct.setShortDescription(request.getShortDescription());
                     existingProduct.setDescription(request.getDescription());
                     Category category = categoryRepository.findById(request.getCategoryId())

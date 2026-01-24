@@ -1,7 +1,5 @@
 package com.store.electro.Models.Entity;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,8 +26,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
-@JsonPropertyOrder({ "id", "name", "price", "discountPercent", "finalPrice", "shortDescription", "description",
-        "status", "createdAt", "updatedAt", "categoryName", "productImages", "productDetails" })
+@JsonPropertyOrder({ "id", "name", "shortDescription", "description", "brandName",
+        "status", "createdAt", "updatedAt", "categoryName", "productImages", "productDetails", "productVariants" })
 @Entity
 @Table(name = "products")
 public class Product {
@@ -42,14 +40,6 @@ public class Product {
     // Product Name
     @Column(name = "name", nullable = false)
     private String name;
-
-    // Product Price
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
-    // Product Discount Percent
-    @Column(name = "discount_percent")
-    private Integer discountPercent = 0;
 
     // Product Short Description
     @Column(name = "short_description")
@@ -77,6 +67,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
     // Product Images
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -87,6 +81,11 @@ public class Product {
     @JsonManagedReference
     private Set<ProductDetail> productDetails = new HashSet<>();
 
+    // Product Variants Opitionals
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<ProductVariant> productVariants = new HashSet<>();
+
     /*
      * CONSTRUCTORS
      */
@@ -94,10 +93,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, BigDecimal price, Integer discountPercent, String shortDescription, String description, ProductStatus status, Category category) {
+    public Product(String name, String shortDescription, String description, ProductStatus status, Category category) {
         this.name = name;
-        this.price = price;
-        this.discountPercent = discountPercent;
         this.shortDescription = shortDescription;
         this.description = description;
         this.status = status;
@@ -122,22 +119,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getDiscountPercent() {
-        return discountPercent;
-    }
-
-    public void setDiscountPercent(Integer discountPercent) {
-        this.discountPercent = discountPercent;
     }
 
     public String getShortDescription() {
@@ -205,16 +186,32 @@ public class Product {
         this.productDetails = productDetails;
     }
 
+    public Set<ProductVariant> getProductVariants() {
+        return productVariants;
+    }
+
+    public void setProductVariants(Set<ProductVariant> productVariants) {
+        this.productVariants = productVariants;
+    }
+
+    @JsonIgnore
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     // Json Property
     @JsonProperty("categoryName")
     public String getCategoryName() {
         return category != null ? category.getName() : null;
     }
 
-    // GETTER for applying discount for finalPrice
-    @JsonProperty("finalPrice")
-    public BigDecimal getFinalPrice() {
-        return calculatePrice();
+    @JsonProperty("brandName")
+    public String getBrandName() {
+        return brand != null ? brand.getName() : null;
     }
 
     /*
@@ -226,7 +223,6 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
                 ", status=" + status +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
@@ -252,29 +248,6 @@ public class Product {
     // Check if the product is available for sale
     public boolean isAvailable() {
         return this.status == ProductStatus.ACTIVE;
-    }
-
-    // Check if the product has a discount
-    public boolean hasDiscount() {
-        return this.discountPercent != null && this.discountPercent > 0;
-    }
-
-    // Calculate the final price after applying discount
-    public BigDecimal calculatePrice() {
-        if (this.price == null || !isAvailable()) {
-            return BigDecimal.ZERO;
-        }
-
-        if (!hasDiscount()) {
-            return this.price;
-        }
-
-        BigDecimal discountPer = BigDecimal.valueOf(discountPercent);
-        BigDecimal hundred = BigDecimal.valueOf(100);
-
-        return price
-                .multiply(hundred.subtract(discountPer))
-                .divide(hundred, 2, RoundingMode.HALF_UP);
     }
 
 }

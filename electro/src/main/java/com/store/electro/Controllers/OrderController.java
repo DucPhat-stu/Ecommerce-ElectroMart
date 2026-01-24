@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.store.electro.Models.Entity.Order;
 import com.store.electro.Models.Entity.OrderDetail;
-import com.store.electro.Models.Entity.Product;
+import com.store.electro.Models.Entity.ProductVariant;
 import com.store.electro.Models.Entity.User;
 import com.store.electro.Repositories.OrderRepository;
-import com.store.electro.Repositories.ProductRepository;
+import com.store.electro.Repositories.ProductVariantRepository;
 import com.store.electro.Repositories.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -23,12 +23,12 @@ public class OrderController {
 
     private final OrderRepository orderRepo;
     private final UserRepository userRepo;
-    private final ProductRepository productRepo;
+    private final ProductVariantRepository productVariantRepo;
 
-    public OrderController(OrderRepository orderRepo, UserRepository userRepo, ProductRepository productRepo) {
+    public OrderController(OrderRepository orderRepo, UserRepository userRepo, ProductVariantRepository productVariantRepo) {
         this.orderRepo = orderRepo;
         this.userRepo = userRepo;
-        this.productRepo = productRepo;
+        this.productVariantRepo = productVariantRepo;
     }
 
     @GetMapping("/v1/orders/{id}")
@@ -45,10 +45,10 @@ public class OrderController {
         User user = userRepo.findById(1L)
                 .orElseThrow(() -> new EntityNotFoundException("Not found!"));
 
-        Product product1 = productRepo.findById(1L)
+        ProductVariant productVariant1 = productVariantRepo.findById(1L)
                 .orElseThrow(() -> new EntityNotFoundException("Not found!"));
 
-        Product product2 = productRepo.findById(2L)
+        ProductVariant productVariant2 = productVariantRepo.findById(2L)
                 .orElseThrow(() -> new EntityNotFoundException("Not found!"));
 
         order.setUser(user);
@@ -58,16 +58,16 @@ public class OrderController {
 
         OrderDetail d1 = new OrderDetail();
         d1.setOrder(order); // 🔥 FK
-        d1.setProduct(product1); // FK
-        d1.setProductName(product1.getName());
-        d1.setProductPrice(product1.getFinalPrice());
+        d1.setProduct(productVariant1); // FK
+        d1.setProductName(productVariant1.getProduct().getName());
+        d1.setProductPrice(productVariant1.getFinalPrice());
         d1.setQuantity(2);
 
         OrderDetail d2 = new OrderDetail();
         d2.setOrder(order);
-        d2.setProduct(product2);
-        d2.setProductName(product2.getName());
-        d2.setProductPrice(product2.getFinalPrice());
+        d2.setProduct(productVariant2);
+        d2.setProductName(productVariant2.getProduct().getName());
+        d2.setProductPrice(productVariant2.getFinalPrice());
         d2.setQuantity(1);
 
         order.getOrderDetails().add(d1);

@@ -41,7 +41,7 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     @JsonBackReference
-    private Product product;
+    private ProductVariant product;
 
     // Quantity
     @Column(name = "quantity", nullable = false)
@@ -58,7 +58,7 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Long userId, Product product, Integer quantity) {
+    public Cart(Long userId, ProductVariant product, Integer quantity) {
         if (userId != null) {
             User user = new User();
             user.setId(userId);
@@ -88,11 +88,11 @@ public class Cart {
         this.user = user;
     }
 
-    public Product getProduct() {
+    public ProductVariant getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductVariant product) {
         this.product = product;
     }
 
