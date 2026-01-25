@@ -19,11 +19,11 @@ INSERT INTO users (
     created_at
     ) 
 VALUES
-('Nguyễn Văn An', 'an.nguyen@example.com', 'password123', '0901234567', '123 Đường ABC, Quận 1, TP.HCM', '2024-01-10 10:00:00'),
-('Trần Thị Bình', 'binh.tran@example.com', 'password123', '0902345678', '456 Đường XYZ, Quận 2, TP.HCM', '2024-01-11 10:00:00'),
-('Lê Hoàng Cường', 'cuong.le@example.com', 'password123', '0903456789', '789 Đường DEF, Quận 3, TP.HCM', '2024-01-12 10:00:00'),
-('Phạm Minh Dũng', 'dung.pham@example.com', 'password123', '0904567890', '321 Đường GHI, Quận 4, TP.HCM', '2024-01-13 10:00:00'),
-('Võ Thị Hạnh', 'hanh.vo@example.com', 'password123', '0905678901', '654 Đường JKL, Quận 5, TP.HCM', '2024-01-14 10:00:00');
+('John Smith', 'john.smith@example.com', 'password123', '0901234567', '123 Main Street, District 1, Ho Chi Minh City', '2024-01-10 10:00:00'),
+('Sarah Johnson', 'sarah.johnson@example.com', 'password123', '0902345678', '456 Oak Avenue, District 2, Ho Chi Minh City', '2024-01-11 10:00:00'),
+('Michael Brown', 'michael.brown@example.com', 'password123', '0903456789', '789 Pine Road, District 3, Ho Chi Minh City', '2024-01-12 10:00:00'),
+('Emily Davis', 'emily.davis@example.com', 'password123', '0904567890', '321 Maple Lane, District 4, Ho Chi Minh City', '2024-01-13 10:00:00'),
+('Jessica Wilson', 'jessica.wilson@example.com', 'password123', '0905678901', '654 Cedar Street, District 5, Ho Chi Minh City', '2024-01-14 10:00:00');
 
 -- ============================================
 -- CATEGORIES DATA
@@ -135,102 +135,102 @@ INSERT INTO products (
 VALUES
 -- Smartphones (id 1-20)
 (1, 'Apple iPhone 15 Pro',
- '6.1" LTPO Super Retina XDR · A17 Pro · Titanium',
- 'iPhone 15 Pro features a titanium design, A17 Pro performance, ProRAW 48MP camera system, USB‑C, and an adaptive 1-120Hz display.',
+ '6.1" LTPO Super Retina XDR - A17 Pro - Titanium',
+ 'iPhone 15 Pro features a titanium design, A17 Pro performance, ProRAW 48MP camera system, USB-C, and an adaptive 1-120Hz display.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-01 10:00:00', 1, 1),
 
 (2, 'Apple iPhone 15',
- '6.1" Super Retina XDR · A16 Bionic · USB‑C',
- 'iPhone 15 brings Dynamic Island, a 48MP main camera, A16 Bionic performance, USB‑C, and strong all‑day battery life.',
+ '6.1" Super Retina XDR - A16 Bionic - USB-C',
+ 'iPhone 15 brings Dynamic Island, a 48MP main camera, A16 Bionic performance, USB-C, and strong all-day battery life.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-01 10:00:00', 1, 1),
 
 (3, 'Samsung Galaxy S24 Ultra',
- '6.8" QHD+ LTPO AMOLED · Snapdragon 8 Gen 3 · 200MP',
+ '6.8" QHD+ LTPO AMOLED - Snapdragon 8 Gen 3 - 200MP',
  'Galaxy S24 Ultra combines a titanium frame, 200MP camera, S Pen, and Galaxy AI features with flagship performance.',
  'ACTIVE', '2024-01-17 09:00:00', '2024-06-01 10:00:00', 1, 2),
 
 (4, 'Samsung Galaxy S24',
- '6.2" FHD+ AMOLED · Snapdragon 8 Gen 3/Exynos 2400',
+ '6.2" FHD+ AMOLED - Snapdragon 8 Gen 3/Exynos 2400',
  'Galaxy S24 delivers compact flagship power, a bright 120Hz display, versatile cameras, and Galaxy AI features.',
  'ACTIVE', '2024-01-17 09:00:00', '2024-06-01 10:00:00', 1, 2),
 
 (5, 'Google Pixel 8 Pro',
- '6.7" LTPO OLED · Tensor G3 · Pro AI camera',
+ '6.7" LTPO OLED - Tensor G3 - Pro AI camera',
  'Pixel 8 Pro adds advanced AI tools, a 120Hz LTPO display, pro camera controls, and long-term software support.',
  'ACTIVE', '2023-10-12 09:00:00', '2024-06-01 10:00:00', 1, 3),
 
 (6, 'Google Pixel 8',
- '6.2" OLED 120Hz · Tensor G3 · 50MP camera',
+ '6.2" OLED 120Hz - Tensor G3 - 50MP camera',
  'Pixel 8 combines Tensor G3 performance, a smooth 120Hz display, and excellent computational photography.',
  'ACTIVE', '2023-10-12 09:00:00', '2024-06-01 10:00:00', 1, 3),
 
 (7, 'OnePlus 12',
- '6.82" LTPO AMOLED · Snapdragon 8 Gen 3 · 100W',
+ '6.82" LTPO AMOLED - Snapdragon 8 Gen 3 - 100W',
  'OnePlus 12 offers a large bright display, strong battery life, fast charging, and Hasselblad-tuned cameras.',
  'ACTIVE', '2024-01-23 09:00:00', '2024-06-01 10:00:00', 1, 4),
 
 (8, 'Xiaomi 14',
- '6.36" LTPO AMOLED · Snapdragon 8 Gen 3 · Leica',
+ '6.36" LTPO AMOLED - Snapdragon 8 Gen 3 - Leica',
  'Xiaomi 14 pairs compact flagship hardware with Leica optics, fast charging, and HyperOS refinements.',
  'ACTIVE', '2023-10-26 09:00:00', '2024-06-01 10:00:00', 1, 5),
 
 (9, 'Sony Xperia 1 V',
- '6.5" 4K OLED 120Hz · Snapdragon 8 Gen 2',
+ '6.5" 4K OLED 120Hz - Snapdragon 8 Gen 2',
  'Xperia 1 V targets creators with a 4K 21:9 OLED display, pro photo/video apps, and manual controls.',
  'ACTIVE', '2023-05-11 09:00:00', '2024-06-01 10:00:00', 1, 6),
 
 (10, 'ASUS ROG Phone 8 Pro',
- '6.78" AMOLED 165Hz · Snapdragon 8 Gen 3 · Gaming',
+ '6.78" AMOLED 165Hz - Snapdragon 8 Gen 3 - Gaming',
  'ROG Phone 8 Pro focuses on gaming with a 165Hz display, advanced cooling, and a large battery.',
  'ACTIVE', '2024-01-08 09:00:00', '2024-06-01 10:00:00', 1, 7),
 
 (11, 'Apple iPhone 15 Pro Max',
- '6.7" LTPO Super Retina XDR · A17 Pro · 5x zoom',
- 'iPhone 15 Pro Max adds a 5x tetraprism camera, titanium build, USB‑C, and top-tier performance.',
+ '6.7" LTPO Super Retina XDR - A17 Pro - 5x zoom',
+ 'iPhone 15 Pro Max adds a 5x tetraprism camera, titanium build, USB-C, and top-tier performance.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-01 10:00:00', 1, 1),
 
 (12, 'Apple iPhone 14 Pro',
- '6.1" LTPO Super Retina XDR · A16 Bionic',
- 'iPhone 14 Pro introduced Dynamic Island, a 48MP main camera, and always‑on display.',
+ '6.1" LTPO Super Retina XDR - A16 Bionic',
+ 'iPhone 14 Pro introduced Dynamic Island, a 48MP main camera, and always-on display.',
  'ACTIVE', '2022-09-16 10:00:00', '2024-06-01 10:00:00', 1, 1),
 
 (13, 'Samsung Galaxy Z Fold5',
- '7.6" foldable AMOLED · Snapdragon 8 Gen 2 · S Pen',
+ '7.6" foldable AMOLED - Snapdragon 8 Gen 2 - S Pen',
  'Galaxy Z Fold5 offers a large foldable display, multitasking features, and flagship cameras.',
  'ACTIVE', '2023-08-11 10:00:00', '2024-06-01 10:00:00', 1, 2),
 
 (14, 'Samsung Galaxy Z Flip5',
- '6.7" foldable AMOLED · Snapdragon 8 Gen 2 · Flex',
+ '6.7" foldable AMOLED - Snapdragon 8 Gen 2 - Flex',
  'Galaxy Z Flip5 features a larger cover screen, compact foldable design, and versatile cameras.',
  'ACTIVE', '2023-08-11 10:00:00', '2024-06-01 10:00:00', 1, 2),
 
 (15, 'Samsung Galaxy S24+',
- '6.7" QHD+ AMOLED · Snapdragon 8 Gen 3/Exynos',
+ '6.7" QHD+ AMOLED - Snapdragon 8 Gen 3/Exynos',
  'Galaxy S24+ delivers a larger QHD+ display, strong battery life, and Galaxy AI features.',
  'ACTIVE', '2024-01-17 09:00:00', '2024-06-01 10:00:00', 1, 2),
 
 (16, 'Google Pixel 8a',
- '6.1" OLED 120Hz · Tensor G3 · 64MP camera',
+ '6.1" OLED 120Hz - Tensor G3 - 64MP camera',
  'Pixel 8a brings Pixel AI features and flagship-quality photography at a more accessible price.',
  'ACTIVE', '2024-05-14 09:00:00', '2024-06-01 10:00:00', 1, 3),
 
 (17, 'Xiaomi 14 Ultra',
- '6.73" LTPO AMOLED · Snapdragon 8 Gen 3 · Leica',
+ '6.73" LTPO AMOLED - Snapdragon 8 Gen 3 - Leica',
  'Xiaomi 14 Ultra delivers a 1-inch main sensor, pro zoom lenses, and fast wired charging.',
  'ACTIVE', '2024-02-22 09:00:00', '2024-06-01 10:00:00', 1, 5),
 
 (18, 'OnePlus 12R',
- '6.78" LTPO AMOLED · Snapdragon 8 Gen 2 · 5500mAh',
+ '6.78" LTPO AMOLED - Snapdragon 8 Gen 2 - 5500mAh',
  'OnePlus 12R focuses on value with a large LTPO display, strong performance, and long battery life.',
  'ACTIVE', '2024-02-06 09:00:00', '2024-06-01 10:00:00', 1, 4),
 
 (19, 'Nothing Phone (2)',
- '6.7" LTPO OLED · Snapdragon 8+ Gen 1 · Glyph',
+ '6.7" LTPO OLED - Snapdragon 8+ Gen 1 - Glyph',
  'Nothing Phone (2) combines the Glyph interface with clean software, a bright display, and solid cameras.',
  'ACTIVE', '2023-07-17 09:00:00', '2024-06-01 10:00:00', 1, 8),
 
 (20, 'Sony Xperia 5 V',
- '6.1" OLED 120Hz · Snapdragon 8 Gen 2 · 21:9',
+ '6.1" OLED 120Hz - Snapdragon 8 Gen 2 - 21:9',
  'Xperia 5 V offers a compact 21:9 OLED display, pro camera tools, and Sony imaging expertise.',
  'ACTIVE', '2023-09-01 09:00:00', '2024-06-01 10:00:00', 1, 6);
 
@@ -248,103 +248,103 @@ INSERT INTO products (
 )
 VALUES
 (21, 'Apple iPad Pro 11 (M4, 2024)',
- '11" Ultra Retina XDR OLED · Apple M4 · 120Hz',
- 'iPad Pro 11-inch (M4) delivers an Ultra Retina XDR OLED display, M4 performance, Apple Pencil Pro support, and Thunderbolt/USB‑C.',
+ '11" Ultra Retina XDR OLED - Apple M4 - 120Hz',
+ 'iPad Pro 11-inch (M4) delivers an Ultra Retina XDR OLED display, M4 performance, Apple Pencil Pro support, and Thunderbolt/USB-C.',
  'ACTIVE', '2024-05-15 10:00:00', '2024-06-01 10:00:00', 3, 9),
 
 (22, 'Apple iPad Pro 13 (M4, 2024)',
- '13" Ultra Retina XDR OLED · Apple M4 · 120Hz',
- 'iPad Pro 13-inch (M4) combines a large Ultra Retina XDR OLED screen with M4 power, pro apps, and Thunderbolt/USB‑C.',
+ '13" Ultra Retina XDR OLED - Apple M4 - 120Hz',
+ 'iPad Pro 13-inch (M4) combines a large Ultra Retina XDR OLED screen with M4 power, pro apps, and Thunderbolt/USB-C.',
  'ACTIVE', '2024-05-15 10:00:00', '2024-06-01 10:00:00', 3, 9),
 
 (23, 'Apple iPad Air 11 (M2, 2024)',
- '11" Liquid Retina · Apple M2 · USB‑C',
+ '11" Liquid Retina - Apple M2 - USB-C',
  'iPad Air 11-inch (M2) balances performance and portability with a Liquid Retina display, M2 chip, and Apple Pencil support.',
  'ACTIVE', '2024-05-15 10:00:00', '2024-06-01 10:00:00', 3, 9),
 
 (24, 'Apple iPad Air 13 (M2, 2024)',
- '13" Liquid Retina · Apple M2 · USB‑C',
+ '13" Liquid Retina - Apple M2 - USB-C',
  'iPad Air 13-inch (M2) offers a larger Liquid Retina display, M2 performance, and a slim lightweight design.',
  'ACTIVE', '2024-05-15 10:00:00', '2024-06-01 10:00:00', 3, 9),
 
 (25, 'Apple iPad (10th generation)',
- '10.9" Liquid Retina · A14 Bionic · USB‑C',
- 'iPad (10th gen) features a 10.9-inch Liquid Retina display, A14 Bionic, USB‑C, and a modern all‑screen design.',
+ '10.9" Liquid Retina - A14 Bionic - USB-C',
+ 'iPad (10th gen) features a 10.9-inch Liquid Retina display, A14 Bionic, USB-C, and a modern all-screen design.',
  'ACTIVE', '2022-10-26 10:00:00', '2024-06-01 10:00:00', 3, 9),
 
 (26, 'Apple iPad mini (6th generation)',
- '8.3" Liquid Retina · A15 Bionic · USB‑C',
+ '8.3" Liquid Retina - A15 Bionic - USB-C',
  'iPad mini (6th gen) packs A15 Bionic power into a compact 8.3-inch Liquid Retina design with Apple Pencil support.',
  'ACTIVE', '2021-09-24 10:00:00', '2024-06-01 10:00:00', 3, 9),
 
 (27, 'Samsung Galaxy Tab S9 Ultra',
- '14.6" AMOLED 120Hz · Snapdragon 8 Gen 2 · S Pen',
+ '14.6" AMOLED 120Hz - Snapdragon 8 Gen 2 - S Pen',
  'Galaxy Tab S9 Ultra delivers a massive AMOLED display, S Pen support, flagship performance, and premium audio.',
  'ACTIVE', '2023-08-11 10:00:00', '2024-06-01 10:00:00', 3, 10),
 
 (28, 'Samsung Galaxy Tab S9+',
- '12.4" AMOLED 120Hz · Snapdragon 8 Gen 2 · S Pen',
+ '12.4" AMOLED 120Hz - Snapdragon 8 Gen 2 - S Pen',
  'Galaxy Tab S9+ offers a vibrant 12.4-inch AMOLED display, S Pen, and powerful Snapdragon 8 Gen 2 performance.',
  'ACTIVE', '2023-08-11 10:00:00', '2024-06-01 10:00:00', 3, 10),
 
 (29, 'Samsung Galaxy Tab S9',
- '11" AMOLED 120Hz · Snapdragon 8 Gen 2 · S Pen',
+ '11" AMOLED 120Hz - Snapdragon 8 Gen 2 - S Pen',
  'Galaxy Tab S9 pairs a sharp AMOLED display with flagship Snapdragon performance and S Pen productivity.',
  'ACTIVE', '2023-08-11 10:00:00', '2024-06-01 10:00:00', 3, 10),
 
 (30, 'Samsung Galaxy Tab S9 FE',
- '10.9" LCD 90Hz · Exynos 1380 · S Pen',
+ '10.9" LCD 90Hz - Exynos 1380 - S Pen',
  'Galaxy Tab S9 FE provides a smooth 90Hz display, S Pen support, and great battery life for everyday use.',
  'ACTIVE', '2023-10-20 10:00:00', '2024-06-01 10:00:00', 3, 10),
 
 (31, 'Samsung Galaxy Tab S9 FE+',
- '12.4" LCD 90Hz · Exynos 1380 · S Pen',
- 'Galaxy Tab S9 FE+ adds a larger 12.4-inch display with S Pen support and solid all‑day battery life.',
+ '12.4" LCD 90Hz - Exynos 1380 - S Pen',
+ 'Galaxy Tab S9 FE+ adds a larger 12.4-inch display with S Pen support and solid all-day battery life.',
  'ACTIVE', '2023-10-20 10:00:00', '2024-06-01 10:00:00', 3, 10),
 
 (32, 'Microsoft Surface Pro 11',
- '13" OLED 120Hz · Snapdragon X Elite · 2‑in‑1',
- 'Surface Pro 11 is a premium 2‑in‑1 with a 120Hz OLED display, Snapdragon X performance, and all‑day mobility.',
+ '13" OLED 120Hz - Snapdragon X Elite - 2-in-1',
+ 'Surface Pro 11 is a premium 2-in-1 with a 120Hz OLED display, Snapdragon X performance, and all-day mobility.',
  'ACTIVE', '2024-06-18 10:00:00', '2024-06-18 10:00:00', 3, 11),
 
 (33, 'Microsoft Surface Go 4',
- '10.5" PixelSense · Intel N200 · 2‑in‑1',
- 'Surface Go 4 delivers a compact 2‑in‑1 form factor with a crisp PixelSense display and improved performance.',
+ '10.5" PixelSense - Intel N200 - 2-in-1',
+ 'Surface Go 4 delivers a compact 2-in-1 form factor with a crisp PixelSense display and improved performance.',
  'ACTIVE', '2023-10-03 10:00:00', '2024-06-01 10:00:00', 3, 11),
 
 (34, 'Lenovo Tab P12',
- '12.7" 3K LCD · Dimensity 7050 · Pen support',
+ '12.7" 3K LCD - Dimensity 7050 - Pen support',
  'Tab P12 features a large 3K display, quad speakers, and optional pen support for media and productivity.',
  'ACTIVE', '2023-08-01 10:00:00', '2024-06-01 10:00:00', 3, 12),
 
 (35, 'Lenovo Tab P11 Pro (2nd Gen)',
- '11.2" OLED 120Hz · Kompanio 1300T',
+ '11.2" OLED 120Hz - Kompanio 1300T',
  'Tab P11 Pro (2nd Gen) offers a vivid OLED screen, premium audio, and smooth performance for entertainment.',
  'ACTIVE', '2022-09-01 10:00:00', '2024-06-01 10:00:00', 3, 12),
 
 (36, 'Xiaomi Pad 6',
- '11" 144Hz · Snapdragon 870 · Quad speakers',
+ '11" 144Hz - Snapdragon 870 - Quad speakers',
  'Xiaomi Pad 6 combines a 144Hz display with Snapdragon 870 performance and quad speakers for immersive media.',
  'ACTIVE', '2023-04-18 10:00:00', '2024-06-01 10:00:00', 3, 13),
 
 (37, 'OnePlus Pad',
- '11.61" 144Hz · Dimensity 9000 · Quad speakers',
+ '11.61" 144Hz - Dimensity 9000 - Quad speakers',
  'OnePlus Pad delivers a smooth 144Hz display, Dimensity 9000 power, and a slim aluminum design.',
  'ACTIVE', '2023-04-28 10:00:00', '2024-06-01 10:00:00', 3, 14),
 
 (38, 'Huawei MatePad Pro 13.2',
- '13.2" OLED 144Hz · Kirin 9000S',
+ '13.2" OLED 144Hz - Kirin 9000S',
  'MatePad Pro 13.2 offers a large OLED display, premium build, and strong productivity features.',
  'ACTIVE', '2023-12-12 10:00:00', '2024-06-01 10:00:00', 3, 15),
 
 (39, 'Amazon Fire Max 11',
- '11" 2K LCD · MT8188J · Alexa',
+ '11" 2K LCD - MT8188J - Alexa',
  'Fire Max 11 provides a large 2K display, Alexa integration, and solid battery life for entertainment.',
  'ACTIVE', '2023-06-14 10:00:00', '2024-06-01 10:00:00', 3, 16),
 
 (40, 'Google Pixel Tablet',
- '10.95" LCD · Tensor G2 · Charging speaker dock',
- 'Pixel Tablet combines a bright display with Tensor G2 power and a speaker dock for smart‑home use.',
+ '10.95" LCD - Tensor G2 - Charging speaker dock',
+ 'Pixel Tablet combines a bright display with Tensor G2 power and a speaker dock for smart-home use.',
  'ACTIVE', '2023-06-20 10:00:00', '2024-06-01 10:00:00', 3, 17);
 
 -- Laptops (id 41-60)
@@ -361,102 +361,102 @@ INSERT INTO products (
 )
 VALUES
 (41, 'Apple MacBook Pro 14 (M3 Pro, 2023)',
- '14.2" Liquid Retina XDR · M3 Pro · 120Hz ProMotion',
+ '14.2" Liquid Retina XDR - M3 Pro - 120Hz ProMotion',
  'MacBook Pro 14 with M3 Pro delivers pro-class CPU/GPU performance, Liquid Retina XDR display, long battery life, and a wide port selection including HDMI and SDXC.',
  'ACTIVE', '2023-10-30 09:00:00', '2024-06-10 10:00:00', 2, 18),
 
 (42, 'Apple MacBook Air 15 (M3, 2024)',
- '15.3" Liquid Retina · M3 · Fanless design',
+ '15.3" Liquid Retina � -  M3 � -  Fanless design',
  'MacBook Air 15 with M3 offers a large, color-accurate display, silent fanless operation, all-day battery life, and a thin-and-light aluminum chassis.',
  'ACTIVE', '2024-03-08 09:00:00', '2024-06-05 10:00:00', 2, 18),
 
 (43, 'Dell XPS 14 (9440, 2024)',
- '14.5" 3.2K OLED · Core Ultra · Premium build',
+ '14.5" 3.2K OLED - Core Ultra - Premium build',
  'XPS 14 pairs Intel Core Ultra with a vivid OLED display, premium CNC aluminum chassis, and a clean minimal design for creators and professionals.',
  'ACTIVE', '2024-02-15 09:00:00', '2024-06-01 10:00:00', 2, 19),
 
 (44, 'Dell XPS 13 (9340, 2024)',
- '13.4" FHD+/OLED · Core Ultra · Ultra-portable',
+ '13.4" FHD+/OLED � -  Core Ultra � -  Ultra-portable',
  'XPS 13 delivers ultra-portability with Intel Core Ultra performance, long battery life, and a compact chassis with a high-quality display.',
  'ACTIVE', '2024-02-10 09:00:00', '2024-05-20 10:00:00', 2, 19),
 
 (45, 'HP Spectre x360 14 (2024)',
- '14" 2.8K OLED · Core Ultra · 2-in-1',
+ '14" 2.8K OLED � -  Core Ultra � -  2-in-1',
  'Spectre x360 14 is a premium convertible with OLED display, strong speakers, pen support, and flexible 360° hinge for tablet mode.',
  'ACTIVE', '2024-01-20 09:00:00', '2024-05-25 10:00:00', 2, 20),
 
 (46, 'Lenovo ThinkPad X1 Carbon Gen 12 (2024)',
- '14" 2.8K OLED · Core Ultra · Carbon-fiber chassis',
+ '14" 2.8K OLED � -  Core Ultra � -  Carbon-fiber chassis',
  'ThinkPad X1 Carbon Gen 12 is a business flagship with robust security, legendary keyboard, lightweight carbon-fiber build, and Intel Core Ultra efficiency.',
  'ACTIVE', '2024-02-01 09:00:00', '2024-05-30 10:00:00', 2, 21),
 
 (47, 'Lenovo ThinkPad X1 Yoga Gen 9 (2024)',
- '14" 2.8K OLED · Core Ultra · 2-in-1 business',
+ '14" 2.8K OLED � -  Core Ultra � -  2-in-1 business',
  'ThinkPad X1 Yoga Gen 9 combines a premium convertible design, pen support, enterprise security, and strong performance for professionals.',
  'ACTIVE', '2024-02-05 09:00:00', '2024-05-30 10:00:00', 2, 21),
 
 (48, 'ASUS ROG Zephyrus G14 (2024)',
- '14" QHD+ 120Hz · Ryzen 9 · RTX graphics',
+ '14" QHD+ 120Hz - Ryzen 9 - RTX graphics',
  'ROG Zephyrus G14 balances powerful gaming performance with a compact chassis, efficient thermals, and a high-refresh display.',
  'ACTIVE', '2024-03-01 09:00:00', '2024-06-15 10:00:00', 2, 22),
 
 (49, 'ASUS ROG Zephyrus G16 (2024)',
- '16" OLED 240Hz · Core Ultra · RTX graphics',
+ '16" OLED 240Hz - Core Ultra - RTX graphics',
  'ROG Zephyrus G16 delivers a stunning OLED display, strong gaming/creator performance, and a sleek aluminum design.',
  'ACTIVE', '2024-03-01 09:00:00', '2024-06-15 10:00:00', 2, 22),
 
 (50, 'Acer Swift X 14 (2024)',
- '14.5" 2.8K OLED · Core Ultra · RTX 4050',
+ '14.5" 2.8K OLED - Core Ultra - RTX 4050',
  'Swift X 14 targets creators with a color-accurate OLED screen, discrete RTX graphics, and a portable chassis.',
  'ACTIVE', '2024-02-20 09:00:00', '2024-05-10 10:00:00', 2, 23),
 
 (51, 'Acer Swift Go 14 (2024)',
- '14" 2.8K OLED · Core Ultra · Lightweight',
+ '14" 2.8K OLED - Core Ultra - Lightweight',
  'Swift Go 14 offers a thin-and-light design with a sharp OLED display, modern ports, and solid battery life.',
  'ACTIVE', '2024-02-18 09:00:00', '2024-05-08 10:00:00', 2, 23),
 
 (52, 'Microsoft Surface Laptop 6 (2024)',
- '13.5"/15" PixelSense · Core Ultra · Business',
+ '13.5"/15" PixelSense - Core Ultra - Business',
  'Surface Laptop 6 for Business features a refined aluminum chassis, excellent keyboard, and Intel Core Ultra efficiency with enterprise security.',
  'ACTIVE', '2024-04-01 09:00:00', '2024-06-12 10:00:00', 2, 24),
 
 (53, 'Microsoft Surface Laptop Studio 2 (2023)',
- '14.4" 120Hz PixelSense · H-series · RTX',
+ '14.4" 120Hz PixelSense � -  H-series � -  RTX',
  'Surface Laptop Studio 2 combines a unique pull-forward display, powerful H-series CPU and RTX graphics for creative workflows.',
  'ACTIVE', '2023-10-03 09:00:00', '2024-05-20 10:00:00', 2, 24),
 
 (54, 'Razer Blade 16 (2024)',
- '16" QHD+ Mini-LED 240Hz · i9 · RTX 4080/4090',
+ '16" QHD+ Mini-LED 240Hz - i9 - RTX 4080/4090',
  'Razer Blade 16 delivers high-end gaming performance in a premium CNC aluminum chassis with a fast Mini-LED display.',
  'ACTIVE', '2024-01-15 09:00:00', '2024-05-18 10:00:00', 2, 25),
 
 (55, 'Razer Blade 14 (2024)',
- '14" QHD+ 240Hz · Ryzen 9 · RTX 4070',
+ '14" QHD+ 240Hz - Ryzen 9 - RTX 4070',
  'Razer Blade 14 pairs strong gaming performance with a compact and portable metal chassis.',
  'ACTIVE', '2024-01-15 09:00:00', '2024-05-18 10:00:00', 2, 25),
 
 (56, 'MSI Stealth 16 Studio (2024)',
- '16" QHD+ 240Hz · Core i9 · RTX Studio',
+ '16" QHD+ 240Hz - Core i9 - RTX Studio',
  'Stealth 16 Studio blends creator-grade performance with a sleek chassis, high-refresh display, and strong connectivity.',
  'ACTIVE', '2024-02-08 09:00:00', '2024-05-22 10:00:00', 2, 26),
 
 (57, 'MSI Raider GE78 HX (2024)',
- '17" QHD+ 240Hz · Core i9 HX · RTX 4090',
+ '17" QHD+ 240Hz - Core i9 HX - RTX 4090',
  'Raider GE78 HX is a desktop-replacement gaming powerhouse with high-wattage GPU and extensive cooling.',
  'ACTIVE', '2024-02-08 09:00:00', '2024-05-22 10:00:00', 2, 26),
 
 (58, 'Gigabyte AORUS 16X (2024)',
- '16" QHD+ 165Hz · Core i7/Ultra · RTX 4070',
+ '16" QHD+ 165Hz - Core i7/Ultra - RTX 4070',
  'AORUS 16X offers a balanced gaming setup with a high-refresh display, strong thermals, and fast storage.',
  'ACTIVE', '2024-02-12 09:00:00', '2024-05-12 10:00:00', 2, 27),
 
 (59, 'Samsung Galaxy Book4 Pro 14 (2024)',
- '14" 3K AMOLED · Core Ultra · Ultra-light',
+ '14" 3K AMOLED � -  Core Ultra � -  Ultra-light',
  'Galaxy Book4 Pro 14 features a vibrant AMOLED display, long battery life, and a lightweight magnesium chassis.',
  'ACTIVE', '2024-02-26 09:00:00', '2024-05-15 10:00:00', 2, 28),
 
 (60, 'LG Gram 16 (2024)',
- '16" WQXGA · Core Ultra · 1.2kg class',
+ '16" WQXGA - Core Ultra - 1.2kg class',
  'LG Gram 16 prioritizes portability with a large, sharp display, long battery life, and ultralight design.',
  'ACTIVE', '2024-02-25 09:00:00', '2024-05-15 10:00:00', 2, 29);
 
@@ -474,103 +474,103 @@ INSERT INTO products (
 )
 VALUES
 (61, 'Sony WH-1000XM5',
- 'Over‑ear ANC · 30mm drivers · 30h battery',
- 'WH‑1000XM5 delivers top-tier active noise cancellation, warm balanced tuning, and long battery life with multipoint Bluetooth.',
+ 'Over-ear ANC � -  30mm drivers � -  30h battery',
+ 'WH-1000XM5 delivers top-tier active noise cancellation, warm balanced tuning, and long battery life with multipoint Bluetooth.',
  'ACTIVE', '2023-05-15 09:00:00', '2024-06-01 10:00:00', 4, 30),
 
 (62, 'Bose QuietComfort Ultra Headphones',
- 'Over‑ear ANC · Immersive Audio · 24h battery',
- 'QuietComfort Ultra Headphones offer powerful noise cancellation, spacious sound, and soft all‑day comfort.',
+ 'Over-ear ANC � -  Immersive Audio � -  24h battery',
+ 'QuietComfort Ultra Headphones offer powerful noise cancellation, spacious sound, and soft all-day comfort.',
  'ACTIVE', '2023-10-05 09:00:00', '2024-06-01 10:00:00', 4, 31),
 
-(63, 'Apple AirPods Pro (2nd gen, USB‑C)',
- 'In‑ear ANC · Adaptive Audio · MagSafe',
- 'AirPods Pro (2nd gen) with USB‑C provide strong ANC, Adaptive Transparency, spatial audio, and seamless Apple device pairing.',
+(63, 'Apple AirPods Pro (2nd gen, USB-C)',
+ 'In-ear ANC � -  Adaptive Audio � -  MagSafe',
+ 'AirPods Pro (2nd gen) with USB-C provide strong ANC, Adaptive Transparency, spatial audio, and seamless Apple device pairing.',
  'ACTIVE', '2023-09-22 09:00:00', '2024-06-01 10:00:00', 4, 32),
 
 (64, 'Sennheiser MOMENTUM 4 Wireless',
- 'Over‑ear ANC · 60h battery · aptX Adaptive',
+ 'Over-ear ANC � -  60h battery � -  aptX Adaptive',
  'Momentum 4 Wireless combines long battery life with punchy, detailed sound and adaptive noise cancellation.',
  'ACTIVE', '2022-08-23 09:00:00', '2024-06-01 10:00:00', 4, 33),
 
 (65, 'Bowers & Wilkins Px7 S2e',
- 'Over‑ear ANC · 40mm drivers · 30h battery',
- 'Px7 S2e delivers refined tuning, premium materials, and strong ANC for high‑end wireless listening.',
+ 'Over-ear ANC � -  40mm drivers � -  30h battery',
+ 'Px7 S2e delivers refined tuning, premium materials, and strong ANC for high-end wireless listening.',
  'ACTIVE', '2023-10-04 09:00:00', '2024-06-01 10:00:00', 4, 34),
 
 (66, 'Bose QuietComfort Ultra Earbuds',
- 'True wireless ANC · Immersive Audio · USB‑C',
- 'QC Ultra Earbuds feature class‑leading noise cancellation, immersive audio, and a compact charging case.',
+ 'True wireless ANC � -  Immersive Audio � -  USB-C',
+ 'QC Ultra Earbuds feature class-leading noise cancellation, immersive audio, and a compact charging case.',
  'ACTIVE', '2023-10-05 09:00:00', '2024-06-01 10:00:00', 4, 31),
 
 (67, 'Sony WF-1000XM5',
- 'True wireless ANC · LDAC · 8h battery',
- 'WF‑1000XM5 offers flagship ANC, rich sound with LDAC, and improved comfort in a smaller shell.',
+ 'True wireless ANC � -  LDAC � -  8h battery',
+ 'WF-1000XM5 offers flagship ANC, rich sound with LDAC, and improved comfort in a smaller shell.',
  'ACTIVE', '2023-07-24 09:00:00', '2024-06-01 10:00:00', 4, 30),
 
 (68, 'Apple AirPods Max',
- 'Over‑ear ANC · Spatial Audio · Aluminum build',
+ 'Over-ear ANC � -  Spatial Audio � -  Aluminum build',
  'AirPods Max delivers premium build quality, strong ANC, and spatial audio with dynamic head tracking.',
  'ACTIVE', '2020-12-15 09:00:00', '2024-06-01 10:00:00', 4, 32),
 
 (69, 'Beats Studio Pro',
- 'Over‑ear ANC · USB‑C lossless · 40h battery',
- 'Beats Studio Pro adds USB‑C lossless audio, improved ANC, and long battery life in a lightweight design.',
+ 'Over-ear ANC � -  USB-C lossless � -  40h battery',
+ 'Beats Studio Pro adds USB-C lossless audio, improved ANC, and long battery life in a lightweight design.',
  'ACTIVE', '2023-07-19 09:00:00', '2024-06-01 10:00:00', 4, 35),
 
 (70, 'Soundcore Liberty 4 NC',
- 'True wireless ANC · Hi‑Res Audio · 10h battery',
+ 'True wireless ANC � -  Hi-Res Audio � -  10h battery',
  'Liberty 4 NC offers strong ANC, solid sound, and long battery life at a competitive price.',
  'ACTIVE', '2023-06-29 09:00:00', '2024-06-01 10:00:00', 4, 36),
 
 (71, 'Jabra Elite 10',
- 'True wireless ANC · Dolby Atmos · 8h battery',
- 'Elite 10 features all‑day comfort, Dolby Atmos with head tracking, and improved call quality.',
+ 'True wireless ANC � -  Dolby Atmos � -  8h battery',
+ 'Elite 10 features all-day comfort, Dolby Atmos with head tracking, and improved call quality.',
  'ACTIVE', '2023-09-01 09:00:00', '2024-06-01 10:00:00', 4, 37),
 
 (72, 'Samsung Galaxy Buds2 Pro',
- 'True wireless ANC · 24‑bit audio · IPX7',
- 'Galaxy Buds2 Pro provides strong ANC, 24‑bit audio on compatible Galaxy devices, and a compact fit.',
+ 'True wireless ANC � -  24-bit audio � -  IPX7',
+ 'Galaxy Buds2 Pro provides strong ANC, 24-bit audio on compatible Galaxy devices, and a compact fit.',
  'ACTIVE', '2022-08-26 09:00:00', '2024-06-01 10:00:00', 4, 38),
 
 (73, 'Google Pixel Buds Pro',
- 'True wireless ANC · Multipoint · 11h battery',
+ 'True wireless ANC � -  Multipoint � -  11h battery',
  'Pixel Buds Pro offers great noise cancellation, multipoint Bluetooth, and tight Google Assistant integration.',
  'ACTIVE', '2022-07-21 09:00:00', '2024-06-01 10:00:00', 4, 39),
 
 (74, 'Nothing Ear (2024)',
- 'True wireless ANC · Hi‑Res Audio · 8.5h battery',
+ 'True wireless ANC � -  Hi-Res Audio � -  8.5h battery',
  'Nothing Ear (2024) delivers clear sound with LDAC, customizable EQ, and a transparent design.',
  'ACTIVE', '2024-04-18 09:00:00', '2024-06-01 10:00:00', 4, 40),
 
 (75, 'JBL Tour One M2',
- 'Over‑ear ANC · 50h battery · Spatial Audio',
+ 'Over-ear ANC � -  50h battery � -  Spatial Audio',
  'Tour One M2 combines strong ANC, deep bass, and very long battery life for travel.',
  'ACTIVE', '2023-01-05 09:00:00', '2024-06-01 10:00:00', 4, 41),
 
 (76, 'Shure AONIC 50 Gen 2',
- 'Over‑ear ANC · Hi‑Res Audio · 45h battery',
- 'AONIC 50 Gen 2 delivers studio‑grade tuning with powerful ANC and robust codec support.',
+ 'Over-ear ANC � -  Hi-Res Audio � -  45h battery',
+ 'AONIC 50 Gen 2 delivers studio-grade tuning with powerful ANC and robust codec support.',
  'ACTIVE', '2023-11-15 09:00:00', '2024-06-01 10:00:00', 4, 42),
 
 (77, 'Sonos Ace',
- 'Over‑ear ANC · Spatial Audio · 30h battery',
+ 'Over-ear ANC � -  Spatial Audio � -  30h battery',
  'Sonos Ace offers cinematic spatial audio, excellent ANC, and seamless integration with Sonos systems.',
  'ACTIVE', '2024-06-05 09:00:00', '2024-06-15 10:00:00', 4, 43),
 
 (78, 'Technics EAH-AZ80',
- 'True wireless ANC · Hi‑Res Audio · 7h battery',
- 'EAH‑AZ80 delivers rich sound with LDAC and excellent call quality with multipoint connectivity.',
+ 'True wireless ANC � -  Hi-Res Audio � -  7h battery',
+ 'EAH-AZ80 delivers rich sound with LDAC and excellent call quality with multipoint connectivity.',
  'ACTIVE', '2023-06-15 09:00:00', '2024-06-01 10:00:00', 4, 44),
 
 (79, 'Bose SoundLink Flex',
- 'Portable Bluetooth speaker · IP67 · 12h battery',
+ 'Portable Bluetooth speaker � -  IP67 � -  12h battery',
  'SoundLink Flex is a rugged portable speaker with balanced sound, strong bass, and IP67 durability.',
  'ACTIVE', '2022-05-12 09:00:00', '2024-06-01 10:00:00', 4, 31),
 
 (80, 'Marshall Motif II ANC',
- 'True wireless ANC · 30h total battery · IPX5',
- 'Motif II ANC combines signature Marshall tuning with ANC and a compact case for all‑day listening.',
+ 'True wireless ANC � -  30h total battery � -  IPX5',
+ 'Motif II ANC combines signature Marshall tuning with ANC and a compact case for all-day listening.',
  'ACTIVE', '2023-09-12 09:00:00', '2024-06-01 10:00:00', 4, 45);
 
 -- Wearables (id 81-100)
@@ -587,102 +587,102 @@ INSERT INTO products (
 )
 VALUES
 (81, 'Apple Watch Series 9',
- '41/45mm OLED · S9 SiP · Double Tap',
- 'Apple Watch Series 9 adds the S9 SiP, a brighter 2000‑nit display, on‑device Siri, and Double Tap gestures with carbon‑neutral case options.',
+ '41/45mm OLED � -  S9 SiP � -  Double Tap',
+ 'Apple Watch Series 9 adds the S9 SiP, a brighter 2000-nit display, on-device Siri, and Double Tap gestures with carbon-neutral case options.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-20 10:00:00', 5, 46),
 
 (82, 'Apple Watch Ultra 2',
- '49mm titanium · S9 SiP · 100m water',
- 'Apple Watch Ultra 2 delivers a rugged titanium build, 3000‑nit display, precision dual‑frequency GPS, and up to 36‑hour battery life.',
+ '49mm titanium � -  S9 SiP � -  100m water',
+ 'Apple Watch Ultra 2 delivers a rugged titanium build, 3000-nit display, precision dual-frequency GPS, and up to 36-hour battery life.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-20 10:00:00', 5, 46),
 
 (83, 'Samsung Galaxy Watch6',
- '40/44mm Super AMOLED · Wear OS',
+ '40/44mm Super AMOLED � -  Wear OS',
  'Galaxy Watch6 brings a larger display, improved health tracking, advanced sleep coaching, and Wear OS apps in a slimmer design.',
  'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 5, 47),
 
 (84, 'Samsung Galaxy Watch6 Classic',
- '43/47mm Super AMOLED · Rotating bezel',
+ '43/47mm Super AMOLED � -  Rotating bezel',
  'Watch6 Classic combines stainless steel, a rotating bezel, and enhanced health sensors with the Wear OS ecosystem.',
  'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 5, 47),
 
 (85, 'Google Pixel Watch 2',
- '41mm AMOLED · Snapdragon W5 · Fitbit',
- 'Pixel Watch 2 integrates Fitbit health features, improved sensors, and all‑day battery life with Wear OS performance.',
+ '41mm AMOLED � -  Snapdragon W5 � -  Fitbit',
+ 'Pixel Watch 2 integrates Fitbit health features, improved sensors, and all-day battery life with Wear OS performance.',
  'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 5, 48),
 
 (86, 'Garmin fēnix 7 Pro',
- '47/51mm MIP · Multi‑band GPS · Solar',
- 'fēnix 7 Pro adds a brighter flashlight, upgraded heart‑rate sensor, and exceptional battery life for outdoor training.',
+ '47/51mm MIP � -  Multi-band GPS � -  Solar',
+ 'fēnix 7 Pro adds a brighter flashlight, upgraded heart-rate sensor, and exceptional battery life for outdoor training.',
  'ACTIVE', '2023-05-31 09:00:00', '2024-06-20 10:00:00', 5, 49),
 
 (87, 'Garmin Forerunner 965',
- '47mm AMOLED · Multi‑band GPS',
+ '47mm AMOLED � -  Multi-band GPS',
  'Forerunner 965 offers an AMOLED display, training readiness, and advanced running metrics with long battery life.',
  'ACTIVE', '2023-03-01 09:00:00', '2024-06-20 10:00:00', 5, 49),
 
 (88, 'Garmin Venu 3',
- '45/41mm AMOLED · Health & sleep',
+ '45/41mm AMOLED � -  Health & sleep',
  'Venu 3 focuses on health metrics, sleep coaching, and voice calling in a modern AMOLED smartwatch.',
  'ACTIVE', '2023-08-31 09:00:00', '2024-06-20 10:00:00', 5, 49),
 
 (89, 'Fitbit Sense 2',
- 'EDA stress sensor · ECG · AMOLED',
+ 'EDA stress sensor � -  ECG � -  AMOLED',
  'Sense 2 delivers stress management with cEDA, ECG app support, and comprehensive health insights.',
  'ACTIVE', '2022-09-23 09:00:00', '2024-06-20 10:00:00', 5, 50),
 
 (90, 'Fitbit Charge 6',
- 'AMOLED band · Built‑in GPS',
- 'Charge 6 adds improved heart‑rate accuracy, Google apps, and built‑in GPS in a slim fitness tracker.',
+ 'AMOLED band � -  Built-in GPS',
+ 'Charge 6 adds improved heart-rate accuracy, Google apps, and built-in GPS in a slim fitness tracker.',
  'ACTIVE', '2023-09-28 09:00:00', '2024-06-20 10:00:00', 5, 50),
 
 (91, 'Oura Ring Gen 3',
- 'Smart ring · Sleep & readiness',
+ 'Smart ring � -  Sleep & readiness',
  'Oura Ring Gen 3 tracks sleep, readiness, and recovery with a lightweight titanium ring and accurate sensors.',
  'ACTIVE', '2022-10-26 09:00:00', '2024-06-20 10:00:00', 5, 51),
 
 (92, 'Xiaomi Watch 2 Pro',
- '46mm AMOLED · Wear OS · LTE',
- 'Watch 2 Pro combines Wear OS, LTE option, and dual‑band GNSS in a premium design.',
+ '46mm AMOLED � -  Wear OS � -  LTE',
+ 'Watch 2 Pro combines Wear OS, LTE option, and dual-band GNSS in a premium design.',
  'ACTIVE', '2023-10-26 09:00:00', '2024-06-20 10:00:00', 5, 52),
 
 (93, 'Huawei Watch GT 4',
- '41/46mm AMOLED · 2‑week battery',
+ '41/46mm AMOLED � -  2-week battery',
  'Watch GT 4 offers long battery life, accurate GNSS, and health tracking in a stylish body.',
  'ACTIVE', '2023-09-14 09:00:00', '2024-06-20 10:00:00', 5, 53),
 
 (94, 'Amazfit Balance',
- '46mm AMOLED · 14‑day battery',
- 'Amazfit Balance provides dual‑band GPS, body composition metrics, and long battery life.',
+ '46mm AMOLED � -  14-day battery',
+ 'Amazfit Balance provides dual-band GPS, body composition metrics, and long battery life.',
  'ACTIVE', '2023-09-20 09:00:00', '2024-06-20 10:00:00', 5, 54),
 
 (95, 'Suunto Vertical',
- 'Rugged GPS · Solar options · Offline maps',
- 'Suunto Vertical targets outdoor athletes with offline maps, solar charging options, and multi‑band GNSS.',
+ 'Rugged GPS � -  Solar options � -  Offline maps',
+ 'Suunto Vertical targets outdoor athletes with offline maps, solar charging options, and multi-band GNSS.',
  'ACTIVE', '2023-05-16 09:00:00', '2024-06-20 10:00:00', 5, 55),
 
 (96, 'Polar Vantage V3',
- '47mm AMOLED · Dual‑frequency GPS',
+ '47mm AMOLED � -  Dual-frequency GPS',
  'Vantage V3 includes AMOLED display, ECG/SpO2, and advanced training tools for endurance athletes.',
  'ACTIVE', '2023-10-11 09:00:00', '2024-06-20 10:00:00', 5, 56),
 
 (97, 'Apple Watch SE (2nd gen)',
- '40/44mm Retina · S8 SiP',
+ '40/44mm Retina � -  S8 SiP',
  'Apple Watch SE (2nd gen) offers core Apple Watch features with S8 SiP, crash detection, and watchOS support.',
  'ACTIVE', '2022-09-16 10:00:00', '2024-06-20 10:00:00', 5, 46),
 
 (98, 'Samsung Galaxy Watch5 Pro',
- '45mm sapphire · Long battery',
+ '45mm sapphire � -  Long battery',
  'Watch5 Pro delivers rugged durability, sapphire crystal, and extended battery life for outdoor use.',
  'ACTIVE', '2022-08-26 09:00:00', '2024-06-20 10:00:00', 5, 47),
 
 (99, 'WHOOP 4.0',
- 'Screenless fitness band · Recovery',
+ 'Screenless fitness band � -  Recovery',
  'WHOOP 4.0 provides continuous recovery, strain, and sleep coaching with a screenless wearable.',
  'ACTIVE', '2021-09-08 09:00:00', '2024-06-20 10:00:00', 5, 57),
 
 (100, 'Samsung Galaxy Ring',
- 'Titanium smart ring · Sleep & health',
+ 'Titanium smart ring � -  Sleep & health',
  'Galaxy Ring tracks sleep, activity, and wellness in a lightweight titanium ring with long battery life.',
  'ACTIVE', '2024-07-10 09:00:00', '2024-07-10 09:00:00', 5, 47);
 
@@ -911,220 +911,220 @@ VALUES
 (1, 'Display', '6.1" LTPO Super Retina XDR, 1-120Hz'),
 (1, 'Processor', 'Apple A17 Pro'),
 (1, 'RAM', '8GB'),
-(1, 'Main Camera', '48MP main + 12MP ultra‑wide + 12MP 3x telephoto'),
+(1, 'Main Camera', '48MP main + 12MP ultra-wide + 12MP 3x telephoto'),
 (1, 'Selfie Camera', '12MP TrueDepth'),
 (1, 'Battery', '3274 mAh'),
 (1, 'OS', 'iOS 17 (upgradable)'),
-(1, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(1, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- iPhone 15
 (2, 'Model', 'iPhone 15'),
 (2, 'Display', '6.1" Super Retina XDR, 60Hz'),
 (2, 'Processor', 'Apple A16 Bionic'),
 (2, 'RAM', '6GB'),
-(2, 'Main Camera', '48MP main + 12MP ultra‑wide'),
+(2, 'Main Camera', '48MP main + 12MP ultra-wide'),
 (2, 'Selfie Camera', '12MP TrueDepth'),
 (2, 'Battery', '3349 mAh'),
 (2, 'OS', 'iOS 17 (upgradable)'),
-(2, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
+(2, 'Connectivity', '5G, Wi-Fi 6, Bluetooth 5.3, USB-C'),
 
 -- Galaxy S24 Ultra
 (3, 'Model', 'Galaxy S24 Ultra'),
 (3, 'Display', '6.8" QHD+ LTPO AMOLED, 1-120Hz'),
 (3, 'Processor', 'Snapdragon 8 Gen 3 for Galaxy'),
 (3, 'RAM', '12GB'),
-(3, 'Main Camera', '200MP + 50MP 5x + 10MP 3x + 12MP ultra‑wide'),
+(3, 'Main Camera', '200MP + 50MP 5x + 10MP 3x + 12MP ultra-wide'),
 (3, 'Selfie Camera', '12MP'),
 (3, 'Battery', '5000 mAh'),
 (3, 'OS', 'Android 14 (One UI 6.1)'),
-(3, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3, UWB'),
+(3, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.3, UWB'),
 
 -- Galaxy S24
 (4, 'Model', 'Galaxy S24'),
 (4, 'Display', '6.2" FHD+ AMOLED, 1-120Hz'),
 (4, 'Processor', 'Snapdragon 8 Gen 3 / Exynos 2400'),
 (4, 'RAM', '8GB'),
-(4, 'Main Camera', '50MP + 10MP 3x + 12MP ultra‑wide'),
+(4, 'Main Camera', '50MP + 10MP 3x + 12MP ultra-wide'),
 (4, 'Selfie Camera', '12MP'),
 (4, 'Battery', '4000 mAh'),
 (4, 'OS', 'Android 14 (One UI 6.1)'),
-(4, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
+(4, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3'),
 
 -- Pixel 8 Pro
 (5, 'Model', 'Pixel 8 Pro'),
 (5, 'Display', '6.7" LTPO OLED, 1-120Hz'),
 (5, 'Processor', 'Google Tensor G3'),
 (5, 'RAM', '12GB'),
-(5, 'Main Camera', '50MP + 48MP 5x + 48MP ultra‑wide'),
+(5, 'Main Camera', '50MP + 48MP 5x + 48MP ultra-wide'),
 (5, 'Selfie Camera', '10.5MP'),
 (5, 'Battery', '5050 mAh'),
 (5, 'OS', 'Android 14'),
-(5, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
+(5, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.3'),
 
 -- Pixel 8
 (6, 'Model', 'Pixel 8'),
 (6, 'Display', '6.2" OLED, 120Hz'),
 (6, 'Processor', 'Google Tensor G3'),
 (6, 'RAM', '8GB'),
-(6, 'Main Camera', '50MP + 12MP ultra‑wide'),
+(6, 'Main Camera', '50MP + 12MP ultra-wide'),
 (6, 'Selfie Camera', '10.5MP'),
 (6, 'Battery', '4575 mAh'),
 (6, 'OS', 'Android 14'),
-(6, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
+(6, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.3'),
 
 -- OnePlus 12
 (7, 'Model', 'OnePlus 12'),
 (7, 'Display', '6.82" LTPO AMOLED, 1-120Hz'),
 (7, 'Processor', 'Snapdragon 8 Gen 3'),
 (7, 'RAM', '12GB'),
-(7, 'Main Camera', '50MP + 64MP 3x periscope + 48MP ultra‑wide'),
+(7, 'Main Camera', '50MP + 64MP 3x periscope + 48MP ultra-wide'),
 (7, 'Selfie Camera', '32MP'),
 (7, 'Battery', '5400 mAh'),
 (7, 'OS', 'Android 14 (OxygenOS)'),
-(7, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.4'),
+(7, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.4'),
 
 -- Xiaomi 14
 (8, 'Model', 'Xiaomi 14'),
 (8, 'Display', '6.36" LTPO AMOLED, 1-120Hz'),
 (8, 'Processor', 'Snapdragon 8 Gen 3'),
 (8, 'RAM', '12GB'),
-(8, 'Main Camera', '50MP + 50MP 3.2x + 50MP ultra‑wide (Leica)'),
+(8, 'Main Camera', '50MP + 50MP 3.2x + 50MP ultra-wide (Leica)'),
 (8, 'Selfie Camera', '32MP'),
 (8, 'Battery', '4610 mAh'),
 (8, 'OS', 'Android 14 (HyperOS)'),
-(8, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.4'),
+(8, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.4'),
 
 -- Sony Xperia 1 V
 (9, 'Model', 'Xperia 1 V'),
 (9, 'Display', '6.5" 4K OLED, 120Hz, 21:9'),
 (9, 'Processor', 'Snapdragon 8 Gen 2'),
 (9, 'RAM', '12GB'),
-(9, 'Main Camera', '48MP + 12MP 85‑125mm tele + 12MP ultra‑wide'),
+(9, 'Main Camera', '48MP + 12MP 85-125mm tele + 12MP ultra-wide'),
 (9, 'Selfie Camera', '12MP'),
 (9, 'Battery', '5000 mAh'),
 (9, 'OS', 'Android 14'),
-(9, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
+(9, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3'),
 
 -- ASUS ROG Phone 8 Pro
 (10, 'Model', 'ROG Phone 8 Pro'),
 (10, 'Display', '6.78" AMOLED, 165Hz'),
 (10, 'Processor', 'Snapdragon 8 Gen 3'),
 (10, 'RAM', '16GB'),
-(10, 'Main Camera', '50MP + 32MP 3x + 13MP ultra‑wide'),
+(10, 'Main Camera', '50MP + 32MP 3x + 13MP ultra-wide'),
 (10, 'Selfie Camera', '32MP'),
 (10, 'Battery', '5500 mAh'),
 (10, 'OS', 'Android 14 (ROG UI)'),
-(10, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
+(10, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.3'),
 
 -- iPhone 15 Pro Max
 (11, 'Model', 'iPhone 15 Pro Max'),
 (11, 'Display', '6.7" LTPO Super Retina XDR, 1-120Hz'),
 (11, 'Processor', 'Apple A17 Pro'),
 (11, 'RAM', '8GB'),
-(11, 'Main Camera', '48MP main + 12MP ultra‑wide + 12MP 5x tetraprism'),
+(11, 'Main Camera', '48MP main + 12MP ultra-wide + 12MP 5x tetraprism'),
 (11, 'Selfie Camera', '12MP TrueDepth'),
 (11, 'Battery', '4422 mAh'),
 (11, 'OS', 'iOS 17 (upgradable)'),
-(11, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(11, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- iPhone 14 Pro
 (12, 'Model', 'iPhone 14 Pro'),
 (12, 'Display', '6.1" LTPO Super Retina XDR, 1-120Hz'),
 (12, 'Processor', 'Apple A16 Bionic'),
 (12, 'RAM', '6GB'),
-(12, 'Main Camera', '48MP main + 12MP ultra‑wide + 12MP 3x telephoto'),
+(12, 'Main Camera', '48MP main + 12MP ultra-wide + 12MP 3x telephoto'),
 (12, 'Selfie Camera', '12MP TrueDepth'),
 (12, 'Battery', '3200 mAh'),
 (12, 'OS', 'iOS 16 (upgradable)'),
-(12, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3, Lightning'),
+(12, 'Connectivity', '5G, Wi-Fi 6, Bluetooth 5.3, Lightning'),
 
 -- Galaxy Z Fold5
 (13, 'Model', 'Galaxy Z Fold5'),
 (13, 'Display', '7.6" QXGA+ LTPO AMOLED, 1-120Hz (main); 6.2" cover'),
 (13, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
 (13, 'RAM', '12GB'),
-(13, 'Main Camera', '50MP + 12MP ultra‑wide + 10MP 3x telephoto'),
-(13, 'Selfie Camera', '10MP cover + 4MP under‑display'),
+(13, 'Main Camera', '50MP + 12MP ultra-wide + 10MP 3x telephoto'),
+(13, 'Selfie Camera', '10MP cover + 4MP under-display'),
 (13, 'Battery', '4400 mAh'),
 (13, 'OS', 'Android 14 (One UI 6.1)'),
-(13, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
+(13, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3'),
 
 -- Galaxy Z Flip5
 (14, 'Model', 'Galaxy Z Flip5'),
 (14, 'Display', '6.7" FHD+ AMOLED, 1-120Hz; 3.4" cover'),
 (14, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
 (14, 'RAM', '8GB'),
-(14, 'Main Camera', '12MP + 12MP ultra‑wide'),
+(14, 'Main Camera', '12MP + 12MP ultra-wide'),
 (14, 'Selfie Camera', '10MP'),
 (14, 'Battery', '3700 mAh'),
 (14, 'OS', 'Android 14 (One UI 6.1)'),
-(14, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
+(14, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3'),
 
 -- Galaxy S24+
 (15, 'Model', 'Galaxy S24+'),
 (15, 'Display', '6.7" QHD+ AMOLED, 1-120Hz'),
 (15, 'Processor', 'Snapdragon 8 Gen 3 / Exynos 2400'),
 (15, 'RAM', '12GB'),
-(15, 'Main Camera', '50MP + 10MP 3x + 12MP ultra‑wide'),
+(15, 'Main Camera', '50MP + 10MP 3x + 12MP ultra-wide'),
 (15, 'Selfie Camera', '12MP'),
 (15, 'Battery', '4900 mAh'),
 (15, 'OS', 'Android 14 (One UI 6.1)'),
-(15, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
+(15, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.3'),
 
 -- Pixel 8a
 (16, 'Model', 'Pixel 8a'),
 (16, 'Display', '6.1" OLED, 120Hz'),
 (16, 'Processor', 'Google Tensor G3'),
 (16, 'RAM', '8GB'),
-(16, 'Main Camera', '64MP + 13MP ultra‑wide'),
+(16, 'Main Camera', '64MP + 13MP ultra-wide'),
 (16, 'Selfie Camera', '13MP'),
 (16, 'Battery', '4492 mAh'),
 (16, 'OS', 'Android 14'),
-(16, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
+(16, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3'),
 
 -- Xiaomi 14 Ultra
 (17, 'Model', 'Xiaomi 14 Ultra'),
 (17, 'Display', '6.73" LTPO AMOLED, 1-120Hz'),
 (17, 'Processor', 'Snapdragon 8 Gen 3'),
 (17, 'RAM', '16GB'),
-(17, 'Main Camera', '50MP 1-inch + 50MP 3.2x + 50MP 5x + 50MP ultra‑wide'),
+(17, 'Main Camera', '50MP 1-inch + 50MP 3.2x + 50MP 5x + 50MP ultra-wide'),
 (17, 'Selfie Camera', '32MP'),
 (17, 'Battery', '5000 mAh'),
 (17, 'OS', 'Android 14 (HyperOS)'),
-(17, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.4'),
+(17, 'Connectivity', '5G, Wi-Fi 7, Bluetooth 5.4'),
 
 -- OnePlus 12R
 (18, 'Model', 'OnePlus 12R'),
 (18, 'Display', '6.78" LTPO AMOLED, 1-120Hz'),
 (18, 'Processor', 'Snapdragon 8 Gen 2'),
 (18, 'RAM', '8GB'),
-(18, 'Main Camera', '50MP + 8MP ultra‑wide + 2MP macro'),
+(18, 'Main Camera', '50MP + 8MP ultra-wide + 2MP macro'),
 (18, 'Selfie Camera', '16MP'),
 (18, 'Battery', '5500 mAh'),
 (18, 'OS', 'Android 14 (OxygenOS)'),
-(18, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3'),
+(18, 'Connectivity', '5G, Wi-Fi 6, Bluetooth 5.3'),
 
 -- Nothing Phone (2)
 (19, 'Model', 'Phone (2)'),
 (19, 'Display', '6.7" LTPO OLED, 1-120Hz'),
 (19, 'Processor', 'Snapdragon 8+ Gen 1'),
 (19, 'RAM', '12GB'),
-(19, 'Main Camera', '50MP + 50MP ultra‑wide'),
+(19, 'Main Camera', '50MP + 50MP ultra-wide'),
 (19, 'Selfie Camera', '32MP'),
 (19, 'Battery', '4700 mAh'),
 (19, 'OS', 'Android 14 (Nothing OS 2)'),
-(19, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3'),
+(19, 'Connectivity', '5G, Wi-Fi 6, Bluetooth 5.3'),
 
 -- Xperia 5 V
 (20, 'Model', 'Xperia 5 V'),
 (20, 'Display', '6.1" FHD+ OLED, 120Hz, 21:9'),
 (20, 'Processor', 'Snapdragon 8 Gen 2'),
 (20, 'RAM', '8GB'),
-(20, 'Main Camera', '48MP main + 12MP ultra‑wide'),
+(20, 'Main Camera', '48MP main + 12MP ultra-wide'),
 (20, 'Selfie Camera', '12MP'),
 (20, 'Battery', '5000 mAh'),
 (20, 'OS', 'Android 14'),
-(20, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
+(20, 'Connectivity', '5G, Wi-Fi 6E, Bluetooth 5.3'),
 
 -- Tablets
 -- iPad Pro 11-inch (M4, 2024)
@@ -1134,10 +1134,10 @@ VALUES
 (21, 'RAM', '8GB'),
 (21, 'Storage', '256GB base'),
 (21, 'Rear Camera', '12MP wide + LiDAR'),
-(21, 'Front Camera', '12MP ultra‑wide (landscape)'),
+(21, 'Front Camera', '12MP ultra-wide (landscape)'),
 (21, 'Battery', '28.65 Wh'),
 (21, 'OS', 'iPadOS 17'),
-(21, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, Thunderbolt/USB‑C'),
+(21, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, Thunderbolt/USB-C'),
 
 -- iPad Pro 13-inch (M4, 2024)
 (22, 'Model', 'iPad Pro 13-inch (M4, 2024)'),
@@ -1146,10 +1146,10 @@ VALUES
 (22, 'RAM', '8GB'),
 (22, 'Storage', '256GB base'),
 (22, 'Rear Camera', '12MP wide + LiDAR'),
-(22, 'Front Camera', '12MP ultra‑wide (landscape)'),
+(22, 'Front Camera', '12MP ultra-wide (landscape)'),
 (22, 'Battery', '38.99 Wh'),
 (22, 'OS', 'iPadOS 17'),
-(22, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, Thunderbolt/USB‑C'),
+(22, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, Thunderbolt/USB-C'),
 
 -- iPad Air 11-inch (M2, 2024)
 (23, 'Model', 'iPad Air 11-inch (M2, 2024)'),
@@ -1158,10 +1158,10 @@ VALUES
 (23, 'RAM', '8GB'),
 (23, 'Storage', '128GB base'),
 (23, 'Rear Camera', '12MP wide'),
-(23, 'Front Camera', '12MP ultra‑wide (landscape)'),
+(23, 'Front Camera', '12MP ultra-wide (landscape)'),
 (23, 'Battery', '28.93 Wh'),
 (23, 'OS', 'iPadOS 17'),
-(23, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(23, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- iPad Air 13-inch (M2, 2024)
 (24, 'Model', 'iPad Air 13-inch (M2, 2024)'),
@@ -1170,10 +1170,10 @@ VALUES
 (24, 'RAM', '8GB'),
 (24, 'Storage', '128GB base'),
 (24, 'Rear Camera', '12MP wide'),
-(24, 'Front Camera', '12MP ultra‑wide (landscape)'),
+(24, 'Front Camera', '12MP ultra-wide (landscape)'),
 (24, 'Battery', '36.59 Wh'),
 (24, 'OS', 'iPadOS 17'),
-(24, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(24, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- iPad (10th generation)
 (25, 'Model', 'iPad (10th generation)'),
@@ -1182,10 +1182,10 @@ VALUES
 (25, 'RAM', '4GB'),
 (25, 'Storage', '64GB base'),
 (25, 'Rear Camera', '12MP wide'),
-(25, 'Front Camera', '12MP ultra‑wide (landscape)'),
+(25, 'Front Camera', '12MP ultra-wide (landscape)'),
 (25, 'Battery', '28.6 Wh'),
 (25, 'OS', 'iPadOS 17'),
-(25, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
+(25, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.2, USB-C'),
 
 -- iPad mini (6th generation)
 (26, 'Model', 'iPad mini (6th generation)'),
@@ -1194,10 +1194,10 @@ VALUES
 (26, 'RAM', '4GB'),
 (26, 'Storage', '64GB base'),
 (26, 'Rear Camera', '12MP wide'),
-(26, 'Front Camera', '12MP ultra‑wide'),
+(26, 'Front Camera', '12MP ultra-wide'),
 (26, 'Battery', '19.3 Wh'),
 (26, 'OS', 'iPadOS 17'),
-(26, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.0, USB‑C'),
+(26, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.0, USB-C'),
 
 -- Galaxy Tab S9 Ultra
 (27, 'Model', 'Galaxy Tab S9 Ultra'),
@@ -1205,11 +1205,11 @@ VALUES
 (27, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
 (27, 'RAM', '12GB'),
 (27, 'Storage', '256GB base'),
-(27, 'Rear Camera', '13MP + 8MP ultra‑wide'),
-(27, 'Front Camera', '12MP ultra‑wide'),
+(27, 'Rear Camera', '13MP + 8MP ultra-wide'),
+(27, 'Front Camera', '12MP ultra-wide'),
 (27, 'Battery', '11200 mAh'),
 (27, 'OS', 'Android 14 (One UI 6.1)'),
-(27, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(27, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- Galaxy Tab S9+
 (28, 'Model', 'Galaxy Tab S9+'),
@@ -1217,11 +1217,11 @@ VALUES
 (28, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
 (28, 'RAM', '12GB'),
 (28, 'Storage', '256GB base'),
-(28, 'Rear Camera', '13MP + 8MP ultra‑wide'),
-(28, 'Front Camera', '12MP ultra‑wide'),
+(28, 'Rear Camera', '13MP + 8MP ultra-wide'),
+(28, 'Front Camera', '12MP ultra-wide'),
 (28, 'Battery', '10090 mAh'),
 (28, 'OS', 'Android 14 (One UI 6.1)'),
-(28, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(28, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- Galaxy Tab S9
 (29, 'Model', 'Galaxy Tab S9'),
@@ -1230,10 +1230,10 @@ VALUES
 (29, 'RAM', '8GB'),
 (29, 'Storage', '128GB base'),
 (29, 'Rear Camera', '13MP'),
-(29, 'Front Camera', '12MP ultra‑wide'),
+(29, 'Front Camera', '12MP ultra-wide'),
 (29, 'Battery', '8400 mAh'),
 (29, 'OS', 'Android 14 (One UI 6.1)'),
-(29, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
+(29, 'Connectivity', 'Wi-Fi 6E, Bluetooth 5.3, USB-C'),
 
 -- Galaxy Tab S9 FE
 (30, 'Model', 'Galaxy Tab S9 FE'),
@@ -1242,10 +1242,10 @@ VALUES
 (30, 'RAM', '6GB'),
 (30, 'Storage', '128GB base'),
 (30, 'Rear Camera', '8MP'),
-(30, 'Front Camera', '12MP ultra‑wide'),
+(30, 'Front Camera', '12MP ultra-wide'),
 (30, 'Battery', '8000 mAh'),
 (30, 'OS', 'Android 14 (One UI 6.1)'),
-(30, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
+(30, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.3, USB-C'),
 
 -- Galaxy Tab S9 FE+
 (31, 'Model', 'Galaxy Tab S9 FE+'),
@@ -1254,10 +1254,10 @@ VALUES
 (31, 'RAM', '6GB'),
 (31, 'Storage', '128GB base'),
 (31, 'Rear Camera', '8MP'),
-(31, 'Front Camera', '12MP ultra‑wide'),
+(31, 'Front Camera', '12MP ultra-wide'),
 (31, 'Battery', '10090 mAh'),
 (31, 'OS', 'Android 14 (One UI 6.1)'),
-(31, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
+(31, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.3, USB-C'),
 
 -- Surface Pro 11
 (32, 'Model', 'Surface Pro 11'),
@@ -1269,7 +1269,7 @@ VALUES
 (32, 'Front Camera', '1440p'),
 (32, 'Battery', '48 Wh'),
 (32, 'OS', 'Windows 11'),
-(32, 'Connectivity', 'Wi‑Fi 7, Bluetooth 5.4, USB4'),
+(32, 'Connectivity', 'Wi-Fi 7, Bluetooth 5.4, USB4'),
 
 -- Surface Go 4
 (33, 'Model', 'Surface Go 4'),
@@ -1281,7 +1281,7 @@ VALUES
 (33, 'Front Camera', '5MP'),
 (33, 'Battery', '28 Wh'),
 (33, 'OS', 'Windows 11'),
-(33, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.1, USB‑C'),
+(33, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.1, USB-C'),
 
 -- Lenovo Tab P12
 (34, 'Model', 'Tab P12'),
@@ -1293,7 +1293,7 @@ VALUES
 (34, 'Front Camera', '13MP'),
 (34, 'Battery', '10200 mAh'),
 (34, 'OS', 'Android 13'),
-(34, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.1, USB‑C'),
+(34, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.1, USB-C'),
 
 -- Lenovo Tab P11 Pro (2nd Gen)
 (35, 'Model', 'Tab P11 Pro (2nd Gen)'),
@@ -1301,11 +1301,11 @@ VALUES
 (35, 'Processor', 'MediaTek Kompanio 1300T'),
 (35, 'RAM', '8GB'),
 (35, 'Storage', '128GB base'),
-(35, 'Rear Camera', '13MP + 8MP ultra‑wide'),
+(35, 'Rear Camera', '13MP + 8MP ultra-wide'),
 (35, 'Front Camera', '8MP'),
 (35, 'Battery', '8200 mAh'),
 (35, 'OS', 'Android 13'),
-(35, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.1, USB‑C'),
+(35, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.1, USB-C'),
 
 -- Xiaomi Pad 6
 (36, 'Model', 'Xiaomi Pad 6'),
@@ -1317,7 +1317,7 @@ VALUES
 (36, 'Front Camera', '8MP'),
 (36, 'Battery', '8840 mAh'),
 (36, 'OS', 'Android 13 (HyperOS)'),
-(36, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
+(36, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.2, USB-C'),
 
 -- OnePlus Pad
 (37, 'Model', 'OnePlus Pad'),
@@ -1329,7 +1329,7 @@ VALUES
 (37, 'Front Camera', '8MP'),
 (37, 'Battery', '9510 mAh'),
 (37, 'OS', 'Android 14 (OxygenOS)'),
-(37, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
+(37, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.3, USB-C'),
 
 -- Huawei MatePad Pro 13.2
 (38, 'Model', 'MatePad Pro 13.2'),
@@ -1337,11 +1337,11 @@ VALUES
 (38, 'Processor', 'Kirin 9000S'),
 (38, 'RAM', '12GB'),
 (38, 'Storage', '256GB base'),
-(38, 'Rear Camera', '13MP + 8MP ultra‑wide'),
+(38, 'Rear Camera', '13MP + 8MP ultra-wide'),
 (38, 'Front Camera', '16MP'),
 (38, 'Battery', '10100 mAh'),
 (38, 'OS', 'HarmonyOS 4'),
-(38, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
+(38, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.2, USB-C'),
 
 -- Amazon Fire Max 11
 (39, 'Model', 'Fire Max 11'),
@@ -1353,7 +1353,7 @@ VALUES
 (39, 'Front Camera', '8MP'),
 (39, 'Battery', '7500 mAh'),
 (39, 'OS', 'Fire OS'),
-(39, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
+(39, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.2, USB-C'),
 
 -- Google Pixel Tablet
 (40, 'Model', 'Pixel Tablet'),
@@ -1365,12 +1365,12 @@ VALUES
 (40, 'Front Camera', '8MP'),
 (40, 'Battery', '27 Wh'),
 (40, 'OS', 'Android 14'),
-(40, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
+(40, 'Connectivity', 'Wi-Fi 6, Bluetooth 5.2, USB-C'),
 
 -- Laptops
 -- MacBook Pro 14 (M3 Pro)
 (41, 'Model', 'MacBook Pro 14 (M3 Pro)'),
-(41, 'Display', '14.2" Liquid Retina XDR, 3024×1964, 120Hz ProMotion'),
+(41, 'Display', '14.2" Liquid Retina XDR, 3024�-1964, 120Hz ProMotion'),
 (41, 'Processor', 'Apple M3 Pro'),
 (41, 'GPU', 'Integrated (M3 Pro GPU)'),
 (41, 'RAM', '18GB'),
@@ -1378,11 +1378,11 @@ VALUES
 (41, 'Battery', 'Up to 18 hours video playback'),
 (41, 'Weight', '1.61 kg'),
 (41, 'OS', 'macOS'),
-(41, 'Ports', '3× Thunderbolt 4, HDMI 2.1, SDXC, MagSafe 3, 3.5mm'),
+(41, 'Ports', '3�- Thunderbolt 4, HDMI 2.1, SDXC, MagSafe 3, 3.5mm'),
 
 -- MacBook Air 15 (M3)
 (42, 'Model', 'MacBook Air 15 (M3)'),
-(42, 'Display', '15.3" Liquid Retina, 2880×1864'),
+(42, 'Display', '15.3" Liquid Retina, 2880�-1864'),
 (42, 'Processor', 'Apple M3'),
 (42, 'GPU', 'Integrated (M3 GPU)'),
 (42, 'RAM', '8GB/16GB'),
@@ -1390,7 +1390,7 @@ VALUES
 (42, 'Battery', 'Up to 18 hours video playback'),
 (42, 'Weight', '1.51 kg'),
 (42, 'OS', 'macOS'),
-(42, 'Ports', '2× Thunderbolt/USB 4, MagSafe 3, 3.5mm'),
+(42, 'Ports', '2�- Thunderbolt/USB 4, MagSafe 3, 3.5mm'),
 
 -- Dell XPS 14 (9440)
 (43, 'Model', 'XPS 14 (9440)'),
@@ -1402,7 +1402,7 @@ VALUES
 (43, 'Battery', 'Up to 13 hours mixed use'),
 (43, 'Weight', '1.68 kg'),
 (43, 'OS', 'Windows 11'),
-(43, 'Ports', '3× Thunderbolt 4 (USB-C) with adapters'),
+(43, 'Ports', '3�- Thunderbolt 4 (USB-C) with adapters'),
 
 -- Dell XPS 13 (9340)
 (44, 'Model', 'XPS 13 (9340)'),
@@ -1414,7 +1414,7 @@ VALUES
 (44, 'Battery', 'Up to 12 hours mixed use'),
 (44, 'Weight', '1.19 kg'),
 (44, 'OS', 'Windows 11'),
-(44, 'Ports', '2× Thunderbolt 4 (USB-C) with adapters'),
+(44, 'Ports', '2�- Thunderbolt 4 (USB-C) with adapters'),
 
 -- HP Spectre x360 14
 (45, 'Model', 'Spectre x360 14'),
@@ -1426,7 +1426,7 @@ VALUES
 (45, 'Battery', 'Up to 13 hours mixed use'),
 (45, 'Weight', '1.44 kg'),
 (45, 'OS', 'Windows 11'),
-(45, 'Ports', '2× Thunderbolt 4, USB-A, 3.5mm'),
+(45, 'Ports', '2�- Thunderbolt 4, USB-A, 3.5mm'),
 
 -- ThinkPad X1 Carbon Gen 12
 (46, 'Model', 'ThinkPad X1 Carbon Gen 12'),
@@ -1438,7 +1438,7 @@ VALUES
 (46, 'Battery', 'Up to 15 hours mixed use'),
 (46, 'Weight', '1.12 kg'),
 (46, 'OS', 'Windows 11 Pro'),
-(46, 'Ports', '2× Thunderbolt 4, 2× USB-A, HDMI, 3.5mm'),
+(46, 'Ports', '2�- Thunderbolt 4, 2�- USB-A, HDMI, 3.5mm'),
 
 -- ThinkPad X1 Yoga Gen 9
 (47, 'Model', 'ThinkPad X1 Yoga Gen 9'),
@@ -1450,7 +1450,7 @@ VALUES
 (47, 'Battery', 'Up to 14 hours mixed use'),
 (47, 'Weight', '1.39 kg'),
 (47, 'OS', 'Windows 11 Pro'),
-(47, 'Ports', '2× Thunderbolt 4, 2× USB-A, HDMI, 3.5mm'),
+(47, 'Ports', '2�- Thunderbolt 4, 2�- USB-A, HDMI, 3.5mm'),
 
 -- ROG Zephyrus G14 (2024)
 (48, 'Model', 'ROG Zephyrus G14 (2024)'),
@@ -1462,7 +1462,7 @@ VALUES
 (48, 'Battery', '76Wh'),
 (48, 'Weight', '1.50 kg'),
 (48, 'OS', 'Windows 11'),
-(48, 'Ports', 'USB4, 2× USB-A, HDMI 2.1, 3.5mm'),
+(48, 'Ports', 'USB4, 2�- USB-A, HDMI 2.1, 3.5mm'),
 
 -- ROG Zephyrus G16 (2024)
 (49, 'Model', 'ROG Zephyrus G16 (2024)'),
@@ -1474,7 +1474,7 @@ VALUES
 (49, 'Battery', '90Wh'),
 (49, 'Weight', '1.85 kg'),
 (49, 'OS', 'Windows 11'),
-(49, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, 3.5mm'),
+(49, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, 3.5mm'),
 
 -- Acer Swift X 14 (2024)
 (50, 'Model', 'Swift X 14'),
@@ -1486,7 +1486,7 @@ VALUES
 (50, 'Battery', '76Wh'),
 (50, 'Weight', '1.55 kg'),
 (50, 'OS', 'Windows 11'),
-(50, 'Ports', '2× USB-C, 2× USB-A, HDMI 2.1'),
+(50, 'Ports', '2�- USB-C, 2�- USB-A, HDMI 2.1'),
 
 -- Acer Swift Go 14 (2024)
 (51, 'Model', 'Swift Go 14'),
@@ -1498,7 +1498,7 @@ VALUES
 (51, 'Battery', '65Wh'),
 (51, 'Weight', '1.25 kg'),
 (51, 'OS', 'Windows 11'),
-(51, 'Ports', '2× USB-C, 2× USB-A, HDMI 2.1'),
+(51, 'Ports', '2�- USB-C, 2�- USB-A, HDMI 2.1'),
 
 -- Surface Laptop 6
 (52, 'Model', 'Surface Laptop 6'),
@@ -1510,7 +1510,7 @@ VALUES
 (52, 'Battery', 'Up to 18 hours'),
 (52, 'Weight', '1.38 kg'),
 (52, 'OS', 'Windows 11 Pro'),
-(52, 'Ports', '2× Thunderbolt 4, USB-A, 3.5mm'),
+(52, 'Ports', '2�- Thunderbolt 4, USB-A, 3.5mm'),
 
 -- Surface Laptop Studio 2
 (53, 'Model', 'Surface Laptop Studio 2'),
@@ -1522,7 +1522,7 @@ VALUES
 (53, 'Battery', 'Up to 19 hours'),
 (53, 'Weight', '1.98 kg'),
 (53, 'OS', 'Windows 11'),
-(53, 'Ports', '2× Thunderbolt 4, USB-A, microSDXC'),
+(53, 'Ports', '2�- Thunderbolt 4, USB-A, microSDXC'),
 
 -- Razer Blade 16
 (54, 'Model', 'Blade 16'),
@@ -1534,7 +1534,7 @@ VALUES
 (54, 'Battery', '95.2Wh'),
 (54, 'Weight', '2.45 kg'),
 (54, 'OS', 'Windows 11'),
-(54, 'Ports', 'Thunderbolt 4, 3× USB-A, HDMI 2.1, SD, 3.5mm'),
+(54, 'Ports', 'Thunderbolt 4, 3�- USB-A, HDMI 2.1, SD, 3.5mm'),
 
 -- Razer Blade 14
 (55, 'Model', 'Blade 14'),
@@ -1546,7 +1546,7 @@ VALUES
 (55, 'Battery', '68.1Wh'),
 (55, 'Weight', '1.84 kg'),
 (55, 'OS', 'Windows 11'),
-(55, 'Ports', 'USB4, 2× USB-A, HDMI 2.1, 3.5mm'),
+(55, 'Ports', 'USB4, 2�- USB-A, HDMI 2.1, 3.5mm'),
 
 -- MSI Stealth 16 Studio
 (56, 'Model', 'Stealth 16 Studio'),
@@ -1558,7 +1558,7 @@ VALUES
 (56, 'Battery', '99.9Wh'),
 (56, 'Weight', '2.10 kg'),
 (56, 'OS', 'Windows 11'),
-(56, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, microSD'),
+(56, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, microSD'),
 
 -- MSI Raider GE78 HX
 (57, 'Model', 'Raider GE78 HX'),
@@ -1570,7 +1570,7 @@ VALUES
 (57, 'Battery', '99.9Wh'),
 (57, 'Weight', '2.98 kg'),
 (57, 'OS', 'Windows 11'),
-(57, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, SD'),
+(57, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, SD'),
 
 -- Gigabyte AORUS 16X
 (58, 'Model', 'AORUS 16X'),
@@ -1582,7 +1582,7 @@ VALUES
 (58, 'Battery', '99Wh'),
 (58, 'Weight', '2.30 kg'),
 (58, 'OS', 'Windows 11'),
-(58, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, RJ-45'),
+(58, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, RJ-45'),
 
 -- Galaxy Book4 Pro 14
 (59, 'Model', 'Galaxy Book4 Pro 14'),
@@ -1594,7 +1594,7 @@ VALUES
 (59, 'Battery', '63Wh'),
 (59, 'Weight', '1.23 kg'),
 (59, 'OS', 'Windows 11'),
-(59, 'Ports', '2× Thunderbolt 4, USB-A, HDMI 2.0, microSD'),
+(59, 'Ports', '2�- Thunderbolt 4, USB-A, HDMI 2.0, microSD'),
 
 -- LG Gram 16
 (60, 'Model', 'Gram 16'),
@@ -1606,7 +1606,7 @@ VALUES
 (60, 'Battery', '80Wh'),
 (60, 'Weight', '1.19 kg'),
 (60, 'OS', 'Windows 11'),
-(60, 'Ports', '2× Thunderbolt 4, 2× USB-A, HDMI, microSD'),
+(60, 'Ports', '2�- Thunderbolt 4, 2�- USB-A, HDMI, microSD'),
 
 -- Audio & Headphones
 -- Sony WH-1000XM5
@@ -1825,7 +1825,7 @@ VALUES
 (81, 'Battery Life', 'Up to 18 hours (low power up to 36 hours)'),
 (81, 'Water Resistance', '50 m (WR50)'),
 (81, 'OS', 'watchOS 10'),
-(81, 'Connectivity', 'GPS, Wi‑Fi, Bluetooth 5.3, optional LTE'),
+(81, 'Connectivity', 'GPS, Wi-Fi, Bluetooth 5.3, optional LTE'),
 
 -- Apple Watch Ultra 2
 (82, 'Model', 'Watch Ultra 2'),
@@ -1837,7 +1837,7 @@ VALUES
 (82, 'Battery Life', 'Up to 36 hours (low power up to 72 hours)'),
 (82, 'Water Resistance', '100 m (EN13319)'),
 (82, 'OS', 'watchOS 10'),
-(82, 'Connectivity', 'Dual‑frequency GPS, Wi‑Fi, Bluetooth 5.3, LTE'),
+(82, 'Connectivity', 'Dual-frequency GPS, Wi-Fi, Bluetooth 5.3, LTE'),
 
 -- Galaxy Watch6
 (83, 'Model', 'Galaxy Watch6'),
@@ -1847,9 +1847,9 @@ VALUES
 (83, 'Chip', 'Exynos W930'),
 (83, 'Sensors', 'BioActive (HR, ECG, BIA), temperature, accelerometer, barometer'),
 (83, 'Battery Life', 'Up to 40 hours'),
-(83, 'Water Resistance', '5ATM + IP68, MIL‑STD‑810H'),
+(83, 'Water Resistance', '5ATM + IP68, MIL-STD-810H'),
 (83, 'OS', 'Wear OS (One UI Watch)'),
-(83, 'Connectivity', 'GPS, Bluetooth 5.3, Wi‑Fi, NFC'),
+(83, 'Connectivity', 'GPS, Bluetooth 5.3, Wi-Fi, NFC'),
 
 -- Galaxy Watch6 Classic
 (84, 'Model', 'Galaxy Watch6 Classic'),
@@ -1860,9 +1860,9 @@ VALUES
 (84, 'Rotating Bezel', 'Yes'),
 (84, 'Sensors', 'BioActive (HR, ECG, BIA), temperature, accelerometer, barometer'),
 (84, 'Battery Life', 'Up to 40 hours'),
-(84, 'Water Resistance', '5ATM + IP68, MIL‑STD‑810H'),
+(84, 'Water Resistance', '5ATM + IP68, MIL-STD-810H'),
 (84, 'OS', 'Wear OS (One UI Watch)'),
-(84, 'Connectivity', 'GPS, Bluetooth 5.3, Wi‑Fi, NFC'),
+(84, 'Connectivity', 'GPS, Bluetooth 5.3, Wi-Fi, NFC'),
 
 -- Pixel Watch 2
 (85, 'Model', 'Pixel Watch 2'),
@@ -1870,33 +1870,33 @@ VALUES
 (85, 'Display', '1.2" AMOLED'),
 (85, 'Case Size', '41mm'),
 (85, 'Chip', 'Qualcomm Snapdragon W5 Gen 1'),
-(85, 'Sensors', 'Multi‑path HR, ECG, SpO2, skin temperature'),
+(85, 'Sensors', 'Multi-path HR, ECG, SpO2, skin temperature'),
 (85, 'Battery Life', 'Up to 24 hours'),
 (85, 'Water Resistance', '5ATM'),
 (85, 'OS', 'Wear OS 4'),
-(85, 'Connectivity', 'GPS, Bluetooth 5.0, Wi‑Fi, NFC, optional LTE'),
+(85, 'Connectivity', 'GPS, Bluetooth 5.0, Wi-Fi, NFC, optional LTE'),
 
 -- Garmin fēnix 7 Pro
 (86, 'Model', 'fēnix 7 Pro'),
 (86, 'Type', 'Outdoor multisport watch'),
-(86, 'Display', '1.3" MIP sunlight‑visible'),
+(86, 'Display', '1.3" MIP sunlight-visible'),
 (86, 'Case Size', '47mm / 51mm'),
-(86, 'Sensors', 'Multi‑band GPS, altimeter, compass, Pulse Ox, HR'),
+(86, 'Sensors', 'Multi-band GPS, altimeter, compass, Pulse Ox, HR'),
 (86, 'Battery Life', 'Up to 18 days (47mm), up to 37 days (51mm), solar extends'),
 (86, 'Water Resistance', '10 ATM'),
 (86, 'OS', 'Garmin OS'),
-(86, 'Connectivity', 'Bluetooth, Wi‑Fi, ANT+'),
+(86, 'Connectivity', 'Bluetooth, Wi-Fi, ANT+'),
 
 -- Garmin Forerunner 965
 (87, 'Model', 'Forerunner 965'),
 (87, 'Type', 'Performance running watch'),
 (87, 'Display', '1.4" AMOLED'),
 (87, 'Case Size', '47mm'),
-(87, 'Sensors', 'Multi‑band GPS, HR, Pulse Ox, barometer'),
+(87, 'Sensors', 'Multi-band GPS, HR, Pulse Ox, barometer'),
 (87, 'Battery Life', 'Up to 23 days (smartwatch mode)'),
 (87, 'Water Resistance', '5 ATM'),
 (87, 'OS', 'Garmin OS'),
-(87, 'Connectivity', 'Bluetooth, Wi‑Fi, ANT+'),
+(87, 'Connectivity', 'Bluetooth, Wi-Fi, ANT+'),
 
 -- Garmin Venu 3
 (88, 'Model', 'Venu 3'),
@@ -1907,7 +1907,7 @@ VALUES
 (88, 'Battery Life', 'Up to 14 days (45mm), up to 10 days (41mm)'),
 (88, 'Water Resistance', '5 ATM'),
 (88, 'OS', 'Garmin OS'),
-(88, 'Connectivity', 'Bluetooth, Wi‑Fi, ANT+'),
+(88, 'Connectivity', 'Bluetooth, Wi-Fi, ANT+'),
 
 -- Fitbit Sense 2
 (89, 'Model', 'Sense 2'),
@@ -1927,7 +1927,7 @@ VALUES
 (90, 'Battery Life', 'Up to 7 days'),
 (90, 'Water Resistance', '50 m'),
 (90, 'OS', 'Fitbit OS'),
-(90, 'Connectivity', 'Bluetooth 5.0, built‑in GPS'),
+(90, 'Connectivity', 'Bluetooth 5.0, built-in GPS'),
 
 -- Oura Ring Gen 3
 (91, 'Model', 'Ring Gen 3'),
@@ -1942,13 +1942,13 @@ VALUES
 -- Xiaomi Watch 2 Pro
 (92, 'Model', 'Watch 2 Pro'),
 (92, 'Type', 'Smartwatch'),
-(92, 'Display', '1.43" AMOLED, 466×466'),
+(92, 'Display', '1.43" AMOLED, 466�-466'),
 (92, 'Case Size', '46mm'),
 (92, 'Chip', 'Snapdragon W5+ Gen 1'),
 (92, 'Battery Life', 'Up to 65 hours (Bluetooth)'),
 (92, 'Water Resistance', '5 ATM'),
 (92, 'OS', 'Wear OS'),
-(92, 'Connectivity', 'Bluetooth 5.2, Wi‑Fi, NFC, optional LTE, GNSS'),
+(92, 'Connectivity', 'Bluetooth 5.2, Wi-Fi, NFC, optional LTE, GNSS'),
 
 -- Huawei Watch GT 4
 (93, 'Model', 'Watch GT 4'),
@@ -1968,7 +1968,7 @@ VALUES
 (94, 'Battery Life', 'Up to 14 days'),
 (94, 'Water Resistance', '5 ATM'),
 (94, 'OS', 'Zepp OS'),
-(94, 'Connectivity', 'Bluetooth 5.0, dual‑band GPS, NFC (select)'),
+(94, 'Connectivity', 'Bluetooth 5.0, dual-band GPS, NFC (select)'),
 
 -- Suunto Vertical
 (95, 'Model', 'Vertical'),
@@ -1978,18 +1978,18 @@ VALUES
 (95, 'Battery Life', 'Up to 60 days (solar modes vary)'),
 (95, 'Water Resistance', '100 m'),
 (95, 'OS', 'Suunto OS'),
-(95, 'Connectivity', 'Bluetooth, multi‑band GNSS, offline maps'),
+(95, 'Connectivity', 'Bluetooth, multi-band GNSS, offline maps'),
 
 -- Polar Vantage V3
 (96, 'Model', 'Vantage V3'),
 (96, 'Type', 'Multisport watch'),
 (96, 'Display', '1.39" AMOLED'),
 (96, 'Case Size', '47mm'),
-(96, 'Sensors', 'ECG, SpO2, skin temperature, dual‑band GPS'),
+(96, 'Sensors', 'ECG, SpO2, skin temperature, dual-band GPS'),
 (96, 'Battery Life', 'Up to 8 days'),
 (96, 'Water Resistance', '50 m'),
 (96, 'OS', 'Polar OS'),
-(96, 'Connectivity', 'Bluetooth, dual‑band GPS'),
+(96, 'Connectivity', 'Bluetooth, dual-band GPS'),
 
 -- Apple Watch SE (2nd gen)
 (97, 'Model', 'Watch SE (2nd gen)'),
@@ -2001,7 +2001,7 @@ VALUES
 (97, 'Battery Life', 'Up to 18 hours'),
 (97, 'Water Resistance', '50 m (WR50)'),
 (97, 'OS', 'watchOS 10'),
-(97, 'Connectivity', 'GPS, Wi‑Fi, Bluetooth 5.3, optional LTE'),
+(97, 'Connectivity', 'GPS, Wi-Fi, Bluetooth 5.3, optional LTE'),
 
 -- Galaxy Watch5 Pro
 (98, 'Model', 'Galaxy Watch5 Pro'),
@@ -2013,7 +2013,7 @@ VALUES
 (98, 'Battery Life', 'Up to 80 hours'),
 (98, 'Water Resistance', '5ATM + IP68'),
 (98, 'OS', 'Wear OS (One UI Watch)'),
-(98, 'Connectivity', 'GPS, Bluetooth 5.2, Wi‑Fi, NFC'),
+(98, 'Connectivity', 'GPS, Bluetooth 5.2, Wi-Fi, NFC'),
 
 -- WHOOP 4.0
 (99, 'Model', '4.0'),
@@ -2334,7 +2334,7 @@ INSERT INTO product_variants (
 (179, 84, '43mm Bluetooth', 'Black', 399.00, 0, 'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 0),
 (180, 84, '47mm Bluetooth', 'Silver', 429.00, 0, 'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 0),
 -- Pixel Watch 2
-(181, 85, 'Wi‑Fi', 'Black', 349.00, 0, 'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 0),
+(181, 85, 'Wi-Fi', 'Black', 349.00, 0, 'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 0),
 (182, 85, 'LTE', 'Polished Silver', 399.00, 0, 'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 0),
 -- Garmin fēnix 7 Pro
 (183, 86, '47mm', 'Slate Gray', 799.00, 0, 'ACTIVE', '2023-05-31 09:00:00', '2024-06-20 10:00:00', 0),
@@ -2605,7 +2605,7 @@ INSERT INTO product_variants (
 (335, 84, '47mm Bluetooth', 'Black', 429.00, 0, 'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 0),
 
 -- Pixel Watch 2 (product 85)
-(336, 85, 'Wi‑Fi', 'Polished Silver', 349.00, 0, 'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 0),
+(336, 85, 'Wi-Fi', 'Polished Silver', 349.00, 0, 'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 0),
 (337, 85, 'LTE', 'Black', 399.00, 0, 'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 0),
 
 -- Garmin fēnix 7 Pro (product 86)
@@ -2726,7 +2726,7 @@ VALUES
 -- Order 2 items
 (2, 41, 'Samsung Galaxy S24+ 256GB Onyx Black', 999.00, 1, 999.00, '2024-02-15 15:05:00'),
 (2, 55, 'Apple iPad Pro 13 256GB Space Black', 1299.00, 1, 1299.00, '2024-02-15 15:06:00'),
-(2, 181, 'Google Pixel Watch 2 Wi‑Fi Black', 349.00, 1, 349.00, '2024-02-15 15:07:00'),
+(2, 181, 'Google Pixel Watch 2 Wi-Fi Black', 349.00, 1, 349.00, '2024-02-15 15:07:00'),
 (2, 113, 'Acer Swift Go 14 8GB/256GB Silver', 899.00, 1, 899.00, '2024-02-15 15:08:00'),
 -- Order 3 items
 (3, 31, 'Apple iPhone 15 Pro Max 256GB Natural Titanium', 1199.00, 1, 1199.00, '2024-03-05 09:25:00'),
