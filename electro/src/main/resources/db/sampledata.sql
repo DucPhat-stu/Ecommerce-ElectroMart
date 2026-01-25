@@ -907,7 +907,6 @@ INSERT INTO product_details (
 VALUES
 -- Smartphones
 -- iPhone 15 Pro
-(1, 'Brand', 'Apple'),
 (1, 'Model', 'iPhone 15 Pro'),
 (1, 'Display', '6.1" LTPO Super Retina XDR, 1-120Hz'),
 (1, 'Processor', 'Apple A17 Pro'),
@@ -919,7 +918,6 @@ VALUES
 (1, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- iPhone 15
-(2, 'Brand', 'Apple'),
 (2, 'Model', 'iPhone 15'),
 (2, 'Display', '6.1" Super Retina XDR, 60Hz'),
 (2, 'Processor', 'Apple A16 Bionic'),
@@ -931,7 +929,6 @@ VALUES
 (2, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
 
 -- Galaxy S24 Ultra
-(3, 'Brand', 'Samsung'),
 (3, 'Model', 'Galaxy S24 Ultra'),
 (3, 'Display', '6.8" QHD+ LTPO AMOLED, 1-120Hz'),
 (3, 'Processor', 'Snapdragon 8 Gen 3 for Galaxy'),
@@ -943,7 +940,6 @@ VALUES
 (3, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3, UWB'),
 
 -- Galaxy S24
-(4, 'Brand', 'Samsung'),
 (4, 'Model', 'Galaxy S24'),
 (4, 'Display', '6.2" FHD+ AMOLED, 1-120Hz'),
 (4, 'Processor', 'Snapdragon 8 Gen 3 / Exynos 2400'),
@@ -955,7 +951,6 @@ VALUES
 (4, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
 
 -- Pixel 8 Pro
-(5, 'Brand', 'Google'),
 (5, 'Model', 'Pixel 8 Pro'),
 (5, 'Display', '6.7" LTPO OLED, 1-120Hz'),
 (5, 'Processor', 'Google Tensor G3'),
@@ -967,7 +962,6 @@ VALUES
 (5, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
 
 -- Pixel 8
-(6, 'Brand', 'Google'),
 (6, 'Model', 'Pixel 8'),
 (6, 'Display', '6.2" OLED, 120Hz'),
 (6, 'Processor', 'Google Tensor G3'),
@@ -979,7 +973,6 @@ VALUES
 (6, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
 
 -- OnePlus 12
-(7, 'Brand', 'OnePlus'),
 (7, 'Model', 'OnePlus 12'),
 (7, 'Display', '6.82" LTPO AMOLED, 1-120Hz'),
 (7, 'Processor', 'Snapdragon 8 Gen 3'),
@@ -991,7 +984,6 @@ VALUES
 (7, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.4'),
 
 -- Xiaomi 14
-(8, 'Brand', 'Xiaomi'),
 (8, 'Model', 'Xiaomi 14'),
 (8, 'Display', '6.36" LTPO AMOLED, 1-120Hz'),
 (8, 'Processor', 'Snapdragon 8 Gen 3'),
@@ -1003,7 +995,6 @@ VALUES
 (8, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.4'),
 
 -- Sony Xperia 1 V
-(9, 'Brand', 'Sony'),
 (9, 'Model', 'Xperia 1 V'),
 (9, 'Display', '6.5" 4K OLED, 120Hz, 21:9'),
 (9, 'Processor', 'Snapdragon 8 Gen 2'),
@@ -1015,7 +1006,6 @@ VALUES
 (9, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
 
 -- ASUS ROG Phone 8 Pro
-(10, 'Brand', 'ASUS'),
 (10, 'Model', 'ROG Phone 8 Pro'),
 (10, 'Display', '6.78" AMOLED, 165Hz'),
 (10, 'Processor', 'Snapdragon 8 Gen 3'),
@@ -1027,7 +1017,6 @@ VALUES
 (10, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
 
 -- iPhone 15 Pro Max
-(11, 'Brand', 'Apple'),
 (11, 'Model', 'iPhone 15 Pro Max'),
 (11, 'Display', '6.7" LTPO Super Retina XDR, 1-120Hz'),
 (11, 'Processor', 'Apple A17 Pro'),
@@ -1039,7 +1028,6 @@ VALUES
 (11, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- iPhone 14 Pro
-(12, 'Brand', 'Apple'),
 (12, 'Model', 'iPhone 14 Pro'),
 (12, 'Display', '6.1" LTPO Super Retina XDR, 1-120Hz'),
 (12, 'Processor', 'Apple A16 Bionic'),
@@ -1051,7 +1039,6 @@ VALUES
 (12, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3, Lightning'),
 
 -- Galaxy Z Fold5
-(13, 'Brand', 'Samsung'),
 (13, 'Model', 'Galaxy Z Fold5'),
 (13, 'Display', '7.6" QXGA+ LTPO AMOLED, 1-120Hz (main); 6.2" cover'),
 (13, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
@@ -1063,7 +1050,6 @@ VALUES
 (13, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
 
 -- Galaxy Z Flip5
-(14, 'Brand', 'Samsung'),
 (14, 'Model', 'Galaxy Z Flip5'),
 (14, 'Display', '6.7" FHD+ AMOLED, 1-120Hz; 3.4" cover'),
 (14, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
@@ -1075,7 +1061,6 @@ VALUES
 (14, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
 
 -- Galaxy S24+
-(15, 'Brand', 'Samsung'),
 (15, 'Model', 'Galaxy S24+'),
 (15, 'Display', '6.7" QHD+ AMOLED, 1-120Hz'),
 (15, 'Processor', 'Snapdragon 8 Gen 3 / Exynos 2400'),
@@ -1087,7 +1072,6 @@ VALUES
 (15, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.3'),
 
 -- Pixel 8a
-(16, 'Brand', 'Google'),
 (16, 'Model', 'Pixel 8a'),
 (16, 'Display', '6.1" OLED, 120Hz'),
 (16, 'Processor', 'Google Tensor G3'),
@@ -1099,7 +1083,6 @@ VALUES
 (16, 'Connectivity', '5G, Wi‑Fi 6E, Bluetooth 5.3'),
 
 -- Xiaomi 14 Ultra
-(17, 'Brand', 'Xiaomi'),
 (17, 'Model', 'Xiaomi 14 Ultra'),
 (17, 'Display', '6.73" LTPO AMOLED, 1-120Hz'),
 (17, 'Processor', 'Snapdragon 8 Gen 3'),
@@ -1111,7 +1094,6 @@ VALUES
 (17, 'Connectivity', '5G, Wi‑Fi 7, Bluetooth 5.4'),
 
 -- OnePlus 12R
-(18, 'Brand', 'OnePlus'),
 (18, 'Model', 'OnePlus 12R'),
 (18, 'Display', '6.78" LTPO AMOLED, 1-120Hz'),
 (18, 'Processor', 'Snapdragon 8 Gen 2'),
@@ -1123,7 +1105,6 @@ VALUES
 (18, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3'),
 
 -- Nothing Phone (2)
-(19, 'Brand', 'Nothing'),
 (19, 'Model', 'Phone (2)'),
 (19, 'Display', '6.7" LTPO OLED, 1-120Hz'),
 (19, 'Processor', 'Snapdragon 8+ Gen 1'),
@@ -1135,7 +1116,6 @@ VALUES
 (19, 'Connectivity', '5G, Wi‑Fi 6, Bluetooth 5.3'),
 
 -- Xperia 5 V
-(20, 'Brand', 'Sony'),
 (20, 'Model', 'Xperia 5 V'),
 (20, 'Display', '6.1" FHD+ OLED, 120Hz, 21:9'),
 (20, 'Processor', 'Snapdragon 8 Gen 2'),
@@ -1148,7 +1128,6 @@ VALUES
 
 -- Tablets
 -- iPad Pro 11-inch (M4, 2024)
-(21, 'Brand', 'Apple'),
 (21, 'Model', 'iPad Pro 11-inch (M4, 2024)'),
 (21, 'Display', '11" Ultra Retina XDR OLED, 120Hz'),
 (21, 'Processor', 'Apple M4'),
@@ -1161,7 +1140,6 @@ VALUES
 (21, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, Thunderbolt/USB‑C'),
 
 -- iPad Pro 13-inch (M4, 2024)
-(22, 'Brand', 'Apple'),
 (22, 'Model', 'iPad Pro 13-inch (M4, 2024)'),
 (22, 'Display', '13" Ultra Retina XDR OLED, 120Hz'),
 (22, 'Processor', 'Apple M4'),
@@ -1174,7 +1152,6 @@ VALUES
 (22, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, Thunderbolt/USB‑C'),
 
 -- iPad Air 11-inch (M2, 2024)
-(23, 'Brand', 'Apple'),
 (23, 'Model', 'iPad Air 11-inch (M2, 2024)'),
 (23, 'Display', '11" Liquid Retina, 60Hz'),
 (23, 'Processor', 'Apple M2'),
@@ -1187,7 +1164,6 @@ VALUES
 (23, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- iPad Air 13-inch (M2, 2024)
-(24, 'Brand', 'Apple'),
 (24, 'Model', 'iPad Air 13-inch (M2, 2024)'),
 (24, 'Display', '13" Liquid Retina, 60Hz'),
 (24, 'Processor', 'Apple M2'),
@@ -1200,7 +1176,6 @@ VALUES
 (24, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- iPad (10th generation)
-(25, 'Brand', 'Apple'),
 (25, 'Model', 'iPad (10th generation)'),
 (25, 'Display', '10.9" Liquid Retina'),
 (25, 'Processor', 'Apple A14 Bionic'),
@@ -1213,7 +1188,6 @@ VALUES
 (25, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
 
 -- iPad mini (6th generation)
-(26, 'Brand', 'Apple'),
 (26, 'Model', 'iPad mini (6th generation)'),
 (26, 'Display', '8.3" Liquid Retina'),
 (26, 'Processor', 'Apple A15 Bionic'),
@@ -1226,7 +1200,6 @@ VALUES
 (26, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.0, USB‑C'),
 
 -- Galaxy Tab S9 Ultra
-(27, 'Brand', 'Samsung'),
 (27, 'Model', 'Galaxy Tab S9 Ultra'),
 (27, 'Display', '14.6" Dynamic AMOLED 2X, 120Hz'),
 (27, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
@@ -1239,7 +1212,6 @@ VALUES
 (27, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- Galaxy Tab S9+
-(28, 'Brand', 'Samsung'),
 (28, 'Model', 'Galaxy Tab S9+'),
 (28, 'Display', '12.4" Dynamic AMOLED 2X, 120Hz'),
 (28, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
@@ -1252,7 +1224,6 @@ VALUES
 (28, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- Galaxy Tab S9
-(29, 'Brand', 'Samsung'),
 (29, 'Model', 'Galaxy Tab S9'),
 (29, 'Display', '11" Dynamic AMOLED 2X, 120Hz'),
 (29, 'Processor', 'Snapdragon 8 Gen 2 for Galaxy'),
@@ -1265,7 +1236,6 @@ VALUES
 (29, 'Connectivity', 'Wi‑Fi 6E, Bluetooth 5.3, USB‑C'),
 
 -- Galaxy Tab S9 FE
-(30, 'Brand', 'Samsung'),
 (30, 'Model', 'Galaxy Tab S9 FE'),
 (30, 'Display', '10.9" LCD, 90Hz'),
 (30, 'Processor', 'Exynos 1380'),
@@ -1278,7 +1248,6 @@ VALUES
 (30, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
 
 -- Galaxy Tab S9 FE+
-(31, 'Brand', 'Samsung'),
 (31, 'Model', 'Galaxy Tab S9 FE+'),
 (31, 'Display', '12.4" LCD, 90Hz'),
 (31, 'Processor', 'Exynos 1380'),
@@ -1291,7 +1260,6 @@ VALUES
 (31, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
 
 -- Surface Pro 11
-(32, 'Brand', 'Microsoft'),
 (32, 'Model', 'Surface Pro 11'),
 (32, 'Display', '13" OLED, 120Hz PixelSense'),
 (32, 'Processor', 'Snapdragon X Elite / X Plus'),
@@ -1304,7 +1272,6 @@ VALUES
 (32, 'Connectivity', 'Wi‑Fi 7, Bluetooth 5.4, USB4'),
 
 -- Surface Go 4
-(33, 'Brand', 'Microsoft'),
 (33, 'Model', 'Surface Go 4'),
 (33, 'Display', '10.5" PixelSense'),
 (33, 'Processor', 'Intel Processor N200'),
@@ -1317,7 +1284,6 @@ VALUES
 (33, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.1, USB‑C'),
 
 -- Lenovo Tab P12
-(34, 'Brand', 'Lenovo'),
 (34, 'Model', 'Tab P12'),
 (34, 'Display', '12.7" 3K LCD'),
 (34, 'Processor', 'MediaTek Dimensity 7050'),
@@ -1330,7 +1296,6 @@ VALUES
 (34, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.1, USB‑C'),
 
 -- Lenovo Tab P11 Pro (2nd Gen)
-(35, 'Brand', 'Lenovo'),
 (35, 'Model', 'Tab P11 Pro (2nd Gen)'),
 (35, 'Display', '11.2" OLED, 120Hz'),
 (35, 'Processor', 'MediaTek Kompanio 1300T'),
@@ -1343,7 +1308,6 @@ VALUES
 (35, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.1, USB‑C'),
 
 -- Xiaomi Pad 6
-(36, 'Brand', 'Xiaomi'),
 (36, 'Model', 'Xiaomi Pad 6'),
 (36, 'Display', '11" IPS LCD, 144Hz'),
 (36, 'Processor', 'Snapdragon 870'),
@@ -1356,7 +1320,6 @@ VALUES
 (36, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
 
 -- OnePlus Pad
-(37, 'Brand', 'OnePlus'),
 (37, 'Model', 'OnePlus Pad'),
 (37, 'Display', '11.61" IPS LCD, 144Hz'),
 (37, 'Processor', 'MediaTek Dimensity 9000'),
@@ -1369,7 +1332,6 @@ VALUES
 (37, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.3, USB‑C'),
 
 -- Huawei MatePad Pro 13.2
-(38, 'Brand', 'Huawei'),
 (38, 'Model', 'MatePad Pro 13.2'),
 (38, 'Display', '13.2" OLED, 144Hz'),
 (38, 'Processor', 'Kirin 9000S'),
@@ -1382,7 +1344,6 @@ VALUES
 (38, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
 
 -- Amazon Fire Max 11
-(39, 'Brand', 'Amazon'),
 (39, 'Model', 'Fire Max 11'),
 (39, 'Display', '11" 2000x1200 LCD'),
 (39, 'Processor', 'MediaTek MT8188J'),
@@ -1395,7 +1356,6 @@ VALUES
 (39, 'Connectivity', 'Wi‑Fi 6, Bluetooth 5.2, USB‑C'),
 
 -- Google Pixel Tablet
-(40, 'Brand', 'Google'),
 (40, 'Model', 'Pixel Tablet'),
 (40, 'Display', '10.95" LCD, 60Hz'),
 (40, 'Processor', 'Google Tensor G2'),
@@ -1409,7 +1369,6 @@ VALUES
 
 -- Laptops
 -- MacBook Pro 14 (M3 Pro)
-(41, 'Brand', 'Apple'),
 (41, 'Model', 'MacBook Pro 14 (M3 Pro)'),
 (41, 'Display', '14.2" Liquid Retina XDR, 3024×1964, 120Hz ProMotion'),
 (41, 'Processor', 'Apple M3 Pro'),
@@ -1422,7 +1381,6 @@ VALUES
 (41, 'Ports', '3× Thunderbolt 4, HDMI 2.1, SDXC, MagSafe 3, 3.5mm'),
 
 -- MacBook Air 15 (M3)
-(42, 'Brand', 'Apple'),
 (42, 'Model', 'MacBook Air 15 (M3)'),
 (42, 'Display', '15.3" Liquid Retina, 2880×1864'),
 (42, 'Processor', 'Apple M3'),
@@ -1435,7 +1393,6 @@ VALUES
 (42, 'Ports', '2× Thunderbolt/USB 4, MagSafe 3, 3.5mm'),
 
 -- Dell XPS 14 (9440)
-(43, 'Brand', 'Dell'),
 (43, 'Model', 'XPS 14 (9440)'),
 (43, 'Display', '14.5" 3.2K OLED, 120Hz'),
 (43, 'Processor', 'Intel Core Ultra 7'),
@@ -1448,7 +1405,6 @@ VALUES
 (43, 'Ports', '3× Thunderbolt 4 (USB-C) with adapters'),
 
 -- Dell XPS 13 (9340)
-(44, 'Brand', 'Dell'),
 (44, 'Model', 'XPS 13 (9340)'),
 (44, 'Display', '13.4" FHD+ IPS or 2.8K OLED'),
 (44, 'Processor', 'Intel Core Ultra 7'),
@@ -1461,7 +1417,6 @@ VALUES
 (44, 'Ports', '2× Thunderbolt 4 (USB-C) with adapters'),
 
 -- HP Spectre x360 14
-(45, 'Brand', 'HP'),
 (45, 'Model', 'Spectre x360 14'),
 (45, 'Display', '14" 2.8K OLED, 120Hz, touchscreen'),
 (45, 'Processor', 'Intel Core Ultra 7'),
@@ -1474,7 +1429,6 @@ VALUES
 (45, 'Ports', '2× Thunderbolt 4, USB-A, 3.5mm'),
 
 -- ThinkPad X1 Carbon Gen 12
-(46, 'Brand', 'Lenovo'),
 (46, 'Model', 'ThinkPad X1 Carbon Gen 12'),
 (46, 'Display', '14" 2.8K OLED or 2.2K IPS'),
 (46, 'Processor', 'Intel Core Ultra 7'),
@@ -1487,7 +1441,6 @@ VALUES
 (46, 'Ports', '2× Thunderbolt 4, 2× USB-A, HDMI, 3.5mm'),
 
 -- ThinkPad X1 Yoga Gen 9
-(47, 'Brand', 'Lenovo'),
 (47, 'Model', 'ThinkPad X1 Yoga Gen 9'),
 (47, 'Display', '14" 2.8K OLED, touchscreen, 360° hinge'),
 (47, 'Processor', 'Intel Core Ultra 7'),
@@ -1500,7 +1453,6 @@ VALUES
 (47, 'Ports', '2× Thunderbolt 4, 2× USB-A, HDMI, 3.5mm'),
 
 -- ROG Zephyrus G14 (2024)
-(48, 'Brand', 'ASUS'),
 (48, 'Model', 'ROG Zephyrus G14 (2024)'),
 (48, 'Display', '14" QHD+ 120Hz'),
 (48, 'Processor', 'AMD Ryzen 9'),
@@ -1513,7 +1465,6 @@ VALUES
 (48, 'Ports', 'USB4, 2× USB-A, HDMI 2.1, 3.5mm'),
 
 -- ROG Zephyrus G16 (2024)
-(49, 'Brand', 'ASUS'),
 (49, 'Model', 'ROG Zephyrus G16 (2024)'),
 (49, 'Display', '16" OLED 240Hz'),
 (49, 'Processor', 'Intel Core Ultra 9'),
@@ -1526,7 +1477,6 @@ VALUES
 (49, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, 3.5mm'),
 
 -- Acer Swift X 14 (2024)
-(50, 'Brand', 'Acer'),
 (50, 'Model', 'Swift X 14'),
 (50, 'Display', '14.5" 2.8K OLED, 120Hz'),
 (50, 'Processor', 'Intel Core Ultra 7'),
@@ -1539,7 +1489,6 @@ VALUES
 (50, 'Ports', '2× USB-C, 2× USB-A, HDMI 2.1'),
 
 -- Acer Swift Go 14 (2024)
-(51, 'Brand', 'Acer'),
 (51, 'Model', 'Swift Go 14'),
 (51, 'Display', '14" 2.8K OLED, 90Hz'),
 (51, 'Processor', 'Intel Core Ultra 5/7'),
@@ -1552,7 +1501,6 @@ VALUES
 (51, 'Ports', '2× USB-C, 2× USB-A, HDMI 2.1'),
 
 -- Surface Laptop 6
-(52, 'Brand', 'Microsoft'),
 (52, 'Model', 'Surface Laptop 6'),
 (52, 'Display', '13.5" or 15" PixelSense, 3:2'),
 (52, 'Processor', 'Intel Core Ultra 7'),
@@ -1565,7 +1513,6 @@ VALUES
 (52, 'Ports', '2× Thunderbolt 4, USB-A, 3.5mm'),
 
 -- Surface Laptop Studio 2
-(53, 'Brand', 'Microsoft'),
 (53, 'Model', 'Surface Laptop Studio 2'),
 (53, 'Display', '14.4" PixelSense Flow, 120Hz'),
 (53, 'Processor', 'Intel Core i7 H-series'),
@@ -1578,7 +1525,6 @@ VALUES
 (53, 'Ports', '2× Thunderbolt 4, USB-A, microSDXC'),
 
 -- Razer Blade 16
-(54, 'Brand', 'Razer'),
 (54, 'Model', 'Blade 16'),
 (54, 'Display', '16" QHD+ Mini-LED, 240Hz'),
 (54, 'Processor', 'Intel Core i9 HX'),
@@ -1591,7 +1537,6 @@ VALUES
 (54, 'Ports', 'Thunderbolt 4, 3× USB-A, HDMI 2.1, SD, 3.5mm'),
 
 -- Razer Blade 14
-(55, 'Brand', 'Razer'),
 (55, 'Model', 'Blade 14'),
 (55, 'Display', '14" QHD+ 240Hz'),
 (55, 'Processor', 'AMD Ryzen 9'),
@@ -1604,7 +1549,6 @@ VALUES
 (55, 'Ports', 'USB4, 2× USB-A, HDMI 2.1, 3.5mm'),
 
 -- MSI Stealth 16 Studio
-(56, 'Brand', 'MSI'),
 (56, 'Model', 'Stealth 16 Studio'),
 (56, 'Display', '16" QHD+ 240Hz'),
 (56, 'Processor', 'Intel Core i9'),
@@ -1617,7 +1561,6 @@ VALUES
 (56, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, microSD'),
 
 -- MSI Raider GE78 HX
-(57, 'Brand', 'MSI'),
 (57, 'Model', 'Raider GE78 HX'),
 (57, 'Display', '17" QHD+ 240Hz'),
 (57, 'Processor', 'Intel Core i9 HX'),
@@ -1630,7 +1573,6 @@ VALUES
 (57, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, SD'),
 
 -- Gigabyte AORUS 16X
-(58, 'Brand', 'Gigabyte'),
 (58, 'Model', 'AORUS 16X'),
 (58, 'Display', '16" QHD+ 165Hz'),
 (58, 'Processor', 'Intel Core i7/Ultra'),
@@ -1643,7 +1585,6 @@ VALUES
 (58, 'Ports', 'Thunderbolt 4, 2× USB-A, HDMI 2.1, RJ-45'),
 
 -- Galaxy Book4 Pro 14
-(59, 'Brand', 'Samsung'),
 (59, 'Model', 'Galaxy Book4 Pro 14'),
 (59, 'Display', '14" 3K AMOLED, 120Hz'),
 (59, 'Processor', 'Intel Core Ultra 7'),
@@ -1656,7 +1597,6 @@ VALUES
 (59, 'Ports', '2× Thunderbolt 4, USB-A, HDMI 2.0, microSD'),
 
 -- LG Gram 16
-(60, 'Brand', 'LG'),
 (60, 'Model', 'Gram 16'),
 (60, 'Display', '16" WQXGA IPS'),
 (60, 'Processor', 'Intel Core Ultra 7'),
@@ -1670,7 +1610,6 @@ VALUES
 
 -- Audio & Headphones
 -- Sony WH-1000XM5
-(61, 'Brand', 'Sony'),
 (61, 'Model', 'WH-1000XM5'),
 (61, 'Type', 'Over-ear wireless'),
 (61, 'Driver', '30mm dynamic'),
@@ -1682,7 +1621,6 @@ VALUES
 (61, 'Weight', '250 g'),
 
 -- Bose QuietComfort Ultra Headphones
-(62, 'Brand', 'Bose'),
 (62, 'Model', 'QuietComfort Ultra Headphones'),
 (62, 'Type', 'Over-ear wireless'),
 (62, 'Driver', 'Custom Bose drivers'),
@@ -1694,7 +1632,6 @@ VALUES
 (62, 'Weight', '250 g'),
 
 -- AirPods Pro (2nd gen, USB-C)
-(63, 'Brand', 'Apple'),
 (63, 'Model', 'AirPods Pro (2nd gen, USB-C)'),
 (63, 'Type', 'True wireless in-ear'),
 (63, 'Noise Cancellation', 'Active Noise Cancellation, Adaptive Transparency'),
@@ -1705,7 +1642,6 @@ VALUES
 (63, 'Water Resistance', 'IPX4 (earbuds and case)'),
 
 -- Sennheiser MOMENTUM 4 Wireless
-(64, 'Brand', 'Sennheiser'),
 (64, 'Model', 'MOMENTUM 4 Wireless'),
 (64, 'Type', 'Over-ear wireless'),
 (64, 'Driver', '42mm dynamic'),
@@ -1717,7 +1653,6 @@ VALUES
 (64, 'Weight', '293 g'),
 
 -- Bowers & Wilkins Px7 S2e
-(65, 'Brand', 'Bowers & Wilkins'),
 (65, 'Model', 'Px7 S2e'),
 (65, 'Type', 'Over-ear wireless'),
 (65, 'Driver', '40mm biocellulose'),
@@ -1729,7 +1664,6 @@ VALUES
 (65, 'Weight', '307 g'),
 
 -- Bose QuietComfort Ultra Earbuds
-(66, 'Brand', 'Bose'),
 (66, 'Model', 'QuietComfort Ultra Earbuds'),
 (66, 'Type', 'True wireless in-ear'),
 (66, 'Noise Cancellation', 'Advanced ANC with Immersive Audio'),
@@ -1740,7 +1674,6 @@ VALUES
 (66, 'Audio Codecs', 'SBC, AAC'),
 
 -- Sony WF-1000XM5
-(67, 'Brand', 'Sony'),
 (67, 'Model', 'WF-1000XM5'),
 (67, 'Type', 'True wireless in-ear'),
 (67, 'Driver', '8.4mm dynamic'),
@@ -1752,7 +1685,6 @@ VALUES
 (67, 'Water Resistance', 'IPX4'),
 
 -- AirPods Max
-(68, 'Brand', 'Apple'),
 (68, 'Model', 'AirPods Max'),
 (68, 'Type', 'Over-ear wireless'),
 (68, 'Noise Cancellation', 'Active Noise Cancellation, Transparency mode'),
@@ -1763,7 +1695,6 @@ VALUES
 (68, 'Weight', '384.8 g'),
 
 -- Beats Studio Pro
-(69, 'Brand', 'Beats'),
 (69, 'Model', 'Studio Pro'),
 (69, 'Type', 'Over-ear wireless'),
 (69, 'Noise Cancellation', 'ANC and Transparency'),
@@ -1774,7 +1705,6 @@ VALUES
 (69, 'Weight', '260 g'),
 
 -- Soundcore Liberty 4 NC
-(70, 'Brand', 'Soundcore'),
 (70, 'Model', 'Liberty 4 NC'),
 (70, 'Type', 'True wireless in-ear'),
 (70, 'Noise Cancellation', 'Adaptive ANC 2.0'),
@@ -1785,7 +1715,6 @@ VALUES
 (70, 'Water Resistance', 'IPX4'),
 
 -- Jabra Elite 10
-(71, 'Brand', 'Jabra'),
 (71, 'Model', 'Elite 10'),
 (71, 'Type', 'True wireless in-ear'),
 (71, 'Noise Cancellation', 'Advanced ANC'),
@@ -1796,7 +1725,6 @@ VALUES
 (71, 'Water Resistance', 'IP57'),
 
 -- Samsung Galaxy Buds2 Pro
-(72, 'Brand', 'Samsung'),
 (72, 'Model', 'Galaxy Buds2 Pro'),
 (72, 'Type', 'True wireless in-ear'),
 (72, 'Noise Cancellation', 'Intelligent ANC'),
@@ -1807,7 +1735,6 @@ VALUES
 (72, 'Water Resistance', 'IPX7'),
 
 -- Google Pixel Buds Pro
-(73, 'Brand', 'Google'),
 (73, 'Model', 'Pixel Buds Pro'),
 (73, 'Type', 'True wireless in-ear'),
 (73, 'Noise Cancellation', 'Active Noise Cancellation'),
@@ -1818,7 +1745,6 @@ VALUES
 (73, 'Water Resistance', 'IPX4'),
 
 -- Nothing Ear (2024)
-(74, 'Brand', 'Nothing'),
 (74, 'Model', 'Ear (2024)'),
 (74, 'Type', 'True wireless in-ear'),
 (74, 'Noise Cancellation', 'Smart ANC up to 45 dB'),
@@ -1829,7 +1755,6 @@ VALUES
 (74, 'Water Resistance', 'IP54'),
 
 -- JBL Tour One M2
-(75, 'Brand', 'JBL'),
 (75, 'Model', 'Tour One M2'),
 (75, 'Type', 'Over-ear wireless'),
 (75, 'Noise Cancellation', 'True Adaptive ANC'),
@@ -1840,7 +1765,6 @@ VALUES
 (75, 'Weight', '278 g'),
 
 -- Shure AONIC 50 Gen 2
-(76, 'Brand', 'Shure'),
 (76, 'Model', 'AONIC 50 Gen 2'),
 (76, 'Type', 'Over-ear wireless'),
 (76, 'Noise Cancellation', 'Adjustable ANC'),
@@ -1851,7 +1775,6 @@ VALUES
 (76, 'Weight', '334 g'),
 
 -- Sonos Ace
-(77, 'Brand', 'Sonos'),
 (77, 'Model', 'Ace'),
 (77, 'Type', 'Over-ear wireless'),
 (77, 'Noise Cancellation', 'Active Noise Cancellation, Aware mode'),
@@ -1862,7 +1785,6 @@ VALUES
 (77, 'Weight', '312 g'),
 
 -- Technics EAH-AZ80
-(78, 'Brand', 'Technics'),
 (78, 'Model', 'EAH-AZ80'),
 (78, 'Type', 'True wireless in-ear'),
 (78, 'Noise Cancellation', 'Dual hybrid ANC'),
@@ -1873,7 +1795,6 @@ VALUES
 (78, 'Water Resistance', 'IPX4'),
 
 -- Bose SoundLink Flex
-(79, 'Brand', 'Bose'),
 (79, 'Model', 'SoundLink Flex'),
 (79, 'Type', 'Portable Bluetooth speaker'),
 (79, 'Drivers', 'Custom full-range'),
@@ -1884,7 +1805,6 @@ VALUES
 (79, 'Weight', '0.6 kg'),
 
 -- Marshall Motif II ANC
-(80, 'Brand', 'Marshall'),
 (80, 'Model', 'Motif II ANC'),
 (80, 'Type', 'True wireless in-ear'),
 (80, 'Noise Cancellation', 'Active Noise Cancellation'),
@@ -1896,7 +1816,6 @@ VALUES
 
 -- Wearables
 -- Apple Watch Series 9
-(81, 'Brand', 'Apple'),
 (81, 'Model', 'Watch Series 9'),
 (81, 'Type', 'Smartwatch'),
 (81, 'Display', '41/45mm LTPO OLED Retina, up to 2000 nits'),
@@ -1909,7 +1828,6 @@ VALUES
 (81, 'Connectivity', 'GPS, Wi‑Fi, Bluetooth 5.3, optional LTE'),
 
 -- Apple Watch Ultra 2
-(82, 'Brand', 'Apple'),
 (82, 'Model', 'Watch Ultra 2'),
 (82, 'Type', 'Rugged smartwatch'),
 (82, 'Display', '1.92" LTPO OLED Retina, up to 3000 nits'),
@@ -1922,7 +1840,6 @@ VALUES
 (82, 'Connectivity', 'Dual‑frequency GPS, Wi‑Fi, Bluetooth 5.3, LTE'),
 
 -- Galaxy Watch6
-(83, 'Brand', 'Samsung'),
 (83, 'Model', 'Galaxy Watch6'),
 (83, 'Type', 'Smartwatch'),
 (83, 'Display', 'Super AMOLED, 40/44mm'),
@@ -1935,7 +1852,6 @@ VALUES
 (83, 'Connectivity', 'GPS, Bluetooth 5.3, Wi‑Fi, NFC'),
 
 -- Galaxy Watch6 Classic
-(84, 'Brand', 'Samsung'),
 (84, 'Model', 'Galaxy Watch6 Classic'),
 (84, 'Type', 'Smartwatch'),
 (84, 'Display', 'Super AMOLED, 43/47mm'),
@@ -1949,7 +1865,6 @@ VALUES
 (84, 'Connectivity', 'GPS, Bluetooth 5.3, Wi‑Fi, NFC'),
 
 -- Pixel Watch 2
-(85, 'Brand', 'Google'),
 (85, 'Model', 'Pixel Watch 2'),
 (85, 'Type', 'Smartwatch'),
 (85, 'Display', '1.2" AMOLED'),
@@ -1962,7 +1877,6 @@ VALUES
 (85, 'Connectivity', 'GPS, Bluetooth 5.0, Wi‑Fi, NFC, optional LTE'),
 
 -- Garmin fēnix 7 Pro
-(86, 'Brand', 'Garmin'),
 (86, 'Model', 'fēnix 7 Pro'),
 (86, 'Type', 'Outdoor multisport watch'),
 (86, 'Display', '1.3" MIP sunlight‑visible'),
@@ -1974,7 +1888,6 @@ VALUES
 (86, 'Connectivity', 'Bluetooth, Wi‑Fi, ANT+'),
 
 -- Garmin Forerunner 965
-(87, 'Brand', 'Garmin'),
 (87, 'Model', 'Forerunner 965'),
 (87, 'Type', 'Performance running watch'),
 (87, 'Display', '1.4" AMOLED'),
@@ -1986,7 +1899,6 @@ VALUES
 (87, 'Connectivity', 'Bluetooth, Wi‑Fi, ANT+'),
 
 -- Garmin Venu 3
-(88, 'Brand', 'Garmin'),
 (88, 'Model', 'Venu 3'),
 (88, 'Type', 'Health & fitness smartwatch'),
 (88, 'Display', 'AMOLED, 45/41mm'),
@@ -1998,7 +1910,6 @@ VALUES
 (88, 'Connectivity', 'Bluetooth, Wi‑Fi, ANT+'),
 
 -- Fitbit Sense 2
-(89, 'Brand', 'Fitbit'),
 (89, 'Model', 'Sense 2'),
 (89, 'Type', 'Health smartwatch'),
 (89, 'Display', 'AMOLED'),
@@ -2009,7 +1920,6 @@ VALUES
 (89, 'Connectivity', 'Bluetooth 5.0, NFC, GPS'),
 
 -- Fitbit Charge 6
-(90, 'Brand', 'Fitbit'),
 (90, 'Model', 'Charge 6'),
 (90, 'Type', 'Fitness tracker'),
 (90, 'Display', 'AMOLED'),
@@ -2020,7 +1930,6 @@ VALUES
 (90, 'Connectivity', 'Bluetooth 5.0, built‑in GPS'),
 
 -- Oura Ring Gen 3
-(91, 'Brand', 'Oura'),
 (91, 'Model', 'Ring Gen 3'),
 (91, 'Type', 'Smart ring'),
 (91, 'Material', 'Titanium'),
@@ -2031,7 +1940,6 @@ VALUES
 (91, 'Sizes', 'US sizes 6-13'),
 
 -- Xiaomi Watch 2 Pro
-(92, 'Brand', 'Xiaomi'),
 (92, 'Model', 'Watch 2 Pro'),
 (92, 'Type', 'Smartwatch'),
 (92, 'Display', '1.43" AMOLED, 466×466'),
@@ -2043,7 +1951,6 @@ VALUES
 (92, 'Connectivity', 'Bluetooth 5.2, Wi‑Fi, NFC, optional LTE, GNSS'),
 
 -- Huawei Watch GT 4
-(93, 'Brand', 'Huawei'),
 (93, 'Model', 'Watch GT 4'),
 (93, 'Type', 'Smartwatch'),
 (93, 'Display', 'AMOLED, 41/46mm'),
@@ -2054,7 +1961,6 @@ VALUES
 (93, 'Connectivity', 'Bluetooth 5.2, GNSS'),
 
 -- Amazfit Balance
-(94, 'Brand', 'Amazfit'),
 (94, 'Model', 'Balance'),
 (94, 'Type', 'Smartwatch'),
 (94, 'Display', '1.5" AMOLED'),
@@ -2065,7 +1971,6 @@ VALUES
 (94, 'Connectivity', 'Bluetooth 5.0, dual‑band GPS, NFC (select)'),
 
 -- Suunto Vertical
-(95, 'Brand', 'Suunto'),
 (95, 'Model', 'Vertical'),
 (95, 'Type', 'Outdoor GPS watch'),
 (95, 'Display', 'MIP display, sapphire options'),
@@ -2076,7 +1981,6 @@ VALUES
 (95, 'Connectivity', 'Bluetooth, multi‑band GNSS, offline maps'),
 
 -- Polar Vantage V3
-(96, 'Brand', 'Polar'),
 (96, 'Model', 'Vantage V3'),
 (96, 'Type', 'Multisport watch'),
 (96, 'Display', '1.39" AMOLED'),
@@ -2088,7 +1992,6 @@ VALUES
 (96, 'Connectivity', 'Bluetooth, dual‑band GPS'),
 
 -- Apple Watch SE (2nd gen)
-(97, 'Brand', 'Apple'),
 (97, 'Model', 'Watch SE (2nd gen)'),
 (97, 'Type', 'Smartwatch'),
 (97, 'Display', 'Retina OLED'),
@@ -2101,7 +2004,6 @@ VALUES
 (97, 'Connectivity', 'GPS, Wi‑Fi, Bluetooth 5.3, optional LTE'),
 
 -- Galaxy Watch5 Pro
-(98, 'Brand', 'Samsung'),
 (98, 'Model', 'Galaxy Watch5 Pro'),
 (98, 'Type', 'Rugged smartwatch'),
 (98, 'Display', '1.4" Super AMOLED'),
@@ -2114,7 +2016,6 @@ VALUES
 (98, 'Connectivity', 'GPS, Bluetooth 5.2, Wi‑Fi, NFC'),
 
 -- WHOOP 4.0
-(99, 'Brand', 'WHOOP'),
 (99, 'Model', '4.0'),
 (99, 'Type', 'Screenless fitness band'),
 (99, 'Sensors', 'PPG, temperature, accelerometer'),
@@ -2125,7 +2026,6 @@ VALUES
 (99, 'Membership', 'Subscription required'),
 
 -- Samsung Galaxy Ring
-(100, 'Brand', 'Samsung'),
 (100, 'Model', 'Galaxy Ring'),
 (100, 'Type', 'Smart ring'),
 (100, 'Material', 'Titanium'),
