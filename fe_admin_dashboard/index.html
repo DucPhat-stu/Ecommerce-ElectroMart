@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ElectroMart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../fe_admin_dashboard/css_admin_dashboard/admin-style.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">
+                    <i class="fas fa-store"></i> ElectroMart Admin
+                </h2>
+                <button class="toggle-sidebar btn-toggle" id="toggleSidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Main Navigation Menu -->
+            <ul class="nav-menu">
+                <!-- Dashboard Link -->
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link" data-section="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- User Management -->
+                <li class="nav-item">
+                    <a href="#users" class="nav-link" data-section="users">
+                        <i class="fas fa-users"></i>
+                        <span class="nav-text">User Management</span>
+                    </a>
+                </li>
+
+                <!-- Product Management -->
+                <li class="nav-item">
+                    <a href="#products" class="nav-link" data-section="products">
+                        <i class="fas fa-box"></i>
+                        <span class="nav-text">Product Management</span>
+                    </a>
+                </li>
+
+                <!-- Category Management -->
+                <li class="nav-item">
+                    <a href="#categories" class="nav-link" data-section="categories">
+                        <i class="fas fa-list"></i>
+                        <span class="nav-text">Category Management</span>
+                    </a>
+                </li>
+
+                <!-- Discount Management -->
+                <li class="nav-item">
+                    <a href="#discounts" class="nav-link" data-section="discounts">
+                        <i class="fas fa-tag"></i>
+                        <span class="nav-text">Discount Management</span>
+                    </a>
+                </li>
+
+                <!-- Order Management -->
+                <li class="nav-item">
+                    <a href="#orders" class="nav-link" data-section="orders">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="nav-text">Order Management</span>
+                    </a>
+                </li>
+
+                <!-- Statistics -->
+                <li class="nav-item">
+                    <a href="#statistics" class="nav-link" data-section="statistics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="nav-text">Sales Statistics</span>
+                    </a>
+                </li>
+
+                <!-- View Products (Customer View) -->
+                <li class="nav-item">
+                    <a href="#shop" class="nav-link" data-section="shop">
+                        <i class="fas fa-eye"></i>
+                        <span class="nav-text">View Store</span>
+                    </a>
+                </li>
+
+                <!-- Wishlist -->
+                <li class="nav-item">
+                    <a href="#wishlist" class="nav-link" data-section="wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="nav-text">Wishlist</span>
+                        <span class="wishlist-badge badge bg-danger" id="wishlistCount">0</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Logout -->
+            <div class="sidebar-footer">
+                <button class="btn btn-logout w-100">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                        <span class="user-name">Admin User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content-wrapper">
+
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="content-section active">
+                    <div class="dashboard-cards">
+                        <div class="card-stat">
+                            <div class="card-icon icon-users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Users</h3>
+                                <p class="stat-number" id="totalUsers">0</p>
+                            </div>
+                        </div>
+
+                        <div class="card-stat">
+                            <div class="card-icon icon-products">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Products</h3>
+                                <p class="stat-number" id="totalProducts">0</p>
+                            </div>
+                        </div>
+
+                        <div class="card-stat">
+                            <div class="card-icon icon-orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Orders</h3>
+                                <p class="stat-number" id="totalOrders">0</p>
+                            </div>
+                        </div>
+
+                        <div class="card-stat">
+                            <div class="card-icon icon-revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Revenue</h3>
+                                <p class="stat-number" id="totalRevenue">$0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Recent Orders</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Customer</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentOrdersTable">
+                                            <tr>
+                                                <td colspan="4" class="text-center">No data</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Top Selling Products</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Sold</th>
+                                                <th>Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="topProductsTable">
+                                            <tr>
+                                                <td colspan="3" class="text-center">No data</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- User Management Section -->
+                <section id="users-section" class="content-section">
+                    <div class="section-header">
+                        <h2>User Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+                            <i class="fas fa-plus"></i> Add User
+                        </button>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" class="form-control search-input" id="userSearch" placeholder="Search users...">
+                        <select class="form-select filter-select" id="userRoleFilter">
+                            <option value="">All roles</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Created Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">No data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Product Management Section -->
+                <section id="products-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Product Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" class="form-control search-input" id="productSearch" placeholder="Search products...">
+                        <select class="form-select filter-select" id="productCategoryFilter">
+                            <option value="">All categories</option>
+                        </select>
+                        <select class="form-select filter-select" id="productStatusFilter">
+                            <option value="">All statuses</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">Không có dữ liệu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Category Management Section -->
+                <section id="categories-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Category Management</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                            <i class="fas fa-plus"></i> Thêm Category
+                        </button>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" class="form-control search-input" id="categorySearch" placeholder="Search categories...">
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Product Count</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Không có dữ liệu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Discount Management Section -->
+                <section id="discounts-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Quản lý Khuyến mãi</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#discountModal">
+                            <i class="fas fa-plus"></i> Thêm Khuyến mãi
+                        </button>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" class="form-control search-input" id="discountSearch" placeholder="Tìm kiếm khuyến mãi...">
+                        <select class="form-select filter-select" id="discountStatusFilter">
+                            <option value="">Tất cả Status</option>
+                            <option value="active">Active</option>
+                            <option value="expired">Hết hạn</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Mã khuyến mãi</th>
+                                    <th>Price��m Price</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="discountsTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">Không có dữ liệu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Order Management Section -->
+                <section id="orders-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Quản lý Đơn hàng</h2>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" class="form-control search-input" id="orderSearch" placeholder="Tìm kiếm đơn hàng...">
+                        <select class="form-select filter-select" id="orderStatusFilter">
+                            <option value="">Tất cả Status</option>
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="shipped">Đã giao</option>
+                            <option value="cancelled">Đã hủy</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID Đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">Không có dữ liệu</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Statistics Section -->
+                <section id="statistics-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Thống kê Bán hàng & Lợi nhuận</h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stat-box">
+                                <h6>Total Revenue</h6>
+                                <p class="stat-value" id="statsRevenue">$0</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-box">
+                                <h6>Total Cost</h6>
+                                <p class="stat-value" id="statsCost">$0</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-box">
+                                <h6>Total Profit</h6>
+                                <p class="stat-value profit" id="statsProfit">$0</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-box">
+                                <h6>Tỷ lệ lợi nhuận</h6>
+                                <p class="stat-value" id="statsProfitRate">0%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Revenue by Month</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Đơn hàng theo Status</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="orderStatusChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5>Profit Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                        <th>Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="profitDetailTable">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">No data</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Shop (Products View) Section -->
+                <section id="shop-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Xem Cửa hàng - Sản phẩm theo Category</h2>
+                    </div>
+
+                    <div class="shop-filter-bar">
+                        <input type="text" class="form-control search-input" id="shopSearch" placeholder="Search products...">
+                        <select class="form-select filter-select" id="shopCategoryFilter">
+                            <option value="">Tất cả Category</option>
+                        </select>
+                        <div class="price-range-filter">
+                            <input type="number" class="form-control" id="minPrice" placeholder="Price tối thiểu" min="0">
+                            <input type="number" class="form-control" id="maxPrice" placeholder="Price tối đa" min="0">
+                        </div>
+                    </div>
+
+                    <div class="products-grid" id="productsGrid">
+                        <div class="col-12 text-center text-muted py-5">
+                            No products
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Wishlist Section -->
+                <section id="wishlist-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Wishlist của tôi</h2>
+                    </div>
+
+                    <div class="wishlist-info">
+                        <p id="wishlistInfo">Bạn có <strong id="wishlistItemCount">0</strong> sản phẩm trong danh sách yêu thích</p>
+                    </div>
+
+                    <div class="wishlist-grid" id="wishlistGrid">
+                        <div class="col-12 text-center text-muted py-5">
+                            No favorite products yet
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: User -->
+    <div class="modal fade" id="userModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm / Chỉnh sửa User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Name User</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="userEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userRole" class="form-label">Role</label>
+                            <select class="form-select" id="userRole" required>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="saveUserBtn">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Product -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm / Chỉnh sửa Sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productCategory" class="form-label">Category</label>
+                            <select class="form-select" id="productCategory" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productPrice" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="productPrice" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productStock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="productStock" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productStatus" class="form-label">Status</label>
+                            <select class="form-select" id="productStatus" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="saveProductBtn">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Category -->
+    <div class="modal fade" id="categoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm / Chỉnh sửa Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="categoryForm">
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="categoryName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryDesc" class="form-label">Description</label>
+                            <textarea class="form-control" id="categoryDesc" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="saveCategoryBtn">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Discount -->
+    <div class="modal fade" id="discountModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm / Chỉnh sửa Khuyến mãi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="discountForm">
+                        <div class="mb-3">
+                            <label for="discountCode" class="form-label">Mã khuyến mãi</label>
+                            <input type="text" class="form-control" id="discountCode" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="discountPercent" class="form-label">Price��m Price (%)</label>
+                            <input type="number" class="form-control" id="discountPercent" required min="0" max="100">
+                        </div>
+                        <div class="mb-3">
+                            <label for="discountStart" class="form-label">Ngày bắt đầu</label>
+                            <input type="date" class="form-control" id="discountStart" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="discountEnd" class="form-label">Ngày kết thúc</label>
+                            <input type="date" class="form-control" id="discountEnd" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="saveDiscountBtn">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    
+    <!-- Utilities -->
+    <script src="../fe_admin_dashboard/js_admin_dashboard/utils/formatters.js"></script>
+    
+    <!-- Services -->
+    <script src="../fe_admin_dashboard/js_admin_dashboard/services/notification.js"></script>
+    
+    <!-- Modules -->
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/dashboard.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/users.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/products.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/categories.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/discounts.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/orders.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/statistics.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/shop.js"></script>
+    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/wishlist.js"></script>
+    
+    <!-- Main -->
+    <script src="../fe_admin_dashboard/js_admin_dashboard/admin-main.js"></script>
+</body>
+</html>
+
+
