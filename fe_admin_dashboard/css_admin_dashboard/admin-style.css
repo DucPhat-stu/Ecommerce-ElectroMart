@@ -173,6 +173,28 @@ html, body {
     .wishlist-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
+
+    /* Statistics responsive - fix text overlapping */
+    .stat-cards-responsive {
+        margin-bottom: 15px;
+    }
+
+    .stat-box {
+        padding: 15px;
+    }
+
+    .stat-box h6 {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .row.mt-4 > .col-lg-6 {
+        margin-bottom: 15px;
+    }
 }
 
 /* ============ SIDEBAR STYLES ============ */
