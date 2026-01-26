@@ -35,10 +35,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123123
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_JPA_SHOW_SQL: true
-    networks:
-      - app-network
     ports:
       - "8080:8080"
+    networks:
+      - app-network
+    volumes:
+      - ./uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy
@@ -53,6 +55,8 @@ services:
       - "80:80"
     networks:
       - app-network
+    volumes:
+      - ./uploads:/app/uploads
     depends_on:
       - be
       - db
