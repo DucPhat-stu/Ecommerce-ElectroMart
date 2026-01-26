@@ -36,14 +36,7 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS brands (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    logo_url VARCHAR(255),
-    category_id BIGINT NOT NULL,
-    INDEX (category_id),
-    CONSTRAINT fk_brands_category
-        FOREIGN KEY (category_id)
-        REFERENCES categories(id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    logo_url VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================

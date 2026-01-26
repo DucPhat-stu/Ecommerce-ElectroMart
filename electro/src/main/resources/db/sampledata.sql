@@ -42,81 +42,51 @@ VALUES
 ('Wearables', NULL, 'ACTIVE', '2024-01-10 10:00:00');
 
 -- ============================================
--- BRANDS DATA
+-- BRANDS DATA - Fixed: Brands now independent of categories
 -- ============================================
 INSERT INTO brands (
     id,
     name,
-    logo_url,
-    category_id
+    logo_url
     )
 VALUES
--- Smartphones
-(1, 'Apple', NULL, 1),
-(2, 'Samsung', NULL, 1),
-(3, 'Google', NULL, 1),
-(4, 'OnePlus', NULL, 1),
-(5, 'Xiaomi', NULL, 1),
-(6, 'Sony', NULL, 1),
-(7, 'ASUS', NULL, 1),
-(8, 'Nothing', NULL, 1),
-
--- Tablets
-(9, 'Apple', NULL, 3),
-(10, 'Samsung', NULL, 3),
-(11, 'Microsoft', NULL, 3),
-(12, 'Lenovo', NULL, 3),
-(13, 'Xiaomi', NULL, 3),
-(14, 'OnePlus', NULL, 3),
-(15, 'Huawei', NULL, 3),
-(16, 'Amazon', NULL, 3),
-(17, 'Google', NULL, 3),
-
--- Laptops
-(18, 'Apple', NULL, 2),
-(19, 'Dell', NULL, 2),
-(20, 'HP', NULL, 2),
-(21, 'Lenovo', NULL, 2),
-(22, 'ASUS', NULL, 2),
-(23, 'Acer', NULL, 2),
-(24, 'Microsoft', NULL, 2),
-(25, 'Razer', NULL, 2),
-(26, 'MSI', NULL, 2),
-(27, 'Gigabyte', NULL, 2),
-(28, 'Samsung', NULL, 2),
-(29, 'LG', NULL, 2),
-
--- Audio & Headphones
-(30, 'Sony', NULL, 4),
-(31, 'Bose', NULL, 4),
-(32, 'Apple', NULL, 4),
-(33, 'Sennheiser', NULL, 4),
-(34, 'Bowers & Wilkins', NULL, 4),
-(35, 'Beats', NULL, 4),
-(36, 'Soundcore', NULL, 4),
-(37, 'Jabra', NULL, 4),
-(38, 'Samsung', NULL, 4),
-(39, 'Google', NULL, 4),
-(40, 'Nothing', NULL, 4),
-(41, 'JBL', NULL, 4),
-(42, 'Shure', NULL, 4),
-(43, 'Sonos', NULL, 4),
-(44, 'Technics', NULL, 4),
-(45, 'Marshall', NULL, 4),
-
--- Wearables
-(46, 'Apple', NULL, 5),
-(47, 'Samsung', NULL, 5),
-(48, 'Google', NULL, 5),
-(49, 'Garmin', NULL, 5),
-(50, 'Fitbit', NULL, 5),
-(51, 'Oura', NULL, 5),
-(52, 'Xiaomi', NULL, 5),
-(53, 'Huawei', NULL, 5),
-(54, 'Amazfit', NULL, 5),
-(55, 'Suunto', NULL, 5),
-(56, 'Polar', NULL, 5),
-(57, 'WHOOP', NULL, 5);
+(1, 'Apple', NULL),
+(2, 'Samsung', NULL),
+(3, 'Google', NULL),
+(4, 'OnePlus', NULL),
+(5, 'Xiaomi', NULL),
+(6, 'Sony', NULL),
+(7, 'ASUS', NULL),
+(8, 'Nothing', NULL),
+(9, 'Microsoft', NULL),
+(10, 'Dell', NULL),
+(11, 'HP', NULL),
+(12, 'Lenovo', NULL),
+(13, 'Acer', NULL),
+(14, 'Razer', NULL),
+(15, 'MSI', NULL),
+(16, 'Gigabyte', NULL),
+(17, 'LG', NULL),
+(18, 'Bose', NULL),
+(19, 'Sennheiser', NULL),
+(20, 'Bowers & Wilkins', NULL),
+(21, 'Beats', NULL),
+(22, 'Soundcore', NULL),
+(23, 'Jabra', NULL),
+(24, 'JBL', NULL),
+(25, 'Shure', NULL),
+(26, 'Sonos', NULL),
+(27, 'Technics', NULL),
+(28, 'Marshall', NULL),
+(29, 'Garmin', NULL),
+(30, 'Fitbit', NULL),
+(31, 'Oura', NULL),
+(32, 'Huawei', NULL),
+(33, 'Amazfit', NULL),
+(34, 'Suunto', NULL),
+(35, 'Polar', NULL),
+(36, 'WHOOP', NULL),
+(37, 'Amazon', NULL);
 
 -- ============================================
 -- PRODUCTS DATA
@@ -366,7 +336,7 @@ VALUES
  'ACTIVE', '2023-10-30 09:00:00', '2024-06-10 10:00:00', 2, 18),
 
 (42, 'Apple MacBook Air 15 (M3, 2024)',
- '15.3" Liquid Retina � -  M3 � -  Fanless design',
+ '15.3" Liquid Retina display - M3 - Fanless design',
  'MacBook Air 15 with M3 offers a large, color-accurate display, silent fanless operation, all-day battery life, and a thin-and-light aluminum chassis.',
  'ACTIVE', '2024-03-08 09:00:00', '2024-06-05 10:00:00', 2, 18),
 
@@ -376,22 +346,22 @@ VALUES
  'ACTIVE', '2024-02-15 09:00:00', '2024-06-01 10:00:00', 2, 19),
 
 (44, 'Dell XPS 13 (9340, 2024)',
- '13.4" FHD+/OLED � -  Core Ultra � -  Ultra-portable',
+ '13.4" FHD+/OLED - Core Ultra - Ultra-portable',
  'XPS 13 delivers ultra-portability with Intel Core Ultra performance, long battery life, and a compact chassis with a high-quality display.',
  'ACTIVE', '2024-02-10 09:00:00', '2024-05-20 10:00:00', 2, 19),
 
 (45, 'HP Spectre x360 14 (2024)',
- '14" 2.8K OLED � -  Core Ultra � -  2-in-1',
- 'Spectre x360 14 is a premium convertible with OLED display, strong speakers, pen support, and flexible 360° hinge for tablet mode.',
+ '14" 2.8K OLED - Core Ultra - 2-in-1',
+ 'Spectre x360 14 is a premium convertible with OLED display, strong speakers, pen support, and flexible 360-degree hinge for tablet mode.',
  'ACTIVE', '2024-01-20 09:00:00', '2024-05-25 10:00:00', 2, 20),
 
 (46, 'Lenovo ThinkPad X1 Carbon Gen 12 (2024)',
- '14" 2.8K OLED � -  Core Ultra � -  Carbon-fiber chassis',
+ '14" 2.8K OLED - Core Ultra - Carbon-fiber chassis',
  'ThinkPad X1 Carbon Gen 12 is a business flagship with robust security, legendary keyboard, lightweight carbon-fiber build, and Intel Core Ultra efficiency.',
  'ACTIVE', '2024-02-01 09:00:00', '2024-05-30 10:00:00', 2, 21),
 
 (47, 'Lenovo ThinkPad X1 Yoga Gen 9 (2024)',
- '14" 2.8K OLED � -  Core Ultra � -  2-in-1 business',
+ '14" 2.8K OLED - Core Ultra - 2-in-1 business',
  'ThinkPad X1 Yoga Gen 9 combines a premium convertible design, pen support, enterprise security, and strong performance for professionals.',
  'ACTIVE', '2024-02-05 09:00:00', '2024-05-30 10:00:00', 2, 21),
 
@@ -421,7 +391,7 @@ VALUES
  'ACTIVE', '2024-04-01 09:00:00', '2024-06-12 10:00:00', 2, 24),
 
 (53, 'Microsoft Surface Laptop Studio 2 (2023)',
- '14.4" 120Hz PixelSense � -  H-series � -  RTX',
+ '14.4" 120Hz PixelSense - H-series - RTX',
  'Surface Laptop Studio 2 combines a unique pull-forward display, powerful H-series CPU and RTX graphics for creative workflows.',
  'ACTIVE', '2023-10-03 09:00:00', '2024-05-20 10:00:00', 2, 24),
 
@@ -451,7 +421,7 @@ VALUES
  'ACTIVE', '2024-02-12 09:00:00', '2024-05-12 10:00:00', 2, 27),
 
 (59, 'Samsung Galaxy Book4 Pro 14 (2024)',
- '14" 3K AMOLED � -  Core Ultra � -  Ultra-light',
+ '14" 3K AMOLED - Core Ultra - Ultra-light',
  'Galaxy Book4 Pro 14 features a vibrant AMOLED display, long battery life, and a lightweight magnesium chassis.',
  'ACTIVE', '2024-02-26 09:00:00', '2024-05-15 10:00:00', 2, 28),
 
@@ -474,102 +444,102 @@ INSERT INTO products (
 )
 VALUES
 (61, 'Sony WH-1000XM5',
- 'Over-ear ANC � -  30mm drivers � -  30h battery',
+ 'Over-ear ANC - 30mm drivers - 30h battery',
  'WH-1000XM5 delivers top-tier active noise cancellation, warm balanced tuning, and long battery life with multipoint Bluetooth.',
  'ACTIVE', '2023-05-15 09:00:00', '2024-06-01 10:00:00', 4, 30),
 
 (62, 'Bose QuietComfort Ultra Headphones',
- 'Over-ear ANC � -  Immersive Audio � -  24h battery',
+ 'Over-ear ANC - Immersive Audio - 24h battery',
  'QuietComfort Ultra Headphones offer powerful noise cancellation, spacious sound, and soft all-day comfort.',
  'ACTIVE', '2023-10-05 09:00:00', '2024-06-01 10:00:00', 4, 31),
 
 (63, 'Apple AirPods Pro (2nd gen, USB-C)',
- 'In-ear ANC � -  Adaptive Audio � -  MagSafe',
+ 'In-ear ANC - Adaptive Audio - MagSafe',
  'AirPods Pro (2nd gen) with USB-C provide strong ANC, Adaptive Transparency, spatial audio, and seamless Apple device pairing.',
  'ACTIVE', '2023-09-22 09:00:00', '2024-06-01 10:00:00', 4, 32),
 
 (64, 'Sennheiser MOMENTUM 4 Wireless',
- 'Over-ear ANC � -  60h battery � -  aptX Adaptive',
+ 'Over-ear ANC - 60h battery - aptX Adaptive',
  'Momentum 4 Wireless combines long battery life with punchy, detailed sound and adaptive noise cancellation.',
  'ACTIVE', '2022-08-23 09:00:00', '2024-06-01 10:00:00', 4, 33),
 
 (65, 'Bowers & Wilkins Px7 S2e',
- 'Over-ear ANC � -  40mm drivers � -  30h battery',
+ 'Over-ear ANC - 40mm drivers - 30h battery',
  'Px7 S2e delivers refined tuning, premium materials, and strong ANC for high-end wireless listening.',
  'ACTIVE', '2023-10-04 09:00:00', '2024-06-01 10:00:00', 4, 34),
 
 (66, 'Bose QuietComfort Ultra Earbuds',
- 'True wireless ANC � -  Immersive Audio � -  USB-C',
+ 'True wireless ANC - Immersive Audio - USB-C',
  'QC Ultra Earbuds feature class-leading noise cancellation, immersive audio, and a compact charging case.',
  'ACTIVE', '2023-10-05 09:00:00', '2024-06-01 10:00:00', 4, 31),
 
 (67, 'Sony WF-1000XM5',
- 'True wireless ANC � -  LDAC � -  8h battery',
+ 'True wireless ANC - LDAC - 8h battery',
  'WF-1000XM5 offers flagship ANC, rich sound with LDAC, and improved comfort in a smaller shell.',
  'ACTIVE', '2023-07-24 09:00:00', '2024-06-01 10:00:00', 4, 30),
 
 (68, 'Apple AirPods Max',
- 'Over-ear ANC � -  Spatial Audio � -  Aluminum build',
+ 'Over-ear ANC - Spatial Audio - Aluminum build',
  'AirPods Max delivers premium build quality, strong ANC, and spatial audio with dynamic head tracking.',
  'ACTIVE', '2020-12-15 09:00:00', '2024-06-01 10:00:00', 4, 32),
 
 (69, 'Beats Studio Pro',
- 'Over-ear ANC � -  USB-C lossless � -  40h battery',
+ 'Over-ear ANC - USB-C lossless - 40h battery',
  'Beats Studio Pro adds USB-C lossless audio, improved ANC, and long battery life in a lightweight design.',
  'ACTIVE', '2023-07-19 09:00:00', '2024-06-01 10:00:00', 4, 35),
 
 (70, 'Soundcore Liberty 4 NC',
- 'True wireless ANC � -  Hi-Res Audio � -  10h battery',
+ 'True wireless ANC - Hi-Res Audio - 10h battery',
  'Liberty 4 NC offers strong ANC, solid sound, and long battery life at a competitive price.',
  'ACTIVE', '2023-06-29 09:00:00', '2024-06-01 10:00:00', 4, 36),
 
 (71, 'Jabra Elite 10',
- 'True wireless ANC � -  Dolby Atmos � -  8h battery',
+ 'True wireless ANC - Dolby Atmos - 8h battery',
  'Elite 10 features all-day comfort, Dolby Atmos with head tracking, and improved call quality.',
  'ACTIVE', '2023-09-01 09:00:00', '2024-06-01 10:00:00', 4, 37),
 
 (72, 'Samsung Galaxy Buds2 Pro',
- 'True wireless ANC � -  24-bit audio � -  IPX7',
+ 'True wireless ANC - 24-bit audio - IPX7',
  'Galaxy Buds2 Pro provides strong ANC, 24-bit audio on compatible Galaxy devices, and a compact fit.',
  'ACTIVE', '2022-08-26 09:00:00', '2024-06-01 10:00:00', 4, 38),
 
 (73, 'Google Pixel Buds Pro',
- 'True wireless ANC � -  Multipoint � -  11h battery',
+ 'True wireless ANC - Multipoint - 11h battery',
  'Pixel Buds Pro offers great noise cancellation, multipoint Bluetooth, and tight Google Assistant integration.',
  'ACTIVE', '2022-07-21 09:00:00', '2024-06-01 10:00:00', 4, 39),
 
 (74, 'Nothing Ear (2024)',
- 'True wireless ANC � -  Hi-Res Audio � -  8.5h battery',
+ 'True wireless ANC - Hi-Res Audio - 8.5h battery',
  'Nothing Ear (2024) delivers clear sound with LDAC, customizable EQ, and a transparent design.',
  'ACTIVE', '2024-04-18 09:00:00', '2024-06-01 10:00:00', 4, 40),
 
 (75, 'JBL Tour One M2',
- 'Over-ear ANC � -  50h battery � -  Spatial Audio',
+ 'Over-ear ANC - 50h battery - Spatial Audio',
  'Tour One M2 combines strong ANC, deep bass, and very long battery life for travel.',
  'ACTIVE', '2023-01-05 09:00:00', '2024-06-01 10:00:00', 4, 41),
 
 (76, 'Shure AONIC 50 Gen 2',
- 'Over-ear ANC � -  Hi-Res Audio � -  45h battery',
+ 'Over-ear ANC - Hi-Res Audio - 45h battery',
  'AONIC 50 Gen 2 delivers studio-grade tuning with powerful ANC and robust codec support.',
  'ACTIVE', '2023-11-15 09:00:00', '2024-06-01 10:00:00', 4, 42),
 
 (77, 'Sonos Ace',
- 'Over-ear ANC � -  Spatial Audio � -  30h battery',
+ 'Over-ear ANC - Spatial Audio - 30h battery',
  'Sonos Ace offers cinematic spatial audio, excellent ANC, and seamless integration with Sonos systems.',
  'ACTIVE', '2024-06-05 09:00:00', '2024-06-15 10:00:00', 4, 43),
 
 (78, 'Technics EAH-AZ80',
- 'True wireless ANC � -  Hi-Res Audio � -  7h battery',
+ 'True wireless ANC - Hi-Res Audio - 7h battery',
  'EAH-AZ80 delivers rich sound with LDAC and excellent call quality with multipoint connectivity.',
  'ACTIVE', '2023-06-15 09:00:00', '2024-06-01 10:00:00', 4, 44),
 
 (79, 'Bose SoundLink Flex',
- 'Portable Bluetooth speaker � -  IP67 � -  12h battery',
+ 'Portable Bluetooth speaker - IP67 - 12h battery',
  'SoundLink Flex is a rugged portable speaker with balanced sound, strong bass, and IP67 durability.',
  'ACTIVE', '2022-05-12 09:00:00', '2024-06-01 10:00:00', 4, 31),
 
 (80, 'Marshall Motif II ANC',
- 'True wireless ANC � -  30h total battery � -  IPX5',
+ 'True wireless ANC - 30h total battery - IPX5',
  'Motif II ANC combines signature Marshall tuning with ANC and a compact case for all-day listening.',
  'ACTIVE', '2023-09-12 09:00:00', '2024-06-01 10:00:00', 4, 45);
 
@@ -587,102 +557,102 @@ INSERT INTO products (
 )
 VALUES
 (81, 'Apple Watch Series 9',
- '41/45mm OLED � -  S9 SiP � -  Double Tap',
+ '41/45mm OLED - S9 SiP - Double Tap',
  'Apple Watch Series 9 adds the S9 SiP, a brighter 2000-nit display, on-device Siri, and Double Tap gestures with carbon-neutral case options.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-20 10:00:00', 5, 46),
 
 (82, 'Apple Watch Ultra 2',
- '49mm titanium � -  S9 SiP � -  100m water',
+ '49mm titanium - S9 SiP - 100m water',
  'Apple Watch Ultra 2 delivers a rugged titanium build, 3000-nit display, precision dual-frequency GPS, and up to 36-hour battery life.',
  'ACTIVE', '2023-09-22 10:00:00', '2024-06-20 10:00:00', 5, 46),
 
 (83, 'Samsung Galaxy Watch6',
- '40/44mm Super AMOLED � -  Wear OS',
+ '40/44mm Super AMOLED - Wear OS',
  'Galaxy Watch6 brings a larger display, improved health tracking, advanced sleep coaching, and Wear OS apps in a slimmer design.',
  'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 5, 47),
 
 (84, 'Samsung Galaxy Watch6 Classic',
- '43/47mm Super AMOLED � -  Rotating bezel',
+ '43/47mm Super AMOLED - Rotating bezel',
  'Watch6 Classic combines stainless steel, a rotating bezel, and enhanced health sensors with the Wear OS ecosystem.',
  'ACTIVE', '2023-07-26 10:00:00', '2024-06-20 10:00:00', 5, 47),
 
 (85, 'Google Pixel Watch 2',
- '41mm AMOLED � -  Snapdragon W5 � -  Fitbit',
+ '41mm AMOLED - Snapdragon W5 - Fitbit',
  'Pixel Watch 2 integrates Fitbit health features, improved sensors, and all-day battery life with Wear OS performance.',
  'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 5, 48),
 
 (86, 'Garmin fēnix 7 Pro',
- '47/51mm MIP � -  Multi-band GPS � -  Solar',
+ '47/51mm MIP - Multi-band GPS - Solar',
  'fēnix 7 Pro adds a brighter flashlight, upgraded heart-rate sensor, and exceptional battery life for outdoor training.',
  'ACTIVE', '2023-05-31 09:00:00', '2024-06-20 10:00:00', 5, 49),
 
 (87, 'Garmin Forerunner 965',
- '47mm AMOLED � -  Multi-band GPS',
+ '47mm AMOLED - Multi-band GPS',
  'Forerunner 965 offers an AMOLED display, training readiness, and advanced running metrics with long battery life.',
  'ACTIVE', '2023-03-01 09:00:00', '2024-06-20 10:00:00', 5, 49),
 
 (88, 'Garmin Venu 3',
- '45/41mm AMOLED � -  Health & sleep',
+ '45/41mm AMOLED - Health & sleep',
  'Venu 3 focuses on health metrics, sleep coaching, and voice calling in a modern AMOLED smartwatch.',
  'ACTIVE', '2023-08-31 09:00:00', '2024-06-20 10:00:00', 5, 49),
 
 (89, 'Fitbit Sense 2',
- 'EDA stress sensor � -  ECG � -  AMOLED',
+ 'EDA stress sensor - ECG - AMOLED',
  'Sense 2 delivers stress management with cEDA, ECG app support, and comprehensive health insights.',
  'ACTIVE', '2022-09-23 09:00:00', '2024-06-20 10:00:00', 5, 50),
 
 (90, 'Fitbit Charge 6',
- 'AMOLED band � -  Built-in GPS',
+ 'AMOLED band - Built-in GPS',
  'Charge 6 adds improved heart-rate accuracy, Google apps, and built-in GPS in a slim fitness tracker.',
  'ACTIVE', '2023-09-28 09:00:00', '2024-06-20 10:00:00', 5, 50),
 
 (91, 'Oura Ring Gen 3',
- 'Smart ring � -  Sleep & readiness',
+ 'Smart ring - Sleep & readiness',
  'Oura Ring Gen 3 tracks sleep, readiness, and recovery with a lightweight titanium ring and accurate sensors.',
  'ACTIVE', '2022-10-26 09:00:00', '2024-06-20 10:00:00', 5, 51),
 
 (92, 'Xiaomi Watch 2 Pro',
- '46mm AMOLED � -  Wear OS � -  LTE',
+ '46mm AMOLED - Wear OS - LTE',
  'Watch 2 Pro combines Wear OS, LTE option, and dual-band GNSS in a premium design.',
  'ACTIVE', '2023-10-26 09:00:00', '2024-06-20 10:00:00', 5, 52),
 
 (93, 'Huawei Watch GT 4',
- '41/46mm AMOLED � -  2-week battery',
+ '41/46mm AMOLED - 2-week battery',
  'Watch GT 4 offers long battery life, accurate GNSS, and health tracking in a stylish body.',
  'ACTIVE', '2023-09-14 09:00:00', '2024-06-20 10:00:00', 5, 53),
 
 (94, 'Amazfit Balance',
- '46mm AMOLED � -  14-day battery',
+ '46mm AMOLED - 14-day battery',
  'Amazfit Balance provides dual-band GPS, body composition metrics, and long battery life.',
  'ACTIVE', '2023-09-20 09:00:00', '2024-06-20 10:00:00', 5, 54),
 
 (95, 'Suunto Vertical',
- 'Rugged GPS � -  Solar options � -  Offline maps',
+ 'Rugged GPS - Solar options - Offline maps',
  'Suunto Vertical targets outdoor athletes with offline maps, solar charging options, and multi-band GNSS.',
  'ACTIVE', '2023-05-16 09:00:00', '2024-06-20 10:00:00', 5, 55),
 
 (96, 'Polar Vantage V3',
- '47mm AMOLED � -  Dual-frequency GPS',
+ '47mm AMOLED - Dual-frequency GPS',
  'Vantage V3 includes AMOLED display, ECG/SpO2, and advanced training tools for endurance athletes.',
  'ACTIVE', '2023-10-11 09:00:00', '2024-06-20 10:00:00', 5, 56),
 
 (97, 'Apple Watch SE (2nd gen)',
- '40/44mm Retina � -  S8 SiP',
+ '40/44mm Retina - S8 SiP',
  'Apple Watch SE (2nd gen) offers core Apple Watch features with S8 SiP, crash detection, and watchOS support.',
  'ACTIVE', '2022-09-16 10:00:00', '2024-06-20 10:00:00', 5, 46),
 
 (98, 'Samsung Galaxy Watch5 Pro',
- '45mm sapphire � -  Long battery',
+ '45mm sapphire - Long battery',
  'Watch5 Pro delivers rugged durability, sapphire crystal, and extended battery life for outdoor use.',
  'ACTIVE', '2022-08-26 09:00:00', '2024-06-20 10:00:00', 5, 47),
 
 (99, 'WHOOP 4.0',
- 'Screenless fitness band � -  Recovery',
+ 'Screenless fitness band - Recovery',
  'WHOOP 4.0 provides continuous recovery, strain, and sleep coaching with a screenless wearable.',
  'ACTIVE', '2021-09-08 09:00:00', '2024-06-20 10:00:00', 5, 57),
 
 (100, 'Samsung Galaxy Ring',
- 'Titanium smart ring � -  Sleep & health',
+ 'Titanium smart ring - Sleep & health',
  'Galaxy Ring tracks sleep, activity, and wellness in a lightweight titanium ring with long battery life.',
  'ACTIVE', '2024-07-10 09:00:00', '2024-07-10 09:00:00', 5, 47);
 
@@ -1370,7 +1340,7 @@ VALUES
 -- Laptops
 -- MacBook Pro 14 (M3 Pro)
 (41, 'Model', 'MacBook Pro 14 (M3 Pro)'),
-(41, 'Display', '14.2" Liquid Retina XDR, 3024�-1964, 120Hz ProMotion'),
+(41, 'Display', '14.2" Liquid Retina XDR, 3024x1964, 120Hz ProMotion'),
 (41, 'Processor', 'Apple M3 Pro'),
 (41, 'GPU', 'Integrated (M3 Pro GPU)'),
 (41, 'RAM', '18GB'),
@@ -1378,11 +1348,11 @@ VALUES
 (41, 'Battery', 'Up to 18 hours video playback'),
 (41, 'Weight', '1.61 kg'),
 (41, 'OS', 'macOS'),
-(41, 'Ports', '3�- Thunderbolt 4, HDMI 2.1, SDXC, MagSafe 3, 3.5mm'),
+(41, 'Ports', '3x Thunderbolt 4, HDMI 2.1, SDXC, MagSafe 3, 3.5mm'),
 
 -- MacBook Air 15 (M3)
 (42, 'Model', 'MacBook Air 15 (M3)'),
-(42, 'Display', '15.3" Liquid Retina, 2880�-1864'),
+(42, 'Display', '15.3" Liquid Retina, 2880x1864'),
 (42, 'Processor', 'Apple M3'),
 (42, 'GPU', 'Integrated (M3 GPU)'),
 (42, 'RAM', '8GB/16GB'),
@@ -1390,7 +1360,7 @@ VALUES
 (42, 'Battery', 'Up to 18 hours video playback'),
 (42, 'Weight', '1.51 kg'),
 (42, 'OS', 'macOS'),
-(42, 'Ports', '2�- Thunderbolt/USB 4, MagSafe 3, 3.5mm'),
+(42, 'Ports', '2x Thunderbolt/USB 4, MagSafe 3, 3.5mm'),
 
 -- Dell XPS 14 (9440)
 (43, 'Model', 'XPS 14 (9440)'),
@@ -1402,7 +1372,7 @@ VALUES
 (43, 'Battery', 'Up to 13 hours mixed use'),
 (43, 'Weight', '1.68 kg'),
 (43, 'OS', 'Windows 11'),
-(43, 'Ports', '3�- Thunderbolt 4 (USB-C) with adapters'),
+(43, 'Ports', '3x Thunderbolt 4 (USB-C) with adapters'),
 
 -- Dell XPS 13 (9340)
 (44, 'Model', 'XPS 13 (9340)'),
@@ -1414,7 +1384,7 @@ VALUES
 (44, 'Battery', 'Up to 12 hours mixed use'),
 (44, 'Weight', '1.19 kg'),
 (44, 'OS', 'Windows 11'),
-(44, 'Ports', '2�- Thunderbolt 4 (USB-C) with adapters'),
+(44, 'Ports', '2x Thunderbolt 4 (USB-C) with adapters'),
 
 -- HP Spectre x360 14
 (45, 'Model', 'Spectre x360 14'),
@@ -1426,7 +1396,7 @@ VALUES
 (45, 'Battery', 'Up to 13 hours mixed use'),
 (45, 'Weight', '1.44 kg'),
 (45, 'OS', 'Windows 11'),
-(45, 'Ports', '2�- Thunderbolt 4, USB-A, 3.5mm'),
+(45, 'Ports', '2x Thunderbolt 4, USB-A, 3.5mm'),
 
 -- ThinkPad X1 Carbon Gen 12
 (46, 'Model', 'ThinkPad X1 Carbon Gen 12'),
@@ -1438,11 +1408,11 @@ VALUES
 (46, 'Battery', 'Up to 15 hours mixed use'),
 (46, 'Weight', '1.12 kg'),
 (46, 'OS', 'Windows 11 Pro'),
-(46, 'Ports', '2�- Thunderbolt 4, 2�- USB-A, HDMI, 3.5mm'),
+(46, 'Ports', '2x Thunderbolt 4, 2x USB-A, HDMI, 3.5mm'),
 
 -- ThinkPad X1 Yoga Gen 9
 (47, 'Model', 'ThinkPad X1 Yoga Gen 9'),
-(47, 'Display', '14" 2.8K OLED, touchscreen, 360° hinge'),
+(47, 'Display', '14" 2.8K OLED, touchscreen, 360-degree hinge'),
 (47, 'Processor', 'Intel Core Ultra 7'),
 (47, 'GPU', 'Intel Arc Graphics'),
 (47, 'RAM', '16GB/32GB LPDDR5x'),
@@ -1450,7 +1420,7 @@ VALUES
 (47, 'Battery', 'Up to 14 hours mixed use'),
 (47, 'Weight', '1.39 kg'),
 (47, 'OS', 'Windows 11 Pro'),
-(47, 'Ports', '2�- Thunderbolt 4, 2�- USB-A, HDMI, 3.5mm'),
+(47, 'Ports', '2x Thunderbolt 4, 2x USB-A, HDMI, 3.5mm'),
 
 -- ROG Zephyrus G14 (2024)
 (48, 'Model', 'ROG Zephyrus G14 (2024)'),
@@ -1462,7 +1432,7 @@ VALUES
 (48, 'Battery', '76Wh'),
 (48, 'Weight', '1.50 kg'),
 (48, 'OS', 'Windows 11'),
-(48, 'Ports', 'USB4, 2�- USB-A, HDMI 2.1, 3.5mm'),
+(48, 'Ports', 'USB4, 2x USB-A, HDMI 2.1, 3.5mm'),
 
 -- ROG Zephyrus G16 (2024)
 (49, 'Model', 'ROG Zephyrus G16 (2024)'),
@@ -1474,7 +1444,7 @@ VALUES
 (49, 'Battery', '90Wh'),
 (49, 'Weight', '1.85 kg'),
 (49, 'OS', 'Windows 11'),
-(49, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, 3.5mm'),
+(49, 'Ports', 'Thunderbolt 4, 2x USB-A, HDMI 2.1, 3.5mm'),
 
 -- Acer Swift X 14 (2024)
 (50, 'Model', 'Swift X 14'),
@@ -1486,7 +1456,7 @@ VALUES
 (50, 'Battery', '76Wh'),
 (50, 'Weight', '1.55 kg'),
 (50, 'OS', 'Windows 11'),
-(50, 'Ports', '2�- USB-C, 2�- USB-A, HDMI 2.1'),
+(50, 'Ports', '2x USB-C, 2x USB-A, HDMI 2.1'),
 
 -- Acer Swift Go 14 (2024)
 (51, 'Model', 'Swift Go 14'),
@@ -1498,7 +1468,7 @@ VALUES
 (51, 'Battery', '65Wh'),
 (51, 'Weight', '1.25 kg'),
 (51, 'OS', 'Windows 11'),
-(51, 'Ports', '2�- USB-C, 2�- USB-A, HDMI 2.1'),
+(51, 'Ports', '2x USB-C, 2x USB-A, HDMI 2.1'),
 
 -- Surface Laptop 6
 (52, 'Model', 'Surface Laptop 6'),
@@ -1510,7 +1480,7 @@ VALUES
 (52, 'Battery', 'Up to 18 hours'),
 (52, 'Weight', '1.38 kg'),
 (52, 'OS', 'Windows 11 Pro'),
-(52, 'Ports', '2�- Thunderbolt 4, USB-A, 3.5mm'),
+(52, 'Ports', '2x Thunderbolt 4, USB-A, 3.5mm'),
 
 -- Surface Laptop Studio 2
 (53, 'Model', 'Surface Laptop Studio 2'),
@@ -1522,7 +1492,7 @@ VALUES
 (53, 'Battery', 'Up to 19 hours'),
 (53, 'Weight', '1.98 kg'),
 (53, 'OS', 'Windows 11'),
-(53, 'Ports', '2�- Thunderbolt 4, USB-A, microSDXC'),
+(53, 'Ports', '2x Thunderbolt 4, USB-A, microSDXC'),
 
 -- Razer Blade 16
 (54, 'Model', 'Blade 16'),
@@ -1534,7 +1504,7 @@ VALUES
 (54, 'Battery', '95.2Wh'),
 (54, 'Weight', '2.45 kg'),
 (54, 'OS', 'Windows 11'),
-(54, 'Ports', 'Thunderbolt 4, 3�- USB-A, HDMI 2.1, SD, 3.5mm'),
+(54, 'Ports', 'Thunderbolt 4, 3x USB-A, HDMI 2.1, SD, 3.5mm'),
 
 -- Razer Blade 14
 (55, 'Model', 'Blade 14'),
@@ -1546,7 +1516,7 @@ VALUES
 (55, 'Battery', '68.1Wh'),
 (55, 'Weight', '1.84 kg'),
 (55, 'OS', 'Windows 11'),
-(55, 'Ports', 'USB4, 2�- USB-A, HDMI 2.1, 3.5mm'),
+(55, 'Ports', 'USB4, 2x USB-A, HDMI 2.1, 3.5mm'),
 
 -- MSI Stealth 16 Studio
 (56, 'Model', 'Stealth 16 Studio'),
@@ -1558,7 +1528,7 @@ VALUES
 (56, 'Battery', '99.9Wh'),
 (56, 'Weight', '2.10 kg'),
 (56, 'OS', 'Windows 11'),
-(56, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, microSD'),
+(56, 'Ports', 'Thunderbolt 4, 2x USB-A, HDMI 2.1, microSD'),
 
 -- MSI Raider GE78 HX
 (57, 'Model', 'Raider GE78 HX'),
@@ -1570,7 +1540,7 @@ VALUES
 (57, 'Battery', '99.9Wh'),
 (57, 'Weight', '2.98 kg'),
 (57, 'OS', 'Windows 11'),
-(57, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, SD'),
+(57, 'Ports', 'Thunderbolt 4, 2x USB-A, HDMI 2.1, SD'),
 
 -- Gigabyte AORUS 16X
 (58, 'Model', 'AORUS 16X'),
@@ -1582,7 +1552,7 @@ VALUES
 (58, 'Battery', '99Wh'),
 (58, 'Weight', '2.30 kg'),
 (58, 'OS', 'Windows 11'),
-(58, 'Ports', 'Thunderbolt 4, 2�- USB-A, HDMI 2.1, RJ-45'),
+(58, 'Ports', 'Thunderbolt 4, 2x USB-A, HDMI 2.1, RJ-45'),
 
 -- Galaxy Book4 Pro 14
 (59, 'Model', 'Galaxy Book4 Pro 14'),
@@ -1594,7 +1564,7 @@ VALUES
 (59, 'Battery', '63Wh'),
 (59, 'Weight', '1.23 kg'),
 (59, 'OS', 'Windows 11'),
-(59, 'Ports', '2�- Thunderbolt 4, USB-A, HDMI 2.0, microSD'),
+(59, 'Ports', '2x Thunderbolt 4, USB-A, HDMI 2.0, microSD'),
 
 -- LG Gram 16
 (60, 'Model', 'Gram 16'),
@@ -1606,7 +1576,7 @@ VALUES
 (60, 'Battery', '80Wh'),
 (60, 'Weight', '1.19 kg'),
 (60, 'OS', 'Windows 11'),
-(60, 'Ports', '2�- Thunderbolt 4, 2�- USB-A, HDMI, microSD'),
+(60, 'Ports', '2x Thunderbolt 4, 2x USB-A, HDMI, microSD'),
 
 -- Audio & Headphones
 -- Sony WH-1000XM5
@@ -1942,7 +1912,7 @@ VALUES
 -- Xiaomi Watch 2 Pro
 (92, 'Model', 'Watch 2 Pro'),
 (92, 'Type', 'Smartwatch'),
-(92, 'Display', '1.43" AMOLED, 466�-466'),
+(92, 'Display', '1.43" AMOLED, 466x466'),
 (92, 'Case Size', '46mm'),
 (92, 'Chip', 'Snapdragon W5+ Gen 1'),
 (92, 'Battery Life', 'Up to 65 hours (Bluetooth)'),
