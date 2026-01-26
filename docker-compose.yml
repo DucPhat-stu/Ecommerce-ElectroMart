@@ -51,8 +51,6 @@ services:
     container_name: nginx-service
     ports:
       - "80:80"
-    volumes:
-      - ./fe:/usr/share/nginx/html:ro
     networks:
       - app-network
     depends_on:
