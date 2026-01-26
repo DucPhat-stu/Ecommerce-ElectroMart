@@ -106,6 +106,38 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
+    public User createUser(UserRequest request) {
+        // Validate input
+        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            throw new RuntimeException("Email is required");
+        }
+
+        // Check if email already exists
+        Optional<User> existingEmail = userRepository.findByEmail(request.getEmail());
+        if (existingEmail.isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        // Create new user
+        User user = new User();
+        user.setUsername(request.getUsername() != null ? request.getUsername() : request.getEmail());
+        user.setEmail(request.getEmail());
+        user.setFullName(request.getFullName());
+        user.setPhone(request.getPhone());
+        user.setAddress(request.getAddress());
+        user.setRoleId(request.getRoleId() != null ? request.getRoleId() : 1);
+        user.setStatus(request.getStatus() != null ? request.getStatus() : "ACTIVE");
+        user.setEmailVerified(false);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+        
+        // Set a default password (should be changed by user later)
+        user.setPasswordHash(passwordEncoder.encode("default123"));
+
+        return userRepository.save(user);
+    }
+
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));

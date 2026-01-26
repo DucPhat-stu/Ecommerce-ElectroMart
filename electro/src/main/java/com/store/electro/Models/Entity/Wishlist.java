@@ -82,6 +82,11 @@ public class Wishlist {
         return product;
     }
 
+    @JsonProperty("productId")
+    public Long getProductId() {
+        return product != null ? product.getId() : null;
+    }
+
     public void setProduct(Product product) {
         this.product = product;
     }

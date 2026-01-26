@@ -1,19 +1,29 @@
 package com.store.electro.Controllers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.store.electro.Models.DTOs.Request.OrderStatusRequest;
 import com.store.electro.Models.Entity.Order;
 import com.store.electro.Models.Entity.OrderDetail;
 import com.store.electro.Models.Entity.ProductVariant;
 import com.store.electro.Models.Entity.User;
+import com.store.electro.Models.Enums.OrderStatus;
 import com.store.electro.Repositories.OrderRepository;
 import com.store.electro.Repositories.ProductVariantRepository;
 import com.store.electro.Repositories.UserRepository;
+import com.store.electro.Services.OrderService;
+import com.store.electro.Utils.ApiResponse;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -24,11 +34,32 @@ public class OrderController {
     private final OrderRepository orderRepo;
     private final UserRepository userRepo;
     private final ProductVariantRepository productVariantRepo;
+    private final OrderService orderService;
 
-    public OrderController(OrderRepository orderRepo, UserRepository userRepo, ProductVariantRepository productVariantRepo) {
+    public OrderController(OrderRepository orderRepo, UserRepository userRepo,
+            ProductVariantRepository productVariantRepo, OrderService orderService) {
         this.orderRepo = orderRepo;
         this.userRepo = userRepo;
         this.productVariantRepo = productVariantRepo;
+        this.orderService = orderService;
+    }
+
+    // Get all orders (admin dashboard)
+    @GetMapping("/v1/orders")
+    public ResponseEntity<ApiResponse<List<Order>>> getAllOrders(
+            @RequestParam(required = false) String status) {
+        List<Order> orders;
+        if (status != null && !status.isBlank()) {
+            try {
+                OrderStatus s = OrderStatus.valueOf(status.toUpperCase());
+                orders = orderService.getOrdersByStatus(s);
+            } catch (IllegalArgumentException e) {
+                orders = orderService.getAllOrders();
+            }
+        } else {
+            orders = orderService.getAllOrders();
+        }
+        return ResponseEntity.ok(ApiResponse.success("Orders retrieved successfully", orders));
     }
 
     @GetMapping("/v1/orders/{id}")
@@ -36,6 +67,23 @@ public class OrderController {
         Order order = orderRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
         return ResponseEntity.ok(order);
+    }
+
+    // Update order status (admin dashboard)
+    @PutMapping("/v1/orders/{id}/status")
+    public ResponseEntity<ApiResponse<Order>> updateOrderStatus(
+            @PathVariable Long id,
+            @RequestBody OrderStatusRequest request) {
+        Order updated = orderService.updateOrderStatus(id, request.getStatus());
+        return ResponseEntity.ok(ApiResponse.success("Order status updated", updated));
+    }
+
+    // Delete order (admin dashboard)
+    @DeleteMapping("/v1/orders/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
+        return ResponseEntity.status(204)
+                .body(ApiResponse.success("Order deleted successfully", null));
     }
 
     @PostMapping("/v1/orders")
