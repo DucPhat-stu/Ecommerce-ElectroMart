@@ -2636,10 +2636,19 @@ INSERT INTO variant_options (
     (118, 2, '128GB', 0.00), (118, 1, 'Black', 0.00),
     (119, 2, '128GB', 0.00), (119, 1, 'Blue', 0.00),
     (120, 2, '256GB', 50.00), (120, 1, 'Black', 0.00),
-    (121, 2, '256GB', 50.00), (121, 1, 'Blue', 0.00),
+    (121, 2, '256GB', 50.00), (121, 1, 'Blue', 0.00);
 
     -- ========== LAPTOPS SECTION ==========
-
+INSERT INTO product_variants (
+    id,
+    product_id,
+    price,
+    discount_percent,
+    status,
+    created_at,
+    updated_at,
+    version
+) VALUES
     -- Apple MacBook Pro 14 (M3 Pro) (id=21) - 2 colors x 2 RAM x 2 SSD = 8 variants
     (122, 21, 1999.00, 0, 'ACTIVE', '2024-06-01 10:00:00', '2024-06-01 10:00:00', 0),
     (123, 21, 1999.00, 0, 'ACTIVE', '2024-06-01 10:00:00', '2024-06-01 10:00:00', 0),
