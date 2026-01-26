@@ -16,7 +16,7 @@ import com.store.electro.Services.WishlistService;
 import com.store.electro.Utils.ApiResponse;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("${api.prefix}")
 public class WishlistController {
 
     private final WishlistService wishlistService;

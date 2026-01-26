@@ -17,7 +17,7 @@ import com.store.electro.Utils.ApiResponse;
  * Provides API endpoints for admin dashboard functionality
  */
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("${api.prefix}/admin")
 public class AdminDashboardController {
 
     private final DashboardService dashboardService;

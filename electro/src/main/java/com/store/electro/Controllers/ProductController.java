@@ -2,18 +2,18 @@ package com.store.electro.Controllers;
 
 import java.util.List;
 
-import com.store.electro.Models.DTOs.Request.ProductUpdateRequest;
+import com.store.electro.Models.DTOs.Request.UpdateProductRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.store.electro.Models.DTOs.Request.AddProductRequest;
-import com.store.electro.Models.Entity.Product;
+import com.store.electro.Models.Entity.Product.Product;
 import com.store.electro.Services.IProductService;
 import com.store.electro.Utils.ApiResponse;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("${api.prefix}")
 public class ProductController {
 
     private final IProductService productService;
@@ -66,7 +66,7 @@ public class ProductController {
     @PutMapping("product/{productId}")
     public ResponseEntity<ApiResponse<Product>> updateProduct(
             @Valid
-            @RequestBody ProductUpdateRequest request,
+            @RequestBody UpdateProductRequest request,
             @PathVariable Long productId) {
         productService.updateProduct(request, productId);
         return ResponseEntity.status(204)

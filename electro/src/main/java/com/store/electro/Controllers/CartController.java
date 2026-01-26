@@ -17,7 +17,7 @@ import com.store.electro.Services.CartService;
 import com.store.electro.Utils.ApiResponse;
 
 @RestController
-@RequestMapping("/api/v1/cart")
+@RequestMapping("${api.prefix}/cart")
 public class CartController {
 
     private final CartService cartService;

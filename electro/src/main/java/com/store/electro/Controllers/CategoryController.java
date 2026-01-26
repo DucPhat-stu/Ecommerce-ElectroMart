@@ -19,7 +19,7 @@ import com.store.electro.Utils.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("${api.prefix}")
 public class CategoryController {
 
     private final ICategoryService categoryService;

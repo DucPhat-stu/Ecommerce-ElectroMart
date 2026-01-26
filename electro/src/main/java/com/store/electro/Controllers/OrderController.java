@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.store.electro.Models.DTOs.Request.OrderStatusRequest;
 import com.store.electro.Models.Entity.Order;
 import com.store.electro.Models.Entity.OrderDetail;
-import com.store.electro.Models.Entity.ProductVariant;
+import com.store.electro.Models.Entity.Product.ProductVariant;
 import com.store.electro.Models.Entity.User;
 import com.store.electro.Models.Enums.OrderStatus;
 import com.store.electro.Repositories.OrderRepository;

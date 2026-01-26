@@ -18,7 +18,7 @@ import com.store.electro.Services.ReviewService;
 import com.store.electro.Utils.ApiResponse;
 
 @RestController
-@RequestMapping("/api/v1/reviews")
+@RequestMapping("${api.prefix}/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
