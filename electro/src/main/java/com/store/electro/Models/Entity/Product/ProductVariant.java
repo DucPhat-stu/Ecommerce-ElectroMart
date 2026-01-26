@@ -1,8 +1,10 @@
-package com.store.electro.Models.Entity;
+package com.store.electro.Models.Entity.Product;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.store.electro.Models.Enums.ProductStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,6 +23,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -28,8 +32,6 @@ import jakarta.persistence.Version;
 @JsonPropertyOrder({
         "product",
         "storageSize",
-        "color",
-        "price",
         "discountPercent",
         "finalPrice",
         "status",
@@ -49,14 +51,8 @@ public class ProductVariant {
     @JsonBackReference
     private Product product;
 
-    @Column(name = "storage_size")
-    private String storageSize;
-
-    @Column(name = "color")
-    private String color;
-
     @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private BigDecimal basePrice;
 
     @Column(name = "discount_percent")
     private Integer discountPercent = 0;
@@ -64,6 +60,9 @@ public class ProductVariant {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ProductStatus status;
+
+    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VariantOption> options = new HashSet<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -81,12 +80,10 @@ public class ProductVariant {
     public ProductVariant() {
     }
 
-    public ProductVariant(Product product, String storageSize, String color, BigDecimal price, Integer discountPercent,
+    public ProductVariant(Product product, BigDecimal price, Integer discountPercent,
             ProductStatus status) {
         this.product = product;
-        this.storageSize = storageSize;
-        this.color = color;
-        this.price = price;
+        this.basePrice = price;
         this.discountPercent = discountPercent != null ? discountPercent : 0;
         this.status = status;
     }
@@ -112,28 +109,12 @@ public class ProductVariant {
         this.product = product;
     }
 
-    public String getStorageSize() {
-        return storageSize;
+    public BigDecimal getBasePrice() {
+        return basePrice;
     }
 
-    public void setStorageSize(String storageSize) {
-        this.storageSize = storageSize;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
     public Integer getDiscountPercent() {
@@ -168,6 +149,14 @@ public class ProductVariant {
         this.updatedAt = updatedAt;
     }
 
+    public Set<VariantOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<VariantOption> options) {
+        this.options = options;
+    }
+
     @JsonIgnore
     public Long getVersion() {
         return version;
@@ -193,9 +182,7 @@ public class ProductVariant {
     public String toString() {
         return "ProductVariant{" +
                 "id=" + id +
-                ", storageSize='" + storageSize + '\'' +
-                ", color='" + color + '\'' +
-                ", price=" + price +
+                ", price=" + basePrice +
                 ", discountPercent=" + discountPercent +
                 ", status=" + status +
                 '}';
@@ -232,19 +219,25 @@ public class ProductVariant {
 
     // Calculate the final price after applying discount
     public BigDecimal calculatePrice() {
-        if (this.price == null || !isAvailable()) {
+        if (status != ProductStatus.ACTIVE) {
             return BigDecimal.ZERO;
         }
 
-        if (!hasDiscount()) {
-            return this.price;
+        BigDecimal optionExtra = options.stream()
+                .map(o ->
+                        o.getExtraPrice() == null
+                                ? BigDecimal.ZERO
+                                : o.getExtraPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal price = basePrice.add(optionExtra);
+
+        if (discountPercent == null || discountPercent == 0) {
+            return price;
         }
 
-        BigDecimal discountPer = BigDecimal.valueOf(discountPercent);
-        BigDecimal hundred = BigDecimal.valueOf(100);
-
-        return price
-                .multiply(hundred.subtract(discountPer))
-                .divide(hundred, 2, RoundingMode.HALF_UP);
+        return price.multiply(
+                BigDecimal.valueOf(100 - discountPercent)
+        ).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
     }
 }
