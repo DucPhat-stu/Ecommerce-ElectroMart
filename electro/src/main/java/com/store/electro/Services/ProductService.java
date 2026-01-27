@@ -1,6 +1,7 @@
 package com.store.electro.Services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,132 +9,296 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.store.electro.Exceptions.ResourceNotFoundException;
-import com.store.electro.Models.DTOs.Request.AddProductRequest;
-import com.store.electro.Models.DTOs.Request.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
 import com.store.electro.Models.Entity.Brand;
 import com.store.electro.Models.Entity.Category;
 import com.store.electro.Models.Entity.Product.Product;
+import com.store.electro.Models.Entity.Product.ProductDetail;
 import com.store.electro.Models.Entity.Product.ProductImage;
+import com.store.electro.Models.Entity.Product.ProductOption;
+import com.store.electro.Models.Entity.Product.ProductVariant;
+import com.store.electro.Models.Entity.Product.VariantOption;
 import com.store.electro.Repositories.BrandRepository;
 import com.store.electro.Repositories.CategoryRepository;
+import com.store.electro.Repositories.ProductOptionRepository;
 import com.store.electro.Repositories.ProductRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductService implements IProductService {
 
-    private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
-    private final BrandRepository brandRepository;
+        private final ProductRepository productRepository;
+        private final CategoryRepository categoryRepository;
+        private final BrandRepository brandRepository;
+        private final ProductOptionRepository productOptionRepository;
 
-    public ProductService(
-            ProductRepository productRepository,
-            CategoryRepository categoryRepository,
-            BrandRepository brandRepository)
-    {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-        this.brandRepository = brandRepository;
-    }
+        public ProductService(
+                        ProductRepository productRepository,
+                        CategoryRepository categoryRepository,
+                        BrandRepository brandRepository,
+                        ProductOptionRepository productOptionRepository) {
+                this.productRepository = productRepository;
+                this.categoryRepository = categoryRepository;
+                this.brandRepository = brandRepository;
+                this.productOptionRepository = productOptionRepository;
+        }
 
-    @Override
-    public Product addProduct(AddProductRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(
-                        () -> new ResourceNotFoundException("Category not found")
-                );
-        Brand brand = brandRepository.findById(request.getBrandId())
-                .orElseThrow(
-                        () -> new ResourceNotFoundException("Brand not found")
-                );
+        // Creating a new product
+        @Override
+        @Transactional
+        public Product addProduct(AddProductRequest request) {
 
-        Product product = new Product();
+                Category category = categoryRepository.findById(request.getCategoryId())
+                                .orElseThrow(
+                                                () -> new ResourceNotFoundException("Category not found"));
+                Brand brand = brandRepository.findById(request.getBrandId())
+                                .orElseThrow(
+                                                () -> new ResourceNotFoundException("Brand not found"));
+
+                Product product = new Product();
                 product.setName(request.getName());
                 product.setShortDescription(request.getShortDescription());
                 product.setDescription(request.getDescription());
                 product.setStatus(request.getStatus());
                 product.setCategory(category);
+                product.setBrand(brand);
 
+                Set<ProductImage> images = Optional.ofNullable(request.getProductImages())
+                                .orElse(List.of())
+                                .stream()
+                                .map(imgReq -> {
+                                        ProductImage imgs = new ProductImage();
+                                        imgs.setImageUrl(imgReq.getImageUrl());
+                                        imgs.setIsPrimary(imgReq.isPrimary());
 
-        Set<ProductImage> images = request.getProductImages()
-                .stream()
-                .map(imgReq -> {
-                    ProductImage imgs = new ProductImage();
-                    imgs.setImageUrl(imgReq.getImageUrl());
-                    imgs.setIsPrimary(imgReq.isPrimary());
+                                        imgs.setProduct(product);
+                                        return imgs;
+                                })
+                                .collect(Collectors.toSet());
+                product.setProductImages(images);
 
-                    imgs.setProduct(product);
-                    return imgs;
-                })
-                .collect(Collectors.toSet());
-        product.setProductImages(images);
+                Set<ProductDetail> details = Optional.ofNullable(request.getProductDetails())
+                                .orElse(List.of())
+                                .stream()
+                                .map(detailReq -> {
+                                        ProductDetail detail = new ProductDetail();
+                                        detail.setAttributeName(detailReq.getAttributeName());
+                                        detail.setAttributeValue(detailReq.getAttributeValue());
 
+                                        detail.setProduct(product);
+                                        return detail;
+                                })
+                                .collect(Collectors.toSet());
+                product.setProductDetails(details);
 
-        // Set<ProductDetail> details = request.getProductDetails()
-        //         .stream()
-        //         .map(detailReq -> {
-        //             ProductDetail detail = new ProductDetail();
-        //             detail.setAttributeName(detailReq.getAttributeName());
-        //             detail.setAttributeValue(detailReq.getAttributeValue());
+                // Creating list of variants
+                Set<ProductVariant> variants = Optional.ofNullable(request.getProductVariants())
+                                .orElse(List.of())
+                                .stream()
+                                .map(variantReq -> {
+                                        ProductVariant variant = new ProductVariant();
+                                        variant.setProduct(product);
+                                        variant.setBasePrice(variantReq.getBasePrice());
+                                        variant.setDiscountPercent(variantReq.getDiscountPercent());
+                                        variant.setStatus(variantReq.getStatus());
 
-        //             detail.setProduct(product);
-        //             return detail;
-        //         })
-        //         .collect(Collectors.toSet());
-        // product.setProductDetails(details);
+                                        // Creating list of options for variants
+                                        Set<VariantOption> options = Optional.ofNullable(variantReq.getOptions())
+                                                        .orElse(List.of())
+                                                        .stream()
+                                                        .map(optionReq -> {
+                                                                ProductOption option = productOptionRepository
+                                                                                .findById(optionReq.getOptionId())
+                                                                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                                                                "Product option not found"));
 
-//        Set<ProductVariant> variants = request.getProductVariants()
-//                .steam()
-//                .map(variantReq -> {
-//                    ProductVariant variant = new ProductVariant();
-//                    variant.setProduct(product);
-//                    variant.setColor(variantReq.getColor());
-//                })
+                                                                VariantOption variantOption = new VariantOption();
+                                                                variantOption.setOption(option);
+                                                                variantOption.setValue(optionReq.getValue());
+                                                                variantOption.setExtraPrice(optionReq.getExtraPrice());
+                                                                variantOption.setVariant(variant);
+                                                                return variantOption;
+                                                        })
+                                                        .collect(Collectors.toSet());
 
-        return productRepository.save(product);
-    }
+                                        variant.setOptions(options);
+                                        return variant;
+                                })
+                                .collect(Collectors.toSet());
+                product.setProductVariants(variants);
 
-    @Override
-    public Product updateProduct(UpdateProductRequest request, Long productId) {
-        return productRepository.findById(productId)
-                .map(existingProduct -> {
-                    existingProduct.setName(request.getName());
-                    existingProduct.setShortDescription(request.getShortDescription());
-                    existingProduct.setDescription(request.getDescription());
-                    Category category = categoryRepository.findById(request.getCategoryId())
-                            .orElseThrow(() -> new ResourceNotFoundException(
-                                    "Category not found with id: " + request.getCategoryId()));
-                    existingProduct.setCategory(category);
-                    return productRepository.save(existingProduct);
-                })
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
-    }
+                return productRepository.save(product);
+        }
 
-    @Override
-    public void deleteProduct(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
-        productRepository.delete(product);
-    }
+        // Updating an existing product
+        @Override
+        @Transactional
+        public Product updateProduct(UpdateProductRequest request, Long productId) {
 
-    @Override
-    public Product getProductById(Long productId) {
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
-    }
+                Product product = productRepository.findById(productId)
+                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
-    @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
+                Category category = categoryRepository.findById(request.getCategoryId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
-    @Override
-    public List<Product> getProductsByCategory(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
-    }
+                Brand brand = brandRepository.findById(request.getBrandId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Brand not found"));
 
-    @Override
-    public Product findProductByName(String productName) {
-        return Optional.ofNullable(productRepository.findByName(productName))
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-    }
+                // ================= BASIC INFO =================
+                product.setName(request.getName());
+                product.setShortDescription(request.getShortDescription());
+                product.setDescription(request.getDescription());
+                product.setStatus(request.getStatus());
+                product.setCategory(category);
+                product.setBrand(brand);
+
+                // ================= IMAGES =================
+                Map<Long, ProductImage> dbImages = product.getProductImages()
+                                .stream()
+                                .collect(Collectors.toMap(ProductImage::getId, i -> i));
+
+                for (var imgReq : request.getProductImages()) {
+                        if (imgReq.getId() != null) {
+                                ProductImage img = dbImages.remove(imgReq.getId());
+                                if (img == null) {
+                                        throw new ResourceNotFoundException(
+                                                        "ProductImage not found with id: " + imgReq.getId());
+                                }
+                                img.setImageUrl(imgReq.getImageUrl());
+                                img.setIsPrimary(imgReq.isPrimary());
+                        } else {
+                                ProductImage img = new ProductImage();
+                                img.setImageUrl(imgReq.getImageUrl());
+                                img.setIsPrimary(imgReq.isPrimary());
+                                img.setProduct(product);
+                                product.getProductImages().add(img);
+                        }
+                }
+                dbImages.values().forEach(product.getProductImages()::remove);
+
+                // ================= DETAILS =================
+                Map<Long, ProductDetail> dbDetails = product.getProductDetails()
+                                .stream()
+                                .collect(Collectors.toMap(ProductDetail::getId, d -> d));
+
+                for (var dReq : request.getProductDetails()) {
+                        if (dReq.getId() != null) {
+                                ProductDetail detail = dbDetails.remove(dReq.getId());
+                                if (detail == null) {
+                                        throw new ResourceNotFoundException(
+                                                        "ProductDetail not found with id: " + dReq.getId());
+                                }
+                                detail.setAttributeName(dReq.getAttributeName());
+                                detail.setAttributeValue(dReq.getAttributeValue());
+                        } else {
+                                ProductDetail detail = new ProductDetail();
+                                detail.setAttributeName(dReq.getAttributeName());
+                                detail.setAttributeValue(dReq.getAttributeValue());
+                                detail.setProduct(product);
+                                product.getProductDetails().add(detail);
+                        }
+                }
+                dbDetails.values().forEach(product.getProductDetails()::remove);
+
+                // ================= VARIANTS =================
+                Map<Long, ProductVariant> dbVariants = product.getProductVariants()
+                                .stream()
+                                .collect(Collectors.toMap(ProductVariant::getId, v -> v));
+
+                for (var vReq : request.getProductVariants()) {
+
+                        ProductVariant variant;
+
+                        if (vReq.getId() != null) {
+                                variant = dbVariants.remove(vReq.getId());
+                                if (variant == null) {
+                                        throw new ResourceNotFoundException(
+                                                        "ProductVariant not found with id: " + vReq.getId());
+                                }
+                        } else {
+                                variant = new ProductVariant();
+                                variant.setProduct(product);
+                                product.getProductVariants().add(variant);
+                        }
+
+                        variant.setBasePrice(vReq.getBasePrice());
+                        variant.setDiscountPercent(vReq.getDiscountPercent());
+                        variant.setStatus(vReq.getStatus());
+
+                        // -------- VARIANT OPTIONS (CHUẨN) --------
+                        Map<Long, VariantOption> dbOptions = variant.getOptions()
+                                        .stream()
+                                        .collect(Collectors.toMap(VariantOption::getId, o -> o));
+
+                        for (var oReq : vReq.getOptions()) {
+                                VariantOption option;
+
+                                // UPDATE
+                                if (oReq.getId() != null) {
+                                        option = dbOptions.remove(oReq.getId());
+                                        if (option == null) {
+                                                throw new ResourceNotFoundException(
+                                                                "VariantOption not found with id: " + oReq.getId());
+                                        }
+                                }
+                                // INSERT
+                                else {
+                                        ProductOption productOption = productOptionRepository
+                                                        .findById(oReq.getOptionId())
+                                                        .orElseThrow(() -> new ResourceNotFoundException(
+                                                                        "ProductOption not found with id: "
+                                                                                        + oReq.getOptionId()));
+
+                                        option = new VariantOption();
+                                        option.setOption(productOption);
+                                        option.setVariant(variant);
+                                        variant.getOptions().add(option);
+                                }
+
+                                option.setValue(oReq.getValue());
+                                option.setExtraPrice(oReq.getExtraPrice());
+                        }
+
+                        // DELETE OPTIONS NOT IN REQUEST
+                        dbOptions.values().forEach(variant.getOptions()::remove);
+                }
+
+                // DELETE VARIANTS NOT IN REQUEST
+                dbVariants.values().forEach(product.getProductVariants()::remove);
+
+                return productRepository.save(product);
+        }
+
+        @Override
+        public void deleteProduct(Long productId) {
+                Product product = productRepository.findById(productId)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "Product not found with id: " + productId));
+                productRepository.delete(product);
+        }
+
+        @Override
+        public Product getProductById(Long productId) {
+                return productRepository.findById(productId)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "Product not found with id: " + productId));
+        }
+
+        @Override
+        public List<Product> getAllProducts() {
+                return productRepository.findAll();
+        }
+
+        @Override
+        public List<Product> getProductsByCategory(Long categoryId) {
+                return productRepository.findByCategoryId(categoryId);
+        }
+
+        @Override
+        public Product findProductByName(String productName) {
+                return Optional.ofNullable(productRepository.findByName(productName))
+                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        }
 }

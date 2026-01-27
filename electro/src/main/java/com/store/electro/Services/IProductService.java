@@ -3,8 +3,8 @@ package com.store.electro.Services;
 import java.util.List;
 
 import com.store.electro.Models.Entity.Product.Product;
-import com.store.electro.Models.DTOs.Request.AddProductRequest;
-import com.store.electro.Models.DTOs.Request.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
 
 public interface IProductService {
     Product addProduct(AddProductRequest product);

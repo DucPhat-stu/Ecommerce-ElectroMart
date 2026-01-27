@@ -1,4 +1,4 @@
-package com.store.electro.Models.DTOs.Request;
+package com.store.electro.Models.DTOs.Request.ProductRequest;
 
 import java.math.BigDecimal;
 

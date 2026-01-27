@@ -2,12 +2,12 @@ package com.store.electro.Controllers;
 
 import java.util.List;
 
-import com.store.electro.Models.DTOs.Request.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.store.electro.Models.DTOs.Request.AddProductRequest;
+import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
 import com.store.electro.Models.Entity.Product.Product;
 import com.store.electro.Services.IProductService;
 import com.store.electro.Utils.ApiResponse;

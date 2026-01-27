@@ -31,7 +31,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 @JsonPropertyOrder({
-        "product",
+        "id",
         "discountPercent",
         "finalPrice",
         "basePrice",
@@ -95,7 +95,6 @@ public class ProductVariant {
      * GETTERS AND SETTERS
      */
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }

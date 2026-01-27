@@ -1,4 +1,6 @@
-package com.store.electro.Models.DTOs.Request;
+package com.store.electro.Models.DTOs.Request.ProductRequest;
+
+import java.util.List;
 
 import com.store.electro.Models.Enums.ProductStatus;
 
@@ -8,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class UpdateProductRequest {
+public class AddProductRequest {
 
     // Name
     @NotBlank(message = "Product name is required")
@@ -28,16 +30,16 @@ public class UpdateProductRequest {
     @Min(value = 1)
     private Long categoryId;
 
-    // // Brand ID
-    // @NotNull(message = "Brand ID is required")
-    // private Long brandId;
-    //
-    // // List of details
-    // private List<ProductDetailRequest> productDetails;
-    //
-    // // List of Images
-    // private List<ProductImageRequest> productImages;
-    //
-    // // List of Variants
-    // private List<ProductVariantRequest> productVariants;
+    // Brand ID
+    @NotNull(message = "Brand ID is required")
+    private Long brandId;
+
+    // List of details
+    private List<ProductDetailRequest> productDetails;
+
+    // List of Images
+    private List<ProductImageRequest> productImages;
+
+    // List of Variants
+    private List<ProductVariantRequest> productVariants;
 }
