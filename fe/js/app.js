@@ -142,7 +142,71 @@
         $btns.eq(0).attr('href', 'cart.html');
         $btns.eq(1).attr('href', 'checkout.html');
       }
+      // Header Wishlist link
+      var $wishlistHeader = $(".header-ctn a:contains('Wishlist')");
+      if ($wishlistHeader.length) {
+        $wishlistHeader.attr('href', 'wishlist.html');
+      }
     } catch (e) { console.warn('ensureHeaderLinks error', e); }
+  }
+
+  // Ensure footer links navigate to correct pages
+  function setFooterLinks() {
+    try {
+      var map = {
+        'my account': 'account.html',
+        'view cart': 'cart.html',
+        'wishlist': 'wishlist.html',
+        'help': 'help.html',
+        'about': 'about.html',
+        'contact': 'contact.html',
+        'privacy': 'privacy.html',
+        'privacy policy': 'privacy.html',
+        'terms': 'terms.html',
+        'terms of service': 'terms.html',
+        'hot deals': 'store.html?hot=1',
+        'laptops': 'store.html?category=Laptops',
+        'smartphones': 'store.html?category=Smartphones',
+        'cameras': 'store.html?category=Cameras',
+        'accessories': 'store.html?category=Accessories'
+      };
+      $('#footer .footer-links a').each(function() {
+        var t = normalize($(this).text());
+        if (map[t]) {
+          $(this).attr('href', map[t]);
+        }
+      });
+    } catch (e) { console.warn('setFooterLinks error', e); }
+  }
+
+  function injectFooterLegalLinks() {
+    try {
+      var $container = $('#bottom-footer .container .row .col-md-12.text-center');
+      if ($container.length) {
+        if ($container.find('.footer-legal').length === 0) {
+          var html = '' +
+            '<ul class="footer-legal" style="margin:0 0 10px 0; padding:0; list-style:none;">' +
+            '  <li style="display:inline-block; margin:0 10px;"><a href="about.html">About</a></li>' +
+            '  <li style="display:inline-block; margin:0 10px;"><a href="contact.html">Contact</a></li>' +
+            '  <li style="display:inline-block; margin:0 10px;"><a href="privacy.html">Privacy</a></li>' +
+            '  <li style="display:inline-block; margin:0 10px;"><a href="terms.html">Terms</a></li>' +
+            '</ul>';
+          $container.prepend(html);
+        } else {
+          // Ensure hrefs are correct if list exists
+          var map = {
+            'about': 'about.html',
+            'contact': 'contact.html',
+            'privacy': 'privacy.html',
+            'terms': 'terms.html'
+          };
+          $container.find('.footer-legal a').each(function(){
+            var t = normalize($(this).text());
+            if (map[t]) $(this).attr('href', map[t]);
+          });
+        }
+      }
+    } catch (e) { console.warn('injectFooterLegalLinks error', e); }
   }
 
   function bindGlobalWishlist() {
@@ -602,6 +666,8 @@
   function initGlobal() {
     // Normalize navigation and header behavior across all pages
     setNavbarLinks();
+    setFooterLinks();
+    injectFooterLegalLinks();
     bindHeaderSearch();
     ensureHeaderLinks();
     bindGlobalWishlist();
