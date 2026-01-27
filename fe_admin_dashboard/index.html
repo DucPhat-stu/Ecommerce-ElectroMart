@@ -287,7 +287,7 @@
                             </thead>
                             <tbody id="productsTableBody">
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted">Không có dữ liệu</td>
+                                    <td colspan="7" class="text-center text-muted">No data available</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -411,26 +411,26 @@
                         <h2>Sales Statistics & Profit Analysis</h2>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-3">
+                    <div class="row stat-cards-responsive">
+                        <div class="col-lg-3 col-md-6">
                             <div class="stat-box">
                                 <h6>Total Revenue</h6>
                                 <p class="stat-value" id="statsRevenue">$0</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="stat-box">
                                 <h6>Total Cost</h6>
                                 <p class="stat-value" id="statsCost">$0</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="stat-box">
                                 <h6>Total Profit</h6>
                                 <p class="stat-value profit" id="statsProfit">$0</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="stat-box">
                                 <h6>Profit Rate</h6>
                                 <p class="stat-value" id="statsProfitRate">0%</p>
@@ -439,7 +439,7 @@
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Revenue by Month</h5>
@@ -450,7 +450,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Orders by Status</h5>
@@ -520,13 +520,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm / Chỉnh sửa User</h5>
+                    <h5 class="modal-title">Add / Edit User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="userForm">
                         <div class="mb-3">
-                            <label for="userName" class="form-label">Name User</label>
+                            <label for="userName" class="form-label">User Name</label>
                             <input type="text" class="form-control" id="userName" required>
                         </div>
                         <div class="mb-3">
@@ -543,8 +543,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" id="saveUserBtn">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveUserBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -555,7 +555,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm / Chỉnh sửa Sản phẩm</h5>
+                    <h5 class="modal-title">Add / Edit Product</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -586,8 +586,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" id="saveProductBtn">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveProductBtn">Save</button>
                 </div>
             </div>
         </div>

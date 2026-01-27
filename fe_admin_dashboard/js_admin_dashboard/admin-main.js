@@ -88,7 +88,7 @@ function updatePageTitle(sectionName) {
         'dashboard': 'Dashboard', 'users': 'User Management', 'products': 'Product Management',
         'categories': 'Category Management', 'discounts': 'Discount Management',
         'orders': 'Order Management', 'statistics': 'Sales Statistics',
-        'shop': 'View Store', 'wishlist': 'Wishlist'
+        'shop': 'View Store'
     };
     pageTitle.textContent = titles[sectionName] || 'Dashboard';
 }
@@ -98,7 +98,7 @@ function loadSectionData(sectionName) {
         'users': renderUsersTable, 'products': renderProductsTable,
         'categories': renderCategoriesTable, 'discounts': renderDiscountsTable,
         'orders': renderOrdersTable, 'statistics': renderStatistics,
-        'shop': renderShop, 'wishlist': renderWishlist,
+        'shop': renderShop,
         'dashboard': renderDashboard
     };
     const renderFunc = sectionMap[sectionName];
@@ -167,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initHashRouting();
     setupNavigation();
     setupSidebarToggle();
-    updateWishlistBadge();
     console.log('✓ Admin Dashboard initialized');
     console.log('✓ Modular structure loaded');
 });
