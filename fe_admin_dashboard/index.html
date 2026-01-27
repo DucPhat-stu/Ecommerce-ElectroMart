@@ -87,15 +87,6 @@
                         <span class="nav-text">View Store</span>
                     </a>
                 </li>
-
-                <!-- Wishlist -->
-                <li class="nav-item">
-                    <a href="#wishlist" class="nav-link" data-section="wishlist">
-                        <i class="fas fa-heart"></i>
-                        <span class="nav-text">Wishlist</span>
-                        <span class="wishlist-badge badge bg-danger" id="wishlistCount">0</span>
-                    </a>
-                </li>
             </ul>
 
             <!-- Logout -->
@@ -308,7 +299,7 @@
                     <div class="section-header">
                         <h2>Category Management</h2>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
-                            <i class="fas fa-plus"></i> Thêm Category
+                            <i class="fas fa-plus"></i> Add Category
                         </button>
                     </div>
 
@@ -329,7 +320,7 @@
                             </thead>
                             <tbody id="categoriesTableBody">
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted">Không có dữ liệu</td>
+                                    <td colspan="5" class="text-center text-muted">No data</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -339,18 +330,18 @@
                 <!-- Discount Management Section -->
                 <section id="discounts-section" class="content-section">
                     <div class="section-header">
-                        <h2>Quản lý Khuyến mãi</h2>
+                        <h2>Discount Management</h2>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#discountModal">
-                            <i class="fas fa-plus"></i> Thêm Khuyến mãi
+                            <i class="fas fa-plus"></i> Add Discount
                         </button>
                     </div>
 
                     <div class="filter-bar">
-                        <input type="text" class="form-control search-input" id="discountSearch" placeholder="Tìm kiếm khuyến mãi...">
+                        <input type="text" class="form-control search-input" id="discountSearch" placeholder="Search discounts...">
                         <select class="form-select filter-select" id="discountStatusFilter">
-                            <option value="">Tất cả Status</option>
+                            <option value="">All Status</option>
                             <option value="active">Active</option>
-                            <option value="expired">Hết hạn</option>
+                            <option value="expired">Expired</option>
                         </select>
                     </div>
 
@@ -359,17 +350,17 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Mã khuyến mãi</th>
-                                    <th>Price��m Price</th>
-                                    <th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>
+                                    <th>Discount Code</th>
+                                    <th>Discount Price (%)</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="discountsTableBody">
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted">Không có dữ liệu</td>
+                                    <td colspan="7" class="text-center text-muted">No data</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -379,17 +370,17 @@
                 <!-- Order Management Section -->
                 <section id="orders-section" class="content-section">
                     <div class="section-header">
-                        <h2>Quản lý Đơn hàng</h2>
+                        <h2>Order Management</h2>
                     </div>
 
                     <div class="filter-bar">
-                        <input type="text" class="form-control search-input" id="orderSearch" placeholder="Tìm kiếm đơn hàng...">
+                        <input type="text" class="form-control search-input" id="orderSearch" placeholder="Search orders...">
                         <select class="form-select filter-select" id="orderStatusFilter">
-                            <option value="">Tất cả Status</option>
-                            <option value="pending">Chờ xử lý</option>
-                            <option value="confirmed">Đã xác nhận</option>
-                            <option value="shipped">Đã giao</option>
-                            <option value="cancelled">Đã hủy</option>
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="cancelled">Cancelled</option>
                         </select>
                     </div>
 
@@ -397,9 +388,9 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID Đơn</th>
-                                    <th>Khách hàng</th>
-                                    <th>Tổng tiền</th>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Total Amount</th>
                                     <th>Status</th>
                                     <th>Created Date</th>
                                     <th>Actions</th>
@@ -407,7 +398,7 @@
                             </thead>
                             <tbody id="ordersTableBody">
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted">Không có dữ liệu</td>
+                                    <td colspan="6" class="text-center text-muted">No data</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -417,7 +408,7 @@
                 <!-- Statistics Section -->
                 <section id="statistics-section" class="content-section">
                     <div class="section-header">
-                        <h2>Thống kê Bán hàng & Lợi nhuận</h2>
+                        <h2>Sales Statistics & Profit Analysis</h2>
                     </div>
 
                     <div class="row">
@@ -441,7 +432,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="stat-box">
-                                <h6>Tỷ lệ lợi nhuận</h6>
+                                <h6>Profit Rate</h6>
                                 <p class="stat-value" id="statsProfitRate">0%</p>
                             </div>
                         </div>
@@ -462,7 +453,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Đơn hàng theo Status</h5>
+                                    <h5>Orders by Status</h5>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="orderStatusChart"></canvas>
@@ -499,40 +490,23 @@
                 <!-- Shop (Products View) Section -->
                 <section id="shop-section" class="content-section">
                     <div class="section-header">
-                        <h2>Xem Cửa hàng - Sản phẩm theo Category</h2>
+                        <h2>View Store - Products by Category</h2>
                     </div>
 
                     <div class="shop-filter-bar">
                         <input type="text" class="form-control search-input" id="shopSearch" placeholder="Search products...">
                         <select class="form-select filter-select" id="shopCategoryFilter">
-                            <option value="">Tất cả Category</option>
+                            <option value="">All Categories</option>
                         </select>
                         <div class="price-range-filter">
-                            <input type="number" class="form-control" id="minPrice" placeholder="Price tối thiểu" min="0">
-                            <input type="number" class="form-control" id="maxPrice" placeholder="Price tối đa" min="0">
+                            <input type="number" class="form-control" id="minPrice" placeholder="Min Price" min="0">
+                            <input type="number" class="form-control" id="maxPrice" placeholder="Max Price" min="0">
                         </div>
                     </div>
 
                     <div class="products-grid" id="productsGrid">
                         <div class="col-12 text-center text-muted py-5">
                             No products
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Wishlist Section -->
-                <section id="wishlist-section" class="content-section">
-                    <div class="section-header">
-                        <h2>Wishlist của tôi</h2>
-                    </div>
-
-                    <div class="wishlist-info">
-                        <p id="wishlistInfo">Bạn có <strong id="wishlistItemCount">0</strong> sản phẩm trong danh sách yêu thích</p>
-                    </div>
-
-                    <div class="wishlist-grid" id="wishlistGrid">
-                        <div class="col-12 text-center text-muted py-5">
-                            No favorite products yet
                         </div>
                     </div>
                 </section>
@@ -624,7 +598,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm / Chỉnh sửa Category</h5>
+                    <h5 class="modal-title">Add / Edit Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -640,8 +614,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" id="saveCategoryBtn">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveCategoryBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -652,32 +626,32 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm / Chỉnh sửa Khuyến mãi</h5>
+                    <h5 class="modal-title">Add / Edit Discount</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="discountForm">
                         <div class="mb-3">
-                            <label for="discountCode" class="form-label">Mã khuyến mãi</label>
+                            <label for="discountCode" class="form-label">Discount Code</label>
                             <input type="text" class="form-control" id="discountCode" required>
                         </div>
                         <div class="mb-3">
-                            <label for="discountPercent" class="form-label">Price��m Price (%)</label>
+                            <label for="discountPercent" class="form-label">Discount Price (%)</label>
                             <input type="number" class="form-control" id="discountPercent" required min="0" max="100">
                         </div>
                         <div class="mb-3">
-                            <label for="discountStart" class="form-label">Ngày bắt đầu</label>
+                            <label for="discountStart" class="form-label">Start Date</label>
                             <input type="date" class="form-control" id="discountStart" required>
                         </div>
                         <div class="mb-3">
-                            <label for="discountEnd" class="form-label">Ngày kết thúc</label>
+                            <label for="discountEnd" class="form-label">End Date</label>
                             <input type="date" class="form-control" id="discountEnd" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" id="saveDiscountBtn">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveDiscountBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -703,7 +677,6 @@
     <script src="../fe_admin_dashboard/js_admin_dashboard/modules/orders.js"></script>
     <script src="../fe_admin_dashboard/js_admin_dashboard/modules/statistics.js"></script>
     <script src="../fe_admin_dashboard/js_admin_dashboard/modules/shop.js"></script>
-    <script src="../fe_admin_dashboard/js_admin_dashboard/modules/wishlist.js"></script>
     
     <!-- Main -->
     <script src="../fe_admin_dashboard/js_admin_dashboard/admin-main.js"></script>
