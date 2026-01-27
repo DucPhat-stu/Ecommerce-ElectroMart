@@ -14,7 +14,7 @@ import com.store.electro.Models.DTOs.Response.CartResponse;
 import com.store.electro.Models.DTOs.Response.CartResponse.CartItemDTO;
 import com.store.electro.Models.DTOs.Response.CartResponse.ProductInfo;
 import com.store.electro.Models.Entity.Cart;
-import com.store.electro.Models.Entity.ProductVariant;
+import com.store.electro.Models.Entity.Product.ProductVariant;
 import com.store.electro.Repositories.CartRepository;
 import com.store.electro.Repositories.ProductVariantRepository;
 
@@ -50,7 +50,7 @@ public class CartService implements ICartService {
             ProductInfo productInfo = new ProductInfo();
             productInfo.setId(product.getId());
             productInfo.setName(product.getProduct().getName());
-            productInfo.setPrice(product.getPrice());
+            productInfo.setPrice(product.getBasePrice());
             productInfo.setDiscountPercent(product.getDiscountPercent());
             productInfo.setFinalPrice(finalPrice);
             productInfo.setImageUrl(imageUrl);

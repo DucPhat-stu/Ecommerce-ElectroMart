@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "api.prefix",
+      "type": "java.lang.String",
+      "description": "Base prefix for REST API endpoints."
+    },
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "description": "Absolute path for storing uploaded files."
+    }
+  ]
+}

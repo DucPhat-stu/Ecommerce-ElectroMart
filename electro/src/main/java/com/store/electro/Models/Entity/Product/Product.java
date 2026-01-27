@@ -1,4 +1,4 @@
-package com.store.electro.Models.Entity;
+package com.store.electro.Models.Entity.Product;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.store.electro.Models.Entity.Brand;
+import com.store.electro.Models.Entity.Category;
 import com.store.electro.Models.Enums.ProductStatus;
 
 import jakarta.persistence.CascadeType;

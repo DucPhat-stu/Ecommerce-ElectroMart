@@ -1,6 +1,7 @@
 package com.store.electro.Models.Entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.store.electro.Models.Entity.Product.ProductVariant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.Version;
 
-@JsonPropertyOrder({ "id", "productId", "totalQuantity", "reservedQuantity", "availableQuantity" })
+@JsonPropertyOrder({ "id", "variant_id", "totalQuantity", "reservedQuantity", "availableQuantity" })
 @Entity
 @Table(name = "inventories")
 public class Inventory {
@@ -26,7 +27,7 @@ public class Inventory {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_variant_id", nullable = false)
+    @JoinColumn(name = "variant_id", nullable = false)
     private ProductVariant productVariant;
 
     @Column(name = "total_quantity", nullable = false)

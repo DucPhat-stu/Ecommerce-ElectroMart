@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "electromart-api-collection",
+		"name": "ElectroMart API Collection",
+		"description": "Complete API collection for ElectroMart E-Commerce System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/products",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "products"]
+						},
+						"description": "Get all products"
+					}
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/products/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get product by ID"
+					}
+				},
+				{
+					"name": "Get Products by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/products/category/:categoryId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "products", "category", ":categoryId"],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get products by category ID"
+					}
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Laptop Dell XPS 15\",\n    \"price\": 25000000,\n    \"discountPercent\": 10,\n    \"shortDescription\": \"High-performance laptop\",\n    \"description\": \"Dell XPS 15 with Intel i7, 16GB RAM, 512GB SSD\",\n    \"stockQuantity\": 50,\n    \"categoryId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/products",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "products"]
+						},
+						"description": "Create a new product"
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Laptop Dell XPS 15 Updated\",\n    \"price\": 24000000,\n    \"discountPercent\": 15,\n    \"shortDescription\": \"High-performance laptop (Updated)\",\n    \"description\": \"Dell XPS 15 with Intel i7, 16GB RAM, 512GB SSD - Updated\",\n    \"stockQuantity\": 45,\n    \"categoryId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/products/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Update product by ID"
+					}
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/products/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Delete product by ID"
+					}
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get Category by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/category/:categoryName",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "category", ":categoryName"],
+							"variable": [
+								{
+									"key": "categoryName",
+									"value": "Laptops"
+								}
+							]
+						},
+						"description": "Get category by name"
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "users"]
+						},
+						"description": "Get all users"
+					}
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Get User Cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/cart/:userId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "cart", ":userId"],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get cart for a specific user"
+					}
+				},
+				{
+					"name": "Add to Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"productId\": 1,\n    \"quantity\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/cart",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "cart"]
+						},
+						"description": "Add product to cart"
+					}
+				},
+				{
+					"name": "Update Cart Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/cart/:cartId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "cart", ":cartId"],
+							"variable": [
+								{
+									"key": "cartId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Update cart item quantity"
+					}
+				},
+				{
+					"name": "Remove from Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/cart/:cartId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "cart", ":cartId"],
+							"variable": [
+								{
+									"key": "cartId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Remove item from cart"
+					}
+				},
+				{
+					"name": "Clear User Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/cart/user/:userId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "cart", "user", ":userId"],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Clear all items from user cart"
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/orders/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "orders", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get order by ID"
+					}
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/orders",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "orders"]
+						},
+						"description": "Create order (Note: Currently hardcoded, needs to be updated)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 1,\n    \"userId\": 1,\n    \"rating\": 5,\n    \"comment\": \"Great product! Very satisfied.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "reviews"]
+						},
+						"description": "Create a new review"
+					}
+				},
+				{
+					"name": "Get Product Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/product/:productId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "reviews", "product", ":productId"],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get all reviews for a product"
+					}
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 4,\n    \"comment\": \"Updated review - still good but could be better\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/:reviewId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "reviews", ":reviewId"],
+							"variable": [
+								{
+									"key": "reviewId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Update review by ID"
+					}
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/:reviewId",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "reviews", ":reviewId"],
+							"variable": [
+								{
+									"key": "reviewId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Delete review by ID"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
+
