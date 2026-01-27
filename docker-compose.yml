@@ -57,6 +57,8 @@ services:
       - app-network
     volumes:
       - ./uploads:/app/uploads
+      - ./fe:/usr/share/nginx/html/fe:ro
+      - ./fe_admin_dashboard:/usr/share/nginx/html/fe_admin_dashboard:ro
     depends_on:
       - be
       - db

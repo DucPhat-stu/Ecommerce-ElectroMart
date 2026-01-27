@@ -24,12 +24,17 @@ docker compose version
 
 ### Bước 2: Chạy toàn bộ hệ thống
 ```bash
-# Di chuyển vào thư mục project
-cd D:\phan_mem\Ecommerce-ElectroMart
+# Di chuyển vào thư mục project (repo-clone)
+cd <đường_dẫn_đến_thư_mục>/repo-clone
 
 # Build và chạy tất cả services (database, backend, frontend)
 docker compose up -d --build
 ```
+
+Lưu ý:
+- FE đã được bind-mount vào container Nginx (./fe và ./fe_admin_dashboard). Khi chỉnh sửa file FE, chỉ cần refresh trình duyệt (F5), không cần build lại image.
+- Ảnh upload được phục vụ qua http://localhost/img/ và lưu tại thư mục ./uploads trên máy.
+- API được truy cập qua http://localhost/api/v1/... (Nginx reverse proxy tới backend).
 
 ### Bước 3: Kiểm tra containers đang chạy
 ```bash
@@ -67,12 +72,17 @@ docker compose down
 # Dừng và xóa toàn bộ dữ liệu (reset database)
 docker compose down -v
 
-# Build lại chỉ backend (khi sửa code Java)
-docker compose up -d --build be
+# Build lại chỉ backend (khi sửa code Java backend)
+docker compose build be && docker compose up -d be
 
 # Xem tất cả containers
 docker ps -a
 ```
+
+### Live update Frontend (FE)
+- FE được mount trực tiếp vào Nginx container. Sửa file trong `repo-clone/fe` hoặc `repo-clone/fe_admin_dashboard` → F5 trình duyệt để thấy thay đổi.
+- Không cần rebuild image Nginx khi phát triển FE.
+- Nếu không thấy cập nhật, kiểm tra trình duyệt có bị cache: dùng Ctrl+F5.
 
 ---
 
