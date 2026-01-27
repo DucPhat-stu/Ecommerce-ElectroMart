@@ -27,10 +27,6 @@ public class Brand {
     @Column(name = "logo_url")
     private String logoUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
-
     /*
      * CONSTRUCTORS
      */
@@ -64,14 +60,6 @@ public class Brand {
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
 }
