@@ -1,0 +1,37 @@
+{
+  "name": "",
+  "shortDescription": "",
+  "description": "",
+  "status": "",
+  "categoryId": null,
+  "brandId": null,
+
+  "productImages": [
+    {
+      "imageUrl": "",
+      "primary": false
+    }
+  ],
+
+  "productDetails": [
+    {
+      "attributeName": "",
+      "attributeValue": ""
+    }
+  ],
+
+  "productVariants": [
+    {
+      "basePrice": null,
+      "discountPercent": null,
+      "status": "",
+      "options": [
+        {
+          "optionId": null,
+          "value": "",
+          "extraPrice": null
+        }
+      ]
+    }
+  ]
+}
