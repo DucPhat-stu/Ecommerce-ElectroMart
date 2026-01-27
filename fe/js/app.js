@@ -10,6 +10,13 @@
       return url.searchParams.get(name);
   }
 
+  // Helper to add/update query params on a relative URL
+  function setParam(url, key, value) {
+    var u = new URL(url, window.location.origin);
+    u.searchParams.set(key, value);
+    return u.pathname + u.search;
+  }
+
   function safeArray(arr) {
     return Array.isArray(arr) ? arr : (arr ? Array.from(arr) : []);
   }
@@ -138,54 +145,6 @@
     } catch (e) { console.warn('ensureHeaderLinks error', e); }
   }
 
-  async function updateHeaderCart() {
-    try {
-      var userId = window.getCurrentUserId();
-      var res = await window.CartAPI.getUserCart(userId);
-      if (!res || res.success === false) return;
-      var cart = res.data || {};
-      var items = safeArray(cart.items || cart.cartItems || cart.products || []);
-      var totalQty = 0;
-      var subtotal = 0;
-      var $cartList = $('.cart-dropdown .cart-list');
-      var $summary = $('.cart-dropdown .cart-summary');
-      if ($cartList.length) {
-        $cartList.empty();
-        items.forEach(function(it){
-          var qty = Number(it.quantity || 1);
-          var prod = it.product || it;
-          totalQty += qty;
-          var priceNum = prod && (prod.finalPrice != null ? Number(prod.finalPrice) : Number(prod.price || 0));
-          subtotal += priceNum * qty;
-          var image = productImageUrl(prod || {});
-          var name = prod && prod.name ? prod.name : 'Product';
-          var id = (prod && prod.id) ? prod.id : it.productId;
-          var productUrl = 'product.html?id=' + encodeURIComponent(id);
-          $cartList.append(
-            '<div class="product-widget">' +
-            '  <div class="product-img"><a href="' + productUrl + '"><img src="' + image + '" alt=""></a></div>' +
-            '  <div class="product-body">' +
-            '    <h3 class="product-name"><a href="' + productUrl + '">' + escapeHtml(name) + '</a></h3>' +
-            '    <h4 class="product-price"><span class="qty">' + qty + 'x</span>' + window.formatPrice(priceNum) + '</h4>' +
-            '  </div>' +
-            '</div>'
-          );
-        });
-      }
-      if ($summary.length) {
-        $summary.find('small').remove();
-        $summary.find('h5').remove();
-        $summary.append('<small>' + totalQty + ' Item(s) selected</small>');
-        $summary.append('<h5>SUBTOTAL: ' + window.formatPrice(subtotal) + '</h5>');
-      }
-      var $qtyBadge = $('.header-ctn .dropdown > a .qty');
-      if ($qtyBadge.length) $qtyBadge.text(totalQty);
-      ensureHeaderLinks();
-    } catch (e) {
-      console.error('Update header cart failed', e);
-    }
-  }
-
   function bindGlobalWishlist() {
     try {
       $(document).off('click', '.add-to-wishlist').on('click', '.add-to-wishlist', function(e){
@@ -226,14 +185,6 @@
         alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
       }
     });
-  }
-
-  function initGlobal() {
-    setNavbarLinks();
-    bindHeaderSearch();
-    ensureHeaderLinks();
-    bindGlobalWishlist();
-    updateHeaderCart();
   }
 
   // -------------------- Page: Index --------------------
@@ -510,6 +461,7 @@
       // set View Cart link to cart.html
       var $viewCart = $('.cart-dropdown .cart-btns a').first();
       if ($viewCart.length) $viewCart.attr('href', 'cart.html');
+      ensureHeaderLinks();
     } catch (e) {
       console.error('Update header cart failed', e);
     }
@@ -641,6 +593,11 @@
   }
 
   function initGlobal() {
+    // Normalize navigation and header behavior across all pages
+    setNavbarLinks();
+    bindHeaderSearch();
+    ensureHeaderLinks();
+    bindGlobalWishlist();
     // View cart navigation
     var $viewCart = $('.cart-dropdown .cart-btns a').first();
     if ($viewCart.length) $viewCart.attr('href', 'cart.html');
