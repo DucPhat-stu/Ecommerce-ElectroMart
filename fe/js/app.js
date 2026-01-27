@@ -113,6 +113,46 @@
     } catch (e) { console.warn('setNavbarLinks error', e); }
   }
 
+  // Bind category CTA on home banners (Shop now)
+  function bindShopNowLinks() {
+    try {
+      $('.shop .shop-body .cta-btn').each(function(){
+        var text = normalize($(this).closest('.shop').find('h3').text());
+        if (text.toLowerCase().indexOf('laptop') !== -1) $(this).attr('href', 'store.html?category=Laptops');
+        else if (text.toLowerCase().indexOf('accessories') !== -1) $(this).attr('href', 'store.html?category=Accessories');
+        else if (text.toLowerCase().indexOf('camera') !== -1) $(this).attr('href', 'store.html?category=Cameras');
+      });
+    } catch (e) { console.warn('bindShopNowLinks error', e); }
+  }
+
+  // Render 4x4 grid of products on home
+  function renderIndexGrid(products) {
+    try {
+      var list = (products || []).slice(0, 16);
+      if (!list.length) return;
+      if ($('#home-grid-16').length === 0) {
+        var html = '' +
+          '<div id="home-grid-16" class="section">' +
+          ' <div class="container">' +
+          '  <div class="row">' +
+          '   <div class="col-md-12"><div class="section-title"><h3 class="title">Featured</h3></div></div>' +
+          '  </div>' +
+          '  <div class="row" id="home-grid-16-row"></div>' +
+          ' </div>' +
+          '</div>';
+        var $newsletter = $('#newsletter').first();
+        if ($newsletter.length) $newsletter.before(html); else $('.section').last().after(html);
+      }
+      var $row = $('#home-grid-16-row');
+      if ($row.length) {
+        $row.empty();
+        list.forEach(function(p){
+          $row.append('<div class="col-md-3 col-xs-6">' + productCard(p) + '</div>');
+        });
+      }
+    } catch (e) { console.warn('renderIndexGrid error', e); }
+  }
+
   function bindHeaderSearch() {
     try {
       $('.header-search form').off('submit').on('submit', function(e){
@@ -147,6 +187,11 @@
       if ($wishlistHeader.length) {
         $wishlistHeader.attr('href', 'wishlist.html');
       }
+      // Top header: USD and My Account
+      var $usd = $("#top-header .header-links.pull-right a:contains('USD')");
+      if ($usd.length) { $usd.attr('href', 'checkout.html#payment'); }
+      var $acct = $("#top-header .header-links.pull-right a:contains('My Account')");
+      if ($acct.length) { $acct.attr('href', 'account.html'); }
     } catch (e) { console.warn('ensureHeaderLinks error', e); }
   }
 
@@ -272,6 +317,8 @@
       var $topSlick = $('#tab2 .products-slick').first();
       await loadProductsIntoSlick($newSlick, top);
       await loadProductsIntoSlick($topSlick, top);
+      renderIndexGrid(products);
+      bindShopNowLinks();
       bindAddToCartButtons();
     } catch (e) {
       console.error(e);
@@ -349,14 +396,32 @@
       var res = await window.ProductAPI.getAll();
       if (!res || res.success === false) return;
       var products = res.data || [];
+      var q = getParam('q') || '';
+      var cat = getParam('category') || '';
+      var hot = getParam('hot');
+      var filtered = products.filter(function(p){
+        var ok = true;
+        if (q) {
+          var text = (p.name || '') + ' ' + (p.shortDescription || '') + ' ' + (p.description || '');
+          ok = ok && containsIgnoreCase(text, q);
+        }
+        if (cat) {
+          var c = (p.categoryName || p.category || '');
+          ok = ok && containsIgnoreCase(c, cat);
+        }
+        if (hot) {
+          ok = ok && Number(p.discountPercent || 0) > 0;
+        }
+        return ok;
+      });
       var $grid = $('#store .row').first();
       if ($grid.length) {
         $grid.empty();
-        if (!products.length) {
+        if (!filtered.length) {
           $grid.append('<div class="col-md-12"><p>Không tìm thấy sản phẩm phù hợp.</p></div>');
         }
-        products.forEach(function(p) {
-          var html = '<div class="col-md-4 col-xs-6">' + productCard(p) + '</div>';
+        filtered.forEach(function(p) {
+          var html = '<div class="col-md-3 col-xs-6">' + productCard(p) + '</div>';
           $grid.append(html);
         });
       }
@@ -493,19 +558,25 @@
       var res = await window.CartAPI.getUserCart(userId);
       if (!res || res.success === false) return;
       var cart = res.data || {};
-      var items = safeArray(cart.items || cart.cartItems || cart.products || []); // try different keys
+      var fullItems = safeArray(cart.items || cart.cartItems || cart.products || []);
+      var displayItems = fullItems.slice().reverse().slice(0, 7);
       var totalQty = 0;
       var subtotal = 0;
+      fullItems.forEach(function(it){
+        var qty = Number(it.quantity || 1);
+        var prod = it.product || it;
+        var priceNum = prod && (prod.finalPrice != null ? Number(prod.finalPrice) : Number(prod.price || 0));
+        totalQty += qty;
+        subtotal += priceNum * qty;
+      });
       var $cartList = $('.cart-dropdown .cart-list');
       var $summary = $('.cart-dropdown .cart-summary');
       if ($cartList.length) {
         $cartList.empty();
-        items.forEach(function(it){
+        displayItems.forEach(function(it){
           var qty = Number(it.quantity || 1);
           var prod = it.product || it;
-          totalQty += qty;
           var priceNum = prod && (prod.finalPrice != null ? Number(prod.finalPrice) : Number(prod.price || 0));
-          subtotal += priceNum * qty;
           var image = productImageUrl(prod || {});
           var name = prod && prod.name ? prod.name : 'Product';
           var id = (prod && prod.id) ? prod.id : it.productId;
@@ -527,9 +598,7 @@
         $summary.append('<small>' + totalQty + ' Item(s) selected</small>');
         $summary.append('<h5>SUBTOTAL: ' + window.formatPrice(subtotal) + '</h5>');
       }
-      // qty bubble
       $('.header-ctn .dropdown > a .qty').text(totalQty);
-      // set View Cart link to cart.html
       var $viewCart = $('.cart-dropdown .cart-btns a').first();
       if ($viewCart.length) $viewCart.attr('href', 'cart.html');
       ensureHeaderLinks();
@@ -670,6 +739,7 @@
     injectFooterLegalLinks();
     bindHeaderSearch();
     ensureHeaderLinks();
+    bindShopNowLinks();
     bindGlobalWishlist();
     // View cart navigation
     var $viewCart = $('.cart-dropdown .cart-btns a').first();
@@ -686,6 +756,8 @@
     } else if (path.endsWith('/store.html')) {
       loadStorePage();
     } else if (path.endsWith('/product.html')) {
+      loadProductPage();
+    } else if (path.endsWith('/quick-view.html')) {
       loadProductPage();
     } else if (path.endsWith('/checkout.html')) {
       loadCheckoutPage();
