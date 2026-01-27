@@ -1,6 +1,7 @@
 package com.store.electro.Models.DTOs.Request;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.store.electro.Models.Enums.ProductStatus;
 
@@ -14,24 +15,34 @@ import lombok.Data;
 @Data
 public class AddProductRequest {
 
+    // Name
     @NotBlank(message = "Product name is required")
     private String name;
 
-    @NotNull(message = "Price is required")
-    @DecimalMin(value = "0.0", message = "Price must be greater than or equal to 0")
-    private BigDecimal price;
-
-    @Min(value = 0, message = "Discount percent must be between 0 and 100")
-    @Max(value = 100)
-    private Integer discountPercent = 0;
-
+    // Short Description
     private String shortDescription;
 
+    // Description
     private String description;
 
+    // Status
     private ProductStatus status;
 
+    // Category ID
     @NotNull(message = "Category ID is required")
     @Min(value = 1)
     private Long categoryId;
+
+    // Brand ID
+    @NotNull(message = "Brand ID is required")
+    private Long brandId;
+
+    // List of details
+    private List<ProductDetailRequest> productDetails;
+
+    // List of Images
+    private List<ProductImageRequest> productImages;
+
+    // List of Variants
+    private List<ProductVariantRequest> productVariants;
 }
