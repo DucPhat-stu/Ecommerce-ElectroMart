@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.store.electro.Models.Entity.Product.ProductVariant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -143,7 +144,7 @@ public class Cart {
     }
 
     public BigDecimal getSubtotal() {
-        if (product != null && product.getPrice() != null && quantity != null) {
+        if (product != null && product.getBasePrice() != null && quantity != null) {
             return product.calculatePrice().multiply(BigDecimal.valueOf(quantity));
         }
         return BigDecimal.ZERO;
