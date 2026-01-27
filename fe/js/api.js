@@ -152,6 +152,56 @@
     }
   };
 
+  var UserAPI = {
+    getCurrentUser: function(userId) {
+      var id = safe(userId, getCurrentUserId());
+      return handleApi(
+        axios.get(baseUrl('/user/' + encodeURIComponent(id)))
+      );
+    },
+
+    updateCurrentUser: function(userId, payload) {
+      var id = safe(userId, getCurrentUserId());
+      return handleApi(
+        axios.put(baseUrl('/user/' + encodeURIComponent(id)), payload)
+      );
+    }
+  };
+
+  var WishlistAPI = {
+    getUserWishlist: function(userId) {
+      var id = safe(userId, getCurrentUserId());
+      return handleApi(
+        axios.get(baseUrl('/wishlist'), { params: { userId: id } })
+      );
+    },
+
+    getWishlistCount: function(userId) {
+      var id = safe(userId, getCurrentUserId());
+      return handleApi(
+        axios.get(baseUrl('/wishlist/count'), { params: { userId: id } })
+      );
+    },
+
+    add: function(userId, productId) {
+      var id = safe(userId, getCurrentUserId());
+      return handleApi(
+        axios.post(baseUrl('/wishlist'), null, {
+          params: { userId: id, productId: productId }
+        })
+      );
+    },
+
+    remove: function(userId, productId) {
+      var id = safe(userId, getCurrentUserId());
+      return handleApi(
+        axios.delete(baseUrl('/wishlist'), {
+          params: { userId: id, productId: productId }
+        })
+      );
+    }
+  };
+
   var OrderAPI = {
     // Backend sample creates a demo order; frontend does not yet send full payload
     create: function(/* orderData */) {
@@ -164,6 +214,8 @@
   window.ProductAPI = ProductAPI;
   window.CartAPI = CartAPI;
   window.ReviewAPI = ReviewAPI;
+  window.UserAPI = UserAPI;
+  window.WishlistAPI = WishlistAPI;
   window.OrderAPI = OrderAPI;
 
 })(window);

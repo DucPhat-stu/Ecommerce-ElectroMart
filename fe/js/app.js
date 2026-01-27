@@ -80,9 +80,9 @@
           '<h4 class="product-price">' + window.formatPrice(price) + ' ' + oldPriceHtml + '</h4>' +
           '<div class="product-rating"></div>' +
           '<div class="product-btns">' +
-            '<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
+            '<button class="add-to-wishlist" data-product-id="' + product.id + '"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>' +
             '<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>' +
-            '<a class="quick-view" href="' + productUrl + '"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></a>' +
+            '<a class="quick-view" href="quick-view.html?id=' + encodeURIComponent(product.id) + '"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></a>' +
           '</div>' +
         '</div>' +
         '<div class="add-to-cart">' +
@@ -151,24 +151,31 @@
         e.preventDefault();
         var id = Number($(this).attr('data-product-id'));
         if (!id) return;
-        var key = 'wishlistProductIds';
-        var cur = [];
-        try { cur = JSON.parse(localStorage.getItem(key) || '[]'); } catch(_) {}
-        if (!Array.isArray(cur)) cur = [];
-        var idx = cur.indexOf(id);
-        if (idx === -1) {
-          cur.push(id);
-          alert('Đã thêm vào wishlist');
-        } else {
-          cur.splice(idx, 1);
-          alert('Đã bỏ khỏi wishlist');
-        }
-        localStorage.setItem(key, JSON.stringify(cur));
-        // badge wishlist (giả lập ở header nếu cần)
-        var $wl = $('.header-ctn a:contains("Wishlist") .qty');
-        if ($wl.length) $wl.text(cur.length);
+        var userId = window.getCurrentUserId();
+        // Toggle wishlist on backend
+        window.WishlistAPI.add(userId, id).then(function(res) {
+          if (res && res.success !== false) {
+            alert('Đã thêm vào wishlist');
+            updateHeaderWishlistCount();
+          } else {
+            alert('Không thể thêm vào wishlist');
+          }
+        });
       });
     } catch (e) { console.warn('bindGlobalWishlist error', e); }
+  }
+
+  async function updateHeaderWishlistCount() {
+    try {
+      var userId = window.getCurrentUserId();
+      var res = await window.WishlistAPI.getWishlistCount(userId);
+      if (!res || res.success === false) return;
+      var count = Number(res.data || 0);
+      var $wl = $('.header-ctn a:contains("Wishlist") .qty');
+      if ($wl.length) $wl.text(count);
+    } catch (e) {
+      console.warn('updateHeaderWishlistCount error', e);
+    }
   }
 
   function bindAddToCartButtons() {
@@ -602,6 +609,7 @@
     var $viewCart = $('.cart-dropdown .cart-btns a').first();
     if ($viewCart.length) $viewCart.attr('href', 'cart.html');
     updateHeaderCart();
+    updateHeaderWishlistCount();
   }
 
   $(document).ready(function(){
