@@ -1,4 +1,4 @@
-package com.store.electro.Models.Entity;
+package com.store.electro.Models.Entity.Product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

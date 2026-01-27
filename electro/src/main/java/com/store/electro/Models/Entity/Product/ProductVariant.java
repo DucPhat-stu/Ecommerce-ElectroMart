@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.store.electro.Models.Enums.ProductStatus;
@@ -31,12 +32,13 @@ import jakarta.persistence.Version;
 
 @JsonPropertyOrder({
         "product",
-        "storageSize",
         "discountPercent",
         "finalPrice",
+        "basePrice",
         "status",
         "createdAt",
-        "updatedAt"
+        "updatedAt",
+        "options"
 })
 @Entity
 @Table(name = "product_variants")
@@ -62,6 +64,7 @@ public class ProductVariant {
     private ProductStatus status;
 
     @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<VariantOption> options = new HashSet<>();
 
     @Column(name = "created_at")

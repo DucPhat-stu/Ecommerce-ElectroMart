@@ -2899,6 +2899,14 @@ INSERT INTO variant_options (
     (185, 1, 'Moonlight White', 0.00), (185, 3, '32GB', 300.00), (185, 2, '1TB', 0.00),
     (186, 1, 'Eclipse Gray', 0.00), (186, 3, '32GB', 300.00), (186, 2, '2TB', 300.00),
     (187, 1, 'Moonlight White', 0.00), (187, 3, '32GB', 300.00), (187, 2, '2TB', 300.00),
+    (180, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (180, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (181, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (181, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (182, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (182, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (183, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (183, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (184, 4, 'AMD Ryzen 9 9950X', 200.00), (184, 5, 'NVIDIA GeForce RTX 4070 Laptop', 200.00),
+    (185, 4, 'AMD Ryzen 9 9950X', 200.00), (185, 5, 'NVIDIA GeForce RTX 4070 Laptop', 200.00),
+    (186, 4, 'AMD Ryzen 9 9950X', 200.00), (186, 5, 'NVIDIA GeForce RTX 4070 Laptop', 200.00),
+    (187, 4, 'AMD Ryzen 9 9950X', 200.00), (187, 5, 'NVIDIA GeForce RTX 4070 Laptop', 200.00),
 
     -- ASUS ROG Zephyrus G16 (188-195) - 2 colors x 2 RAM x 2 SSD
     (188, 1, 'Eclipse Gray', 0.00), (188, 3, '16GB', 0.00), (188, 2, '1TB', 0.00),
@@ -2909,6 +2917,14 @@ INSERT INTO variant_options (
     (193, 1, 'Platinum', 0.00), (193, 3, '32GB', 300.00), (193, 2, '1TB', 0.00),
     (194, 1, 'Eclipse Gray', 0.00), (194, 3, '32GB', 300.00), (194, 2, '2TB', 300.00),
     (195, 1, 'Platinum', 0.00), (195, 3, '32GB', 300.00), (195, 2, '2TB', 300.00),
+    (188, 4, 'Intel Core Ultra 9', 0.00), (188, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (189, 4, 'Intel Core Ultra 9', 0.00), (189, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (190, 4, 'Intel Core Ultra 9', 0.00), (190, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (191, 4, 'Intel Core Ultra 9', 0.00), (191, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (192, 4, 'Intel Core i9-14900HX', 200.00), (192, 5, 'NVIDIA GeForce RTX 4080 Laptop', 250.00),
+    (193, 4, 'Intel Core i9-14900HX', 200.00), (193, 5, 'NVIDIA GeForce RTX 4080 Laptop', 250.00),
+    (194, 4, 'Intel Core i9-14900HX', 200.00), (194, 5, 'NVIDIA GeForce RTX 4080 Laptop', 250.00),
+    (195, 4, 'Intel Core i9-14900HX', 200.00), (195, 5, 'NVIDIA GeForce RTX 4080 Laptop', 250.00),
 
     -- Acer Swift X 14 (196-199) - 1 color x 2 RAM x 2 SSD
     (196, 1, 'Steel Gray', 0.00), (196, 3, '16GB', 0.00), (196, 2, '512GB', 0.00),
@@ -2921,6 +2937,10 @@ INSERT INTO variant_options (
     (201, 1, 'Silver', 0.00), (201, 3, '8GB', 0.00), (201, 2, '512GB', 100.00),
     (202, 1, 'Silver', 0.00), (202, 3, '16GB', 200.00), (202, 2, '256GB', 0.00),
     (203, 1, 'Silver', 0.00), (203, 3, '16GB', 200.00), (203, 2, '512GB', 100.00),
+    (200, 4, 'Intel Core Ultra 5', 0.00),
+    (201, 4, 'Intel Core Ultra 5', 0.00),
+    (202, 4, 'Intel Core Ultra 7', 100.00),
+    (203, 4, 'Intel Core Ultra 7', 100.00),
 
     -- Microsoft Surface Laptop 6 (204-211) - 2 colors x 2 RAM x 2 SSD
     (204, 1, 'Platinum', 0.00), (204, 3, '16GB', 0.00), (204, 2, '512GB', 0.00),
@@ -2931,6 +2951,14 @@ INSERT INTO variant_options (
     (209, 1, 'Black', 0.00), (209, 3, '32GB', 300.00), (209, 2, '512GB', 0.00),
     (210, 1, 'Platinum', 0.00), (210, 3, '32GB', 300.00), (210, 2, '1TB', 200.00),
     (211, 1, 'Black', 0.00), (211, 3, '32GB', 300.00), (211, 2, '1TB', 200.00),
+    (204, 4, 'Intel Core Ultra 7', 0.00),
+    (205, 4, 'Intel Core Ultra 7', 0.00),
+    (206, 4, 'Intel Core Ultra 7', 0.00),
+    (207, 4, 'Intel Core Ultra 7', 0.00),
+    (208, 4, 'Intel Core Ultra 9', 150.00),
+    (209, 4, 'Intel Core Ultra 9', 150.00),
+    (210, 4, 'Intel Core Ultra 9', 150.00),
+    (211, 4, 'Intel Core Ultra 9', 150.00),
 
     -- Microsoft Surface Laptop Studio 2 (212-219) - 2 colors x 2 RAM x 2 SSD
     (212, 1, 'Platinum', 0.00), (212, 3, '16GB', 0.00), (212, 2, '512GB', 0.00),
@@ -2941,10 +2969,20 @@ INSERT INTO variant_options (
     (217, 1, 'Graphite', 0.00), (217, 3, '32GB', 300.00), (217, 2, '512GB', 0.00),
     (218, 1, 'Platinum', 0.00), (218, 3, '32GB', 300.00), (218, 2, '1TB', 200.00),
     (219, 1, 'Graphite', 0.00), (219, 3, '32GB', 300.00), (219, 2, '1TB', 200.00),
+    (212, 4, 'Intel Core i7 H-series', 0.00), (212, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (213, 4, 'Intel Core i7 H-series', 0.00), (213, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (214, 4, 'Intel Core i7 H-series', 0.00), (214, 5, 'NVIDIA GeForce RTX 4060 Laptop', 200.00),
+    (215, 4, 'Intel Core i7 H-series', 0.00), (215, 5, 'NVIDIA GeForce RTX 4060 Laptop', 200.00),
+    (216, 4, 'Intel Core i9 H-series', 200.00), (216, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (217, 4, 'Intel Core i9 H-series', 200.00), (217, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (218, 4, 'Intel Core i9 H-series', 200.00), (218, 5, 'NVIDIA GeForce RTX 4060 Laptop', 200.00),
+    (219, 4, 'Intel Core i9 H-series', 200.00), (219, 5, 'NVIDIA GeForce RTX 4060 Laptop', 200.00),
 
     -- Razer Blade 16 (220-221) - 1 color x 1 RAM x 2 SSD
     (220, 1, 'Black', 0.00), (220, 3, '32GB', 0.00), (220, 2, '1TB', 0.00),
     (221, 1, 'Black', 0.00), (221, 3, '32GB', 0.00), (221, 2, '2TB', 400.00),
+    (220, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+    (221, 5, 'NVIDIA GeForce RTX 4090 Laptop', 400.00),
 
     -- Razer Blade 14 (222-225) - 2 colors x 2 RAM x 1 SSD
     (222, 1, 'Black', 0.00), (222, 3, '16GB', 0.00), (222, 2, '1TB', 0.00),
@@ -2957,6 +2995,10 @@ INSERT INTO variant_options (
     (227, 1, 'Core Black', 0.00), (227, 3, '16GB', 0.00), (227, 2, '2TB', 400.00),
     (228, 1, 'Core Black', 0.00), (228, 3, '32GB', 400.00), (228, 2, '1TB', 0.00),
     (229, 1, 'Core Black', 0.00), (229, 3, '32GB', 400.00), (229, 2, '2TB', 400.00),
+    (226, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (227, 5, 'NVIDIA GeForce RTX 4080 Laptop', 300.00),
+    (228, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (229, 5, 'NVIDIA GeForce RTX 4080 Laptop', 300.00),
 
     -- MSI Raider GE78 HX (230-233) - 1 color x 2 RAM x 2 SSD
     (230, 1, 'Black', 0.00), (230, 3, '32GB', 0.00), (230, 2, '1TB', 0.00),
@@ -2967,6 +3009,8 @@ INSERT INTO variant_options (
     -- Gigabyte AORUS 16X (234-235) - 1 color x 2 RAM x 1 SSD
     (234, 1, 'Black', 0.00), (234, 3, '16GB', 0.00), (234, 2, '1TB', 0.00),
     (235, 1, 'Black', 0.00), (235, 3, '32GB', 400.00), (235, 2, '1TB', 0.00),
+    (234, 4, 'Intel Core i7', 0.00),
+    (235, 4, 'Intel Core i9', 200.00),
 
     -- Samsung Galaxy Book4 Pro 14 (236-239) - 1 color x 2 RAM x 2 SSD
     (236, 1, 'Moonstone Gray', 0.00), (236, 3, '16GB', 0.00), (236, 2, '512GB', 0.00),
@@ -2978,7 +3022,67 @@ INSERT INTO variant_options (
     (240, 1, 'Black', 0.00), (240, 3, '16GB', 0.00), (240, 2, '512GB', 0.00),
     (241, 1, 'Black', 0.00), (241, 3, '16GB', 0.00), (241, 2, '1TB', 200.00),
     (242, 1, 'Black', 0.00), (242, 3, '32GB', 300.00), (242, 2, '512GB', 0.00),
-    (243, 1, 'Black', 0.00), (243, 3, '32GB', 300.00), (243, 2, '1TB', 200.00);
+    (243, 1, 'Black', 0.00), (243, 3, '32GB', 300.00), (243, 2, '1TB', 200.00),
+
+    -- CPU/GPU options for ROG Zephyrus G14 (180-187)
+    (180, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (180, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (181, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (181, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (182, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (182, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (183, 4, 'AMD Ryzen 9 7900HX3D', 0.00), (183, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (184, 4, 'AMD Ryzen 9 9950X', 0.00), (184, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (185, 4, 'AMD Ryzen 9 9950X', 0.00), (185, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (186, 4, 'AMD Ryzen 9 9950X', 0.00), (186, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (187, 4, 'AMD Ryzen 9 9950X', 0.00), (187, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+
+    -- CPU/GPU options for ROG Zephyrus G16 (188-195)
+    (188, 4, 'Intel Core Ultra 9', 0.00), (188, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (189, 4, 'Intel Core Ultra 9', 0.00), (189, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (190, 4, 'Intel Core Ultra 9', 0.00), (190, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (191, 4, 'Intel Core Ultra 9', 0.00), (191, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (192, 4, 'Intel Core i9-14900HX', 0.00), (192, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+    (193, 4, 'Intel Core i9-14900HX', 0.00), (193, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+    (194, 4, 'Intel Core i9-14900HX', 0.00), (194, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+    (195, 4, 'Intel Core i9-14900HX', 0.00), (195, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+
+    -- CPU options for Acer Swift Go 14 (200-203)
+    (200, 4, 'Intel Core Ultra 5', 0.00),
+    (201, 4, 'Intel Core Ultra 5', 0.00),
+    (202, 4, 'Intel Core Ultra 7', 0.00),
+    (203, 4, 'Intel Core Ultra 7', 0.00),
+
+    -- CPU options for Surface Laptop 6 (204-211)
+    (204, 4, 'Intel Core Ultra 7', 0.00),
+    (205, 4, 'Intel Core Ultra 7', 0.00),
+    (206, 4, 'Intel Core Ultra 7', 0.00),
+    (207, 4, 'Intel Core Ultra 7', 0.00),
+    (208, 4, 'Intel Core Ultra 9', 0.00),
+    (209, 4, 'Intel Core Ultra 9', 0.00),
+    (210, 4, 'Intel Core Ultra 9', 0.00),
+    (211, 4, 'Intel Core Ultra 9', 0.00),
+
+    -- CPU/GPU options for Surface Laptop Studio 2 (212-219)
+    (212, 4, 'Intel Core i7 H-series', 0.00), (212, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (213, 4, 'Intel Core i7 H-series', 0.00), (213, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (214, 4, 'Intel Core i7 H-series', 0.00), (214, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (215, 4, 'Intel Core i7 H-series', 0.00), (215, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (216, 4, 'Intel Core i9 H-series', 0.00), (216, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (217, 4, 'Intel Core i9 H-series', 0.00), (217, 5, 'NVIDIA GeForce RTX 4050 Laptop', 0.00),
+    (218, 4, 'Intel Core i9 H-series', 0.00), (218, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+    (219, 4, 'Intel Core i9 H-series', 0.00), (219, 5, 'NVIDIA GeForce RTX 4060 Laptop', 0.00),
+
+    -- GPU options for Razer Blade 16 (220-221)
+    (220, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+    (221, 5, 'NVIDIA GeForce RTX 4090 Laptop', 0.00),
+
+    -- GPU options for MSI Stealth 16 Studio (226-229)
+    (226, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (227, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+    (228, 5, 'NVIDIA GeForce RTX 4070 Laptop', 0.00),
+    (229, 5, 'NVIDIA GeForce RTX 4080 Laptop', 0.00),
+
+    -- CPU options for Gigabyte AORUS 16X (234-235)
+    (234, 4, 'Intel Core i7', 0.00),
+    (235, 4, 'Intel Core i9', 0.00);
 
 -- ========== TABLETS SECTION ==========
 
