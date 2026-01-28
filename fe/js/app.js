@@ -40,15 +40,40 @@
   }
 
   function productImageUrl(product) {
-    try {
-      var images = safeArray(product.productImages);
-      if (images.length > 0 && images[0].imageUrl) {
-        return images[0].imageUrl;
+    // 1) explicit imageUrl (if backend provides)
+    if (product && product.imageUrl) {
+      // repo-clone nginx serves uploads at /uploads/* (not /img/*)
+      if (typeof product.imageUrl === 'string' && product.imageUrl.indexOf('/img/') === 0) {
+        return '/uploads/' + product.imageUrl.slice('/img/'.length);
       }
-    } catch(e) {}
-    // fallback to sample images in template
+      return product.imageUrl;
+    }
+
+    // 2) productImages[0].imageUrl (common API shape)
+    try {
+      var images = safeArray(product && product.productImages);
+      if (images.length > 0 && images[0] && images[0].imageUrl) {
+        var u = images[0].imageUrl;
+        if (typeof u === 'string' && u.indexOf('/img/') === 0) {
+          return '/uploads/' + u.slice('/img/'.length);
+        }
+        return u;
+      }
+    } catch (e) {}
+
+    // 3) fallback to local template images: product01..product09 (stable by product.id)
+    var idNum = Number(product && product.id);
+    if (!isNaN(idNum) && idNum > 0) {
+      var idx = ((idNum - 1) % 9) + 1;
+      var suffix = idx < 10 ? ('0' + idx) : String(idx);
+      return 'img/product' + suffix + '.png';
+    }
+
     return 'img/product01.png';
   }
+
+  // Expose for pages that aren't wired into app.js (e.g. compare.html inline script)
+  window.__productImageUrl = productImageUrl;
 
   function renderStars(rating) {
     var html = '';
@@ -113,6 +138,46 @@
     } catch (e) { console.warn('setNavbarLinks error', e); }
   }
 
+  // Bind category CTA on home banners (Shop now)
+  function bindShopNowLinks() {
+    try {
+      $('.shop .shop-body .cta-btn').each(function(){
+        var text = normalize($(this).closest('.shop').find('h3').text());
+        if (text.toLowerCase().indexOf('laptop') !== -1) $(this).attr('href', 'store.html?category=Laptops');
+        else if (text.toLowerCase().indexOf('accessories') !== -1) $(this).attr('href', 'store.html?category=Accessories');
+        else if (text.toLowerCase().indexOf('camera') !== -1) $(this).attr('href', 'store.html?category=Cameras');
+      });
+    } catch (e) { console.warn('bindShopNowLinks error', e); }
+  }
+
+  // Render 4x4 grid of products on home
+  function renderIndexGrid(products) {
+    try {
+      var list = (products || []).slice(0, 16);
+      if (!list.length) return;
+      if ($('#home-grid-16').length === 0) {
+        var html = '' +
+          '<div id="home-grid-16" class="section">' +
+          ' <div class="container">' +
+          '  <div class="row">' +
+          '   <div class="col-md-12"><div class="section-title"><h3 class="title">Featured</h3></div></div>' +
+          '  </div>' +
+          '  <div class="row" id="home-grid-16-row"></div>' +
+          ' </div>' +
+          '</div>';
+        var $newsletter = $('#newsletter').first();
+        if ($newsletter.length) $newsletter.before(html); else $('.section').last().after(html);
+      }
+      var $row = $('#home-grid-16-row');
+      if ($row.length) {
+        $row.empty();
+        list.forEach(function(p){
+          $row.append('<div class="col-md-3 col-xs-6">' + productCard(p) + '</div>');
+        });
+      }
+    } catch (e) { console.warn('renderIndexGrid error', e); }
+  }
+
   function bindHeaderSearch() {
     try {
       $('.header-search form').off('submit').on('submit', function(e){
@@ -147,6 +212,11 @@
       if ($wishlistHeader.length) {
         $wishlistHeader.attr('href', 'wishlist.html');
       }
+      // Top header: USD and My Account
+      var $usd = $("#top-header .header-links.pull-right a:contains('USD')");
+      if ($usd.length) { $usd.attr('href', 'checkout.html#payment'); }
+      var $acct = $("#top-header .header-links.pull-right a:contains('My Account')");
+      if ($acct.length) { $acct.attr('href', 'account.html'); }
     } catch (e) { console.warn('ensureHeaderLinks error', e); }
   }
 
@@ -226,16 +296,36 @@
           }
         });
       });
+
+      // Quick-view page: "add to wishlist" link
+      $(document).off('click', '.btn-add-wishlist').on('click', '.btn-add-wishlist', function(e){
+        e.preventDefault();
+        var id = Number(getParam('id'));
+        if (!id) return;
+        var userId = window.getCurrentUserId();
+        window.WishlistAPI.add(userId, id).then(function(res) {
+          if (res && res.success !== false) {
+            alert('Đã thêm vào wishlist');
+            updateHeaderWishlistCount();
+          } else {
+            alert('Không thể thêm vào wishlist');
+          }
+        });
+      });
     } catch (e) { console.warn('bindGlobalWishlist error', e); }
   }
 
   async function updateHeaderWishlistCount() {
     try {
+      // default state (avoid template hard-code)
+      var $wl0 = $('.header-ctn a[href*="wishlist"] .qty, .header-ctn a:contains("Wishlist") .qty');
+      if ($wl0.length) $wl0.text('0');
+
       var userId = window.getCurrentUserId();
       var res = await window.WishlistAPI.getWishlistCount(userId);
       if (!res || res.success === false) return;
       var count = Number(res.data || 0);
-      var $wl = $('.header-ctn a:contains("Wishlist") .qty');
+      var $wl = $('.header-ctn a[href*="wishlist"] .qty, .header-ctn a:contains("Wishlist") .qty');
       if ($wl.length) $wl.text(count);
     } catch (e) {
       console.warn('updateHeaderWishlistCount error', e);
@@ -243,9 +333,12 @@
   }
 
   function bindAddToCartButtons() {
-    $('.add-to-cart-btn').off('click').on('click', async function() {
+    // Use delegation to work with dynamic DOM (slick, ajax render)
+    $(document).off('click', '.add-to-cart-btn').on('click', '.add-to-cart-btn', async function(e) {
+      // If button is inside a link, avoid navigation
+      if (e && e.preventDefault) e.preventDefault();
       var pid = Number($(this).attr('data-product-id'));
-      if (!pid) return;
+      if (!pid) return; // product page/quick-view handle their own add-to-cart
       var qty = 1;
       var userId = window.getCurrentUserId();
       var resp = await window.CartAPI.addToCart(userId, pid, qty);
@@ -255,6 +348,46 @@
       } else {
         alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
       }
+    });
+  }
+
+  // Compare (client-side) - stores a small list of product ids in localStorage
+  function getCompareIds() {
+    try {
+      var raw = window.localStorage.getItem('compareProductIds');
+      var arr = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(arr)) return [];
+      return arr.map(Number).filter(function(n){ return !isNaN(n) && n > 0; });
+    } catch (_) { return []; }
+  }
+
+  function setCompareIds(ids) {
+    try { window.localStorage.setItem('compareProductIds', JSON.stringify(ids || [])); } catch (_) {}
+  }
+
+  function bindCompareButtons() {
+    $(document).off('click', '.add-to-compare').on('click', '.add-to-compare', function(e){
+      e.preventDefault();
+      // productCard doesn't put data-product-id on compare button → read from sibling wishlist button
+      var pid = Number($(this).closest('.product').find('.add-to-wishlist').attr('data-product-id'));
+      if (!pid) return;
+      var ids = getCompareIds();
+      var idx = ids.indexOf(pid);
+      if (idx >= 0) {
+        ids.splice(idx, 1);
+        setCompareIds(ids);
+        alert('Đã xóa khỏi compare');
+        return;
+      }
+      if (ids.length >= 4) {
+        alert('Compare tối đa 4 sản phẩm');
+        return;
+      }
+      ids.push(pid);
+      setCompareIds(ids);
+      alert('Đã thêm vào compare. Mở trang compare để xem.');
+      // Navigate to compare page for a standard ecommerce flow
+      window.location.href = 'compare.html';
     });
   }
 
@@ -272,7 +405,9 @@
       var $topSlick = $('#tab2 .products-slick').first();
       await loadProductsIntoSlick($newSlick, top);
       await loadProductsIntoSlick($topSlick, top);
-      bindAddToCartButtons();
+      renderIndexGrid(products);
+      bindShopNowLinks();
+      // Add-to-cart is delegated globally; no need to rebind here
     } catch (e) {
       console.error(e);
     }
@@ -309,54 +444,39 @@
     }
   }
 
-  async function loadIndexPage() {
-    try {
-      var res = await window.ProductAPI.getAll();
-      if (!res || res.success === false) {
-        console.warn('Cannot load products:', res && res.message);
-        return;
-      }
-      var products = res.data || [];
-      var top = products.slice(0, 10);
-      var $newSlick = $('#tab1 .products-slick').first();
-      var $topSlick = $('#tab2 .products-slick').first();
-      await loadProductsIntoSlick($newSlick, top);
-      await loadProductsIntoSlick($topSlick, top);
-      bindAddToCartButtons();
-        } catch (e) {
-      console.error(e);
-    }
-  }
-
-  function bindAddToCartButtons() {
-    $('.add-to-cart-btn').off('click').on('click', async function() {
-      var pid = Number($(this).attr('data-product-id'));
-      if (!pid) return;
-      var qty = 1;
-      var userId = window.getCurrentUserId();
-      var resp = await window.CartAPI.addToCart(userId, pid, qty);
-      if (resp && resp.success !== false) {
-        alert('Đã thêm sản phẩm vào giỏ hàng');
-        updateHeaderCart();
-      } else {
-        alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
-      }
-    });
-  }
+  // (removed duplicate loadIndexPage/bindAddToCartButtons block)
 
   async function loadStorePage() {
     try {
       var res = await window.ProductAPI.getAll();
       if (!res || res.success === false) return;
       var products = res.data || [];
+      var q = getParam('q') || '';
+      var cat = getParam('category') || '';
+      var hot = getParam('hot');
+      var filtered = products.filter(function(p){
+        var ok = true;
+        if (q) {
+          var text = (p.name || '') + ' ' + (p.shortDescription || '') + ' ' + (p.description || '');
+          ok = ok && containsIgnoreCase(text, q);
+        }
+        if (cat) {
+          var c = (p.categoryName || p.category || '');
+          ok = ok && containsIgnoreCase(c, cat);
+        }
+        if (hot) {
+          ok = ok && Number(p.discountPercent || 0) > 0;
+        }
+        return ok;
+      });
       var $grid = $('#store .row').first();
       if ($grid.length) {
         $grid.empty();
-        if (!products.length) {
+        if (!filtered.length) {
           $grid.append('<div class="col-md-12"><p>Không tìm thấy sản phẩm phù hợp.</p></div>');
         }
-        products.forEach(function(p) {
-          var html = '<div class="col-md-4 col-xs-6">' + productCard(p) + '</div>';
+        filtered.forEach(function(p) {
+          var html = '<div class="col-md-3 col-xs-6">' + productCard(p) + '</div>';
           $grid.append(html);
         });
       }
@@ -493,19 +613,25 @@
       var res = await window.CartAPI.getUserCart(userId);
       if (!res || res.success === false) return;
       var cart = res.data || {};
-      var items = safeArray(cart.items || cart.cartItems || cart.products || []); // try different keys
+      var fullItems = safeArray(cart.items || cart.cartItems || cart.products || []);
+      var displayItems = fullItems.slice().reverse().slice(0, 7);
       var totalQty = 0;
       var subtotal = 0;
+      fullItems.forEach(function(it){
+        var qty = Number(it.quantity || 1);
+        var prod = it.product || it;
+        var priceNum = prod && (prod.finalPrice != null ? Number(prod.finalPrice) : Number(prod.price || 0));
+        totalQty += qty;
+        subtotal += priceNum * qty;
+      });
       var $cartList = $('.cart-dropdown .cart-list');
       var $summary = $('.cart-dropdown .cart-summary');
       if ($cartList.length) {
         $cartList.empty();
-        items.forEach(function(it){
+        displayItems.forEach(function(it){
           var qty = Number(it.quantity || 1);
           var prod = it.product || it;
-          totalQty += qty;
           var priceNum = prod && (prod.finalPrice != null ? Number(prod.finalPrice) : Number(prod.price || 0));
-          subtotal += priceNum * qty;
           var image = productImageUrl(prod || {});
           var name = prod && prod.name ? prod.name : 'Product';
           var id = (prod && prod.id) ? prod.id : it.productId;
@@ -527,9 +653,7 @@
         $summary.append('<small>' + totalQty + ' Item(s) selected</small>');
         $summary.append('<h5>SUBTOTAL: ' + window.formatPrice(subtotal) + '</h5>');
       }
-      // qty bubble
       $('.header-ctn .dropdown > a .qty').text(totalQty);
-      // set View Cart link to cart.html
       var $viewCart = $('.cart-dropdown .cart-btns a').first();
       if ($viewCart.length) $viewCart.attr('href', 'cart.html');
       ensureHeaderLinks();
@@ -670,7 +794,10 @@
     injectFooterLegalLinks();
     bindHeaderSearch();
     ensureHeaderLinks();
+    bindShopNowLinks();
     bindGlobalWishlist();
+    bindCompareButtons();
+    bindAddToCartButtons();
     // View cart navigation
     var $viewCart = $('.cart-dropdown .cart-btns a').first();
     if ($viewCart.length) $viewCart.attr('href', 'cart.html');
@@ -686,6 +813,8 @@
     } else if (path.endsWith('/store.html')) {
       loadStorePage();
     } else if (path.endsWith('/product.html')) {
+      loadProductPage();
+    } else if (path.endsWith('/quick-view.html')) {
       loadProductPage();
     } else if (path.endsWith('/checkout.html')) {
       loadCheckoutPage();

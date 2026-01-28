@@ -238,7 +238,3 @@ Sau đó truy cập:
 - Có thêm `fe_admin_dashboard` trong `repo-clone` nhưng chưa được tích hợp
 
 ---
-
-**Ngày đánh giá:** $(date)  
-**Người đánh giá:** AI Assistant
-
