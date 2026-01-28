@@ -245,8 +245,7 @@
     <script>
       $(function () {
         var $tbody = $('#orders-table tbody');
-        axios.get('/api/v1/orders')
-          .then(function (res) { return res.data; })
+        window.OrderAPI.getAll()
           .then(function (body) {
             if (!body || body.success === false) {
               $tbody.append('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');

@@ -131,6 +131,24 @@
               <div class="section-title">
                 <h3 class="title">Profile</h3>
               </div>
+              <div id="auth-panel" style="margin-bottom: 20px; display:none;">
+                <div class="section-title">
+                  <h4 class="title" style="margin:0 0 10px 0;">Đăng nhập</h4>
+                </div>
+                <form id="login-form">
+                  <div class="form-group">
+                    <input class="input" id="login-username" type="text" placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                    <input class="input" id="login-password" type="password" placeholder="Password">
+                  </div>
+                  <button type="submit" class="primary-btn">Login</button>
+                </form>
+                <p style="margin-top:10px; opacity:0.8;">
+                  Tài khoản mẫu: <strong>john_smith</strong> / mật khẩu: <strong>password123</strong>
+                </p>
+              </div>
+
               <form id="account-form">
                 <div class="form-group">
                   <input class="input" id="acc-name" type="text" placeholder="Full Name">
@@ -145,6 +163,7 @@
                   <input class="input" id="acc-address" type="text" placeholder="Address">
                 </div>
                 <button type="submit" class="primary-btn">Save Changes</button>
+                <button type="button" id="btn-logout" class="btn btn-link" style="margin-left:10px;">Logout</button>
               </form>
             </div>
           </div>
@@ -262,20 +281,70 @@
     <script src="js/app.js"></script>
     <script>
       $(function () {
-        // load current user profile
-        window.UserAPI.getCurrentUser().then(function(res) {
-          if (!res || res.success === false || !res.data) return;
+        function hasToken() {
+          try {
+            return !!(localStorage.getItem('accessToken') || localStorage.getItem('token') || localStorage.getItem('jwt'));
+          } catch (_) { return false; }
+        }
+
+        function showAuthRequired() {
+          $('#auth-panel').show();
+          $('#account-form').hide();
+          $('#account-orders').html('<p>Vui lòng đăng nhập để xem tài khoản.</p>');
+        }
+
+        function showProfile() {
+          $('#auth-panel').hide();
+          $('#account-form').show();
+        }
+
+        async function loadProfile() {
+          var uid = window.getCurrentUserId();
+          var res = await window.UserAPI.getCurrentUser(uid);
+          if (!res || res.success === false || !res.data) return false;
           var u = res.data;
-          $('#acc-name').val(u.name || '');
+          $('#acc-name').val(u.fullName || u.name || '');
           $('#acc-email').val(u.email || '');
           $('#acc-phone').val(u.phone || '');
           $('#acc-address').val(u.address || '');
+          return true;
+        }
+
+        // Auth gate
+        if (!hasToken()) {
+          showAuthRequired();
+        } else {
+          showProfile();
+          loadProfile();
+        }
+
+        $('#login-form').on('submit', async function(e){
+          e.preventDefault();
+          var username = $('#login-username').val().trim();
+          var password = $('#login-password').val();
+          if (!username || !password) return;
+          var res = await window.AuthAPI.login(username, password);
+          if (res && res.success !== false && res.data && res.data.accessToken) {
+            try {
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('currentUserId', String(res.data.userId || ''));
+              localStorage.setItem('username', res.data.username || '');
+            } catch (_) {}
+            showProfile();
+            await loadProfile();
+            // refresh header counts
+            if (window.updateHeaderCart) window.updateHeaderCart();
+            if (window.updateHeaderWishlistCount) window.updateHeaderWishlistCount();
+            alert('Đăng nhập thành công');
+          } else {
+            alert((res && res.message) ? res.message : 'Đăng nhập thất bại');
+          }
         });
 
         $('#account-form').on('submit', function(e) {
           e.preventDefault();
           var payload = {
-            name: $('#acc-name').val(),
+            fullName: $('#acc-name').val(),
             email: $('#acc-email').val(),
             phone: $('#acc-phone').val(),
             address: $('#acc-address').val()
@@ -287,6 +356,17 @@
               alert('Cập nhật thất bại');
             }
           });
+        });
+
+        $('#btn-logout').on('click', function(){
+          try {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('token');
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('currentUserId');
+            localStorage.removeItem('username');
+          } catch (_) {}
+          location.reload();
         });
       });
     </script>

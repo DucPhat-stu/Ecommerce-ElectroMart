@@ -229,9 +229,10 @@
         var id = $('#track-order-id').val();
         if (!id) return;
         $('#track-result').html('Đang tải thông tin đơn hàng...');
-        axios.get('/api/v1/orders/' + encodeURIComponent(id))
-          .then(function (res) { return res.data; })
-          .then(function (order) {
+        window.OrderAPI.getById(id)
+          .then(function (resp) {
+            // Support both ApiResponse<T> and raw order object
+            var order = resp && typeof resp.success === 'boolean' ? resp.data : resp;
             if (!order || !order.id) {
               $('#track-result').html('Không tìm thấy đơn hàng.');
               return;

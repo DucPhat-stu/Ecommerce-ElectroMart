@@ -16,6 +16,8 @@ import com.store.electro.Models.Entity.Cart;
 import com.store.electro.Services.CartService;
 import com.store.electro.Utils.ApiResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("${api.prefix}/cart")
 public class CartController {
@@ -26,82 +28,104 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<ApiResponse<CartResponse>> getUserCart(@PathVariable Long userId) {
-        try {
-            CartResponse cart = cartService.getUserCart(userId);
-            return ResponseEntity.ok(ApiResponse.success("Cart retrieved successfully", cart));
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body(ApiResponse.error("Failed to retrieve cart", "INTERNAL_ERROR", e.getMessage()));
+    private Long requireAuthUserId(HttpServletRequest request) {
+        Object userId = request.getAttribute("userId");
+        if (userId instanceof Long) {
+            return (Long) userId;
+        }
+        throw new SecurityException("Unauthorized");
+    }
+
+    private void requireSameUser(Long pathOrBodyUserId, Long authUserId) {
+        if (pathOrBodyUserId == null || !pathOrBodyUserId.equals(authUserId)) {
+            throw new SecurityException("Forbidden");
         }
     }
 
+    /**
+     * Preferred endpoint: get current user's cart.
+     */
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<CartResponse>> getMyCart(HttpServletRequest request) {
+        Long userId = requireAuthUserId(request);
+        CartResponse cart = cartService.getUserCart(userId);
+        return ResponseEntity.ok(ApiResponse.success("Cart retrieved successfully", cart));
+    }
+
+    /**
+     * Legacy endpoint (avoid using): get cart by userId.
+     * Kept for backward compatibility but now enforces userId == token userId.
+     */
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<CartResponse>> getUserCart(
+            @PathVariable Long userId,
+            HttpServletRequest request) {
+        Long authUserId = requireAuthUserId(request);
+        requireSameUser(userId, authUserId);
+        CartResponse cart = cartService.getUserCart(userId);
+        return ResponseEntity.ok(ApiResponse.success("Cart retrieved successfully", cart));
+    }
+
+    /**
+     * Preferred endpoint: add/update cart item for current user.
+     */
+    @PostMapping("/items")
+    public ResponseEntity<ApiResponse<Cart>> addToMyCart(
+            @RequestBody CartRequest requestBody,
+            HttpServletRequest request) {
+        Long authUserId = requireAuthUserId(request);
+        requestBody.setUserId(authUserId); // do NOT trust client userId
+        Cart cart = cartService.addToCart(requestBody);
+        return ResponseEntity.status(201).body(ApiResponse.success("Product added to cart", cart));
+    }
+
+    /**
+     * Legacy endpoint (avoid using): add/update cart item by passing userId in body.
+     * Kept for backward compatibility but now enforces body.userId == token userId.
+     */
     @PostMapping
-    public ResponseEntity<ApiResponse<Cart>> addToCart(@RequestBody CartRequest request) {
-        try {
-            Cart cart = cartService.addToCart(request);
-            return ResponseEntity.status(201).body(ApiResponse.success("Product added to cart", cart));
-        } catch (RuntimeException e) {
-            if (e.getMessage().contains("not found")) {
-                return ResponseEntity.status(404)
-                        .body(ApiResponse.error("Product not found", "PRODUCT_NOT_FOUND", e.getMessage()));
-            } else if (e.getMessage().contains("Insufficient stock")) {
-                return ResponseEntity.status(400)
-                        .body(ApiResponse.error("Insufficient stock", "INSUFFICIENT_STOCK", e.getMessage()));
-            }
-            return ResponseEntity.status(400)
-                    .body(ApiResponse.error("Failed to add to cart", "CART_ERROR", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body(ApiResponse.error("Failed to add to cart", "INTERNAL_ERROR", e.getMessage()));
+    public ResponseEntity<ApiResponse<Cart>> addToCart(
+            @RequestBody CartRequest requestBody,
+            HttpServletRequest request) {
+        Long authUserId = requireAuthUserId(request);
+        if (requestBody.getUserId() != null) {
+            requireSameUser(requestBody.getUserId(), authUserId);
         }
+        requestBody.setUserId(authUserId); // force correct userId
+        Cart cart = cartService.addToCart(requestBody);
+        return ResponseEntity.status(201).body(ApiResponse.success("Product added to cart", cart));
     }
 
     @PutMapping("/{cartId}")
     public ResponseEntity<ApiResponse<Cart>> updateCartItem(@PathVariable Long cartId,
             @RequestBody CartRequest request) {
-        try {
-            Cart cart = cartService.updateCartItem(cartId, request.getQuantity());
-            return ResponseEntity.ok(ApiResponse.success("Cart updated successfully", cart));
-        } catch (RuntimeException e) {
-            if (e.getMessage().contains("not found")) {
-                return ResponseEntity.status(404)
-                        .body(ApiResponse.error("Cart item not found", "CART_ITEM_NOT_FOUND", e.getMessage()));
-            } else if (e.getMessage().contains("Insufficient stock")) {
-                return ResponseEntity.status(400)
-                        .body(ApiResponse.error("Insufficient stock", "INSUFFICIENT_STOCK", e.getMessage()));
-            }
-            return ResponseEntity.status(400)
-                    .body(ApiResponse.error("Failed to update cart", "CART_ERROR", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body(ApiResponse.error("Failed to update cart", "INTERNAL_ERROR", e.getMessage()));
-        }
+        Cart cart = cartService.updateCartItem(cartId, request.getQuantity());
+        return ResponseEntity.ok(ApiResponse.success("Cart updated successfully", cart));
     }
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<ApiResponse<Void>> removeFromCart(@PathVariable Long cartId) {
-        try {
-            cartService.removeFromCart(cartId);
-            return ResponseEntity.ok(ApiResponse.success("Item removed from cart", null));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404)
-                    .body(ApiResponse.error("Cart item not found", "CART_ITEM_NOT_FOUND", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body(ApiResponse.error("Failed to remove from cart", "INTERNAL_ERROR", e.getMessage()));
-        }
+        cartService.removeFromCart(cartId);
+        return ResponseEntity.ok(ApiResponse.success("Item removed from cart", null));
     }
 
     @DeleteMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<Void>> clearUserCart(@PathVariable Long userId) {
-        try {
-            cartService.clearUserCart(userId);
-            return ResponseEntity.ok(ApiResponse.success("Cart cleared successfully", null));
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body(ApiResponse.error("Failed to clear cart", "INTERNAL_ERROR", e.getMessage()));
-        }
+    public ResponseEntity<ApiResponse<Void>> clearUserCart(
+            @PathVariable Long userId,
+            HttpServletRequest request) {
+        Long authUserId = requireAuthUserId(request);
+        requireSameUser(userId, authUserId);
+        cartService.clearUserCart(userId);
+        return ResponseEntity.ok(ApiResponse.success("Cart cleared successfully", null));
+    }
+
+    /**
+     * Preferred endpoint: clear current user's cart.
+     */
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> clearMyCart(HttpServletRequest request) {
+        Long userId = requireAuthUserId(request);
+        cartService.clearUserCart(userId);
+        return ResponseEntity.ok(ApiResponse.success("Cart cleared successfully", null));
     }
 }

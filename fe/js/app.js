@@ -39,37 +39,71 @@
     return normalize(hay).indexOf(normalize(needle)) !== -1;
   }
 
-  function productImageUrl(product) {
-    // 1) explicit imageUrl (if backend provides)
-    if (product && product.imageUrl) {
-      // repo-clone nginx serves uploads at /uploads/* (not /img/*)
-      if (typeof product.imageUrl === 'string' && product.imageUrl.indexOf('/img/') === 0) {
-        return '/uploads/' + product.imageUrl.slice('/img/'.length);
-      }
-      return product.imageUrl;
-    }
+  // --- Product image resolving (template-first, DB-independent) ---
+  // Rule:
+  // - Prefer a template image key coming from backend/admin (e.g. "product03.png" or "img/product03.png")
+  // - Otherwise fallback to a stable template mapping by product.id (product01..product09)
+  // This keeps UI independent of DB/uploaded images, while still allowing Admin to "choose" an image
+  // by saving a template key in productImages[0].imageUrl.
 
-    // 2) productImages[0].imageUrl (common API shape)
-    try {
-      var images = safeArray(product && product.productImages);
-      if (images.length > 0 && images[0] && images[0].imageUrl) {
-        var u = images[0].imageUrl;
-        if (typeof u === 'string' && u.indexOf('/img/') === 0) {
-          return '/uploads/' + u.slice('/img/'.length);
-        }
-        return u;
-      }
-    } catch (e) {}
+  function isTemplateImageKey(key) {
+    // Keep this strict to avoid depending on uploaded/DB images.
+    // Allow: product01..product09.png only (current templates in fe/img).
+    return /^product0[1-9]\.png$/i.test(String(key || '').trim());
+  }
 
-    // 3) fallback to local template images: product01..product09 (stable by product.id)
+  function templateSrcFromAny(value) {
+    if (!value) return null;
+    var s = String(value).trim();
+
+    // Reject remote/data URLs to avoid DB/image dependency
+    if (/^(https?:)?\/\//i.test(s) || /^data:/i.test(s)) return null;
+
+    // Accept "img/product01.png"
+    var m1 = s.match(/(?:^|\/)img\/(product0[1-9]\.png)$/i);
+    if (m1 && isTemplateImageKey(m1[1])) return 'img/' + m1[1];
+
+    // Accept "/img/product01.png" (normalize to relative)
+    var m2 = s.match(/(?:^|\/)img\/(product0[1-9]\.png)$/i);
+    if (m2 && isTemplateImageKey(m2[1])) return 'img/' + m2[1];
+
+    // Accept raw key "product01.png"
+    if (isTemplateImageKey(s)) return 'img/' + s.toLowerCase();
+
+    return null;
+  }
+
+  function stableTemplateById(product) {
     var idNum = Number(product && product.id);
     if (!isNaN(idNum) && idNum > 0) {
       var idx = ((idNum - 1) % 9) + 1;
       var suffix = idx < 10 ? ('0' + idx) : String(idx);
       return 'img/product' + suffix + '.png';
     }
-
     return 'img/product01.png';
+  }
+
+  function productPrimaryTemplateFromProductImages(product) {
+    var imgs = safeArray(product && product.productImages);
+    if (!imgs.length) return null;
+
+    // Prefer primary=true then first
+    var primary = imgs.find ? imgs.find(function(i){ return i && i.primary; }) : null;
+    var candidate = primary || imgs[0];
+    return templateSrcFromAny(candidate && candidate.imageUrl);
+  }
+
+  function productImageUrl(product) {
+    // 1) If backend/admin stored a template key in productImages -> use it
+    var fromImages = productPrimaryTemplateFromProductImages(product);
+    if (fromImages) return fromImages;
+
+    // 2) Some APIs may expose a single imageUrl field
+    var fromSingle = templateSrcFromAny(product && product.imageUrl);
+    if (fromSingle) return fromSingle;
+
+    // 3) Stable fallback (works for sampledata too)
+    return stableTemplateById(product);
   }
 
   // Expose for pages that aren't wired into app.js (e.g. compare.html inline script)
@@ -323,7 +357,10 @@
 
       var userId = window.getCurrentUserId();
       var res = await window.WishlistAPI.getWishlistCount(userId);
-      if (!res || res.success === false) return;
+      if (!res || res.success === false) {
+        // If unauthenticated, keep 0 silently
+        return;
+      }
       var count = Number(res.data || 0);
       var $wl = $('.header-ctn a[href*="wishlist"] .qty, .header-ctn a:contains("Wishlist") .qty');
       if ($wl.length) $wl.text(count);
@@ -346,6 +383,11 @@
         alert('Đã thêm sản phẩm vào giỏ hàng');
         updateHeaderCart();
       } else {
+        if (resp && resp.status === 401) {
+          alert('Bạn cần đăng nhập để thêm vào giỏ hàng');
+          window.location.href = 'account.html';
+          return;
+        }
         alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
       }
     });
@@ -501,8 +543,11 @@
       // Stock
       var inStock = (p.stockQuantity || 0) > 0;
       $('.product-details .product-available').text(inStock ? 'In Stock' : 'Out of Stock');
-      // Images
-      var imgs = safeArray(p.productImages).map(function(img){ return img.imageUrl; }).filter(Boolean);
+      // Images (template-first, DB-independent)
+      // Only keep template images; otherwise fallback to stable template mapping.
+      var imgs = safeArray(p.productImages)
+        .map(function(img){ return templateSrcFromAny(img && img.imageUrl); })
+        .filter(Boolean);
       if (imgs.length === 0) imgs = [productImageUrl(p)];
       var $main = $('#product-main-img');
       var $thumbs = $('#product-imgs');
@@ -680,8 +725,21 @@
             return;
           }
         }
-        // Submit order (backend sample creates a demo order)
-        var orderData = { note: $('.order-notes textarea').val() || '' };
+        // Submit order aligned with api_structure/createOrderAPI.json
+        var firstName = $('input[name="first-name"]').first().val().trim();
+        var lastName = $('input[name="last-name"]').first().val().trim();
+        var shippingName = (firstName + ' ' + lastName).trim();
+        var shippingPhone = $('input[name="tel"]').first().val().trim();
+        var shippingAddress = $('input[name="address"]').first().val().trim();
+        var notes = $('.order-notes textarea').val() || '';
+
+        var orderData = {
+          userId: window.getCurrentUserId(),
+          shippingName: shippingName,
+          shippingPhone: shippingPhone,
+          shippingAddress: shippingAddress,
+          notes: notes
+        };
         var resp = await window.OrderAPI.create(orderData);
         if (resp && resp.success !== false) {
           // clear cart
