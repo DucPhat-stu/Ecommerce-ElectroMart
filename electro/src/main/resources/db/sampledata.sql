@@ -11,19 +11,26 @@ USE ElectroStore;
 -- USERS DATA
 -- ============================================
 INSERT INTO users (
-    name, 
+    username,
     email, 
-    password, 
+    password_hash, 
+    full_name,
     phone, 
     address, 
-    created_at
+    role_id,
+    status,
+    email_verified,
+    created_at,
+    updated_at,
+    last_login
     ) 
 VALUES
-('John Smith', 'john.smith@example.com', 'password123', '0901234567', '123 Main Street, District 1, Ho Chi Minh City', '2024-01-10 10:00:00'),
-('Sarah Johnson', 'sarah.johnson@example.com', 'password123', '0902345678', '456 Oak Avenue, District 2, Ho Chi Minh City', '2024-01-11 10:00:00'),
-('Michael Brown', 'michael.brown@example.com', 'password123', '0903456789', '789 Pine Road, District 3, Ho Chi Minh City', '2024-01-12 10:00:00'),
-('Emily Davis', 'emily.davis@example.com', 'password123', '0904567890', '321 Maple Lane, District 4, Ho Chi Minh City', '2024-01-13 10:00:00'),
-('Jessica Wilson', 'jessica.wilson@example.com', 'password123', '0905678901', '654 Cedar Street, District 5, Ho Chi Minh City', '2024-01-14 10:00:00');
+('john_smith', 'john.smith@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'John Smith', '0901234567', '123 Main Street, District 1, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-10 10:00:00', '2024-01-10 10:00:00', '2024-06-15 14:30:00'),
+('sarah_johnson', 'sarah.johnson@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Sarah Johnson', '0902345678', '456 Oak Avenue, District 2, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-11 10:00:00', '2024-01-11 10:00:00', '2024-06-14 09:15:00'),
+('michael_brown', 'michael.brown@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Michael Brown', '0903456789', '789 Pine Road, District 3, Ho Chi Minh City', 1, 'ACTIVE', FALSE, '2024-01-12 10:00:00', '2024-01-12 10:00:00', NULL),
+('emily_davis', 'emily.davis@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Emily Davis', '0904567890', '321 Maple Lane, District 4, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-13 10:00:00', '2024-01-13 10:00:00', '2024-06-10 11:45:00'),
+('jessica_wilson', 'jessica.wilson@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Jessica Wilson', '0905678901', '654 Cedar Street, District 5, Ho Chi Minh City', 1, 'INACTIVE', TRUE, '2024-01-14 10:00:00', '2024-01-14 10:00:00', NULL),
+('admin_user', 'admin@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Admin User', '0910000000', '999 Admin Street, District 1, Ho Chi Minh City', 2, 'ACTIVE', TRUE, '2024-01-01 00:00:00', '2024-01-01 00:00:00', '2024-06-20 16:20:00');
 
 -- ============================================
 -- CATEGORIES DATA
@@ -3826,7 +3833,7 @@ VALUES
 
 INSERT INTO order_details (
     order_id,
-    variant_id,
+    product_id,
     product_name,
     product_price,
     quantity,
@@ -3834,7 +3841,7 @@ INSERT INTO order_details (
     created_at
     )
 VALUES
--- Order 1 items (uses variant_id from product_variants table)
+-- Order 1 items (uses product_id from product_variants table)
 (1, 5, 'Apple iPhone 15 Pro 256GB Blue Titanium', 1099.00, 1, 1099.00, '2024-02-10 11:05:00'),
 (1, 163, 'Dell XPS 13 32GB/1TB Graphite', 1699.00, 1, 1699.00, '2024-02-10 11:06:00'),
 (1, 203, 'Acer Swift Go 14 16GB/512GB Silver', 699.00, 1, 699.00, '2024-02-10 11:07:00'),
