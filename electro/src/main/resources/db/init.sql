@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS inventories (
     variant_id BIGINT PRIMARY KEY,
     total_quantity INT NOT NULL DEFAULT 0,
     reserved_quantity INT NOT NULL DEFAULT 0,
+    version BIGINT NOT NULL DEFAULT 0,
     CONSTRAINT fk_inventories_product 
         FOREIGN KEY (variant_id) 
         REFERENCES product_variants(id) 
@@ -239,5 +240,27 @@ CREATE TABLE IF NOT EXISTS order_details (
     CONSTRAINT fk_order_details_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_order_details_product FOREIGN KEY (product_id) REFERENCES product_variants(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- PAYMENTS TABLES
+-- ============================================
+CREATE TABLE IF NOT EXISTS payments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    order_id BIGINT NOT NULL,
+    method VARCHAR(50) NOT NULL COMMENT 'COD, VNPAY, MOMO',
+    amount DECIMAL(10,2) NOT NULL,
+    status VARCHAR(50) DEFAULT 'INITIATED' COMMENT 'INITIATED, SUCCESS, FAILED',
+    transaction_id VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_payment_order (order_id),
+    INDEX idx_payment_status (status),
+    INDEX idx_payment_method (method),
+    CONSTRAINT fk_payments_order
+    FOREIGN KEY (order_id)
+    REFERENCES orders(id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS=1;

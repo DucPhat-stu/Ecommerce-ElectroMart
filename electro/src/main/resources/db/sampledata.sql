@@ -3902,3 +3902,29 @@ VALUES
 (5, 241, 1, '2024-06-14 08:00:00'),
 (5, 242, 4, '2024-06-14 09:00:00');
 
+-- ============================================
+-- PAYMENTS DATA
+-- ============================================
+INSERT INTO payments (
+    id,
+    order_id,
+    method,
+    amount,
+    status,
+    transaction_id,
+    created_at,
+    updated_at
+    )
+VALUES
+-- Order 1: PENDING order - Payment still waiting
+(1, 1, 'COD', 3497.00, 'INITIATED', NULL, '2024-02-10 11:00:00', '2024-02-10 11:00:00'),
+-- Order 2: CONFIRMED order - Payment received (VNPAY)
+(2, 2, 'VNPAY', 4046.00, 'SUCCESS', 'VNP_TXN_20240215150015', '2024-02-15 15:00:15', '2024-02-15 15:00:30'),
+-- Order 3: SHIPPED order - Payment completed (VNPAY)
+(3, 3, 'VNPAY', 4897.00, 'SUCCESS', 'VNP_TXN_20240305092500', '2024-03-05 09:25:00', '2024-03-05 09:25:45'),
+-- Order 4: DELIVERED order - Payment completed (MOMO)
+(4, 4, 'MOMO', 2477.00, 'SUCCESS', 'MOMO_20240318141000', '2024-03-18 14:10:00', '2024-03-18 14:10:30'),
+-- Order 5: CONFIRMED order - Payment received (VNPAY)
+(5, 5, 'VNPAY', 6446.00, 'SUCCESS', 'VNP_TXN_20240402084500', '2024-04-02 08:45:00', '2024-04-02 08:46:15'),
+-- Order 6: PENDING order - Payment via COD
+(6, 6, 'COD', 3696.00, 'INITIATED', NULL, '2024-04-15 10:30:00', '2024-04-15 10:30:00');

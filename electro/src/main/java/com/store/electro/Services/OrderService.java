@@ -13,12 +13,14 @@ import com.store.electro.Models.DTOs.Request.OrderRequest;
 import com.store.electro.Models.DTOs.Response.OrderDetailResponse;
 import com.store.electro.Models.DTOs.Response.OrderResponse;
 import com.store.electro.Models.Entity.Cart;
+import com.store.electro.Models.Entity.Inventory;
 import com.store.electro.Models.Entity.Order;
 import com.store.electro.Models.Entity.OrderDetail;
 import com.store.electro.Models.Entity.Product.VariantOption;
 import com.store.electro.Models.Entity.User;
 import com.store.electro.Models.Enums.OrderStatus;
 import com.store.electro.Repositories.CartRepository;
+import com.store.electro.Repositories.InventoryRepository;
 import com.store.electro.Repositories.OrderRepository;
 import com.store.electro.Repositories.UserRepository;
 
@@ -30,12 +32,14 @@ public class OrderService implements IOrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final InventoryRepository inventoryRepository;
 
     public OrderService(OrderRepository orderRepository, UserRepository userRepository,
-            CartRepository cartRepository) {
+            CartRepository cartRepository, InventoryRepository inventoryRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
     @Override
@@ -104,6 +108,13 @@ public class OrderService implements IOrderService {
             
             order.getOrderDetails().add(orderDetail);
             totalPrice = totalPrice.add(orderDetail.getSubtotal());
+
+            // Reserve inventory for this order
+            Inventory inventory = inventoryRepository.findByProductVariantId(cartItem.getProduct().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "Inventory not found for variant: " + cartItem.getProduct().getId()));
+            inventory.reserve(cartItem.getQuantity());
+            inventoryRepository.save(inventory);
         }
 
         order.setTotalPrice(totalPrice);
