@@ -34,7 +34,7 @@ async function renderUsersTable() {
         const email = user?.email ?? '';
         const role = (user?.role || '').toString().toLowerCase();
         const createdAt = user?.createdAt ?? user?.created_date ?? '';
-        const isAdmin = role === 'admin' || role === 'role_admin';
+        const isAdmin = role === 'admin' || role === 'ROLE_ADMIN';
         const roleBadge = isAdmin
             ? '<span class="badge-danger">Admin</span>'
             : '<span class="badge-info">User</span>';
@@ -98,7 +98,7 @@ async function editUser(userId) {
     document.getElementById('userName').value = user?.name ?? user?.fullName ?? '';
     document.getElementById('userEmail').value = user?.email ?? '';
     const role = (user?.role || '').toString().toLowerCase();
-    document.getElementById('userRole').value = role === 'admin' || role === 'role_admin' ? 'admin' : 'user';
+    document.getElementById('userRole').value = role === 'admin' || role === 'ROLE_ADMIN' ? 'admin' : 'user';
     const modal = new bootstrap.Modal(document.getElementById('userModal'));
     modal.show();
 }
