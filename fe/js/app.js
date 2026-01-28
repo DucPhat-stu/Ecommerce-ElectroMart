@@ -40,13 +40,35 @@
   }
 
   function productImageUrl(product) {
-    try {
-      var images = safeArray(product.productImages);
-      if (images.length > 0 && images[0].imageUrl) {
-        return images[0].imageUrl;
+    // 1) explicit imageUrl (if backend provides)
+    if (product && product.imageUrl) {
+      // repo-clone nginx serves uploads at /uploads/* (not /img/*)
+      if (typeof product.imageUrl === 'string' && product.imageUrl.indexOf('/img/') === 0) {
+        return '/uploads/' + product.imageUrl.slice('/img/'.length);
       }
-    } catch(e) {}
-    // fallback to sample images in template
+      return product.imageUrl;
+    }
+
+    // 2) productImages[0].imageUrl (common API shape)
+    try {
+      var images = safeArray(product && product.productImages);
+      if (images.length > 0 && images[0] && images[0].imageUrl) {
+        var u = images[0].imageUrl;
+        if (typeof u === 'string' && u.indexOf('/img/') === 0) {
+          return '/uploads/' + u.slice('/img/'.length);
+        }
+        return u;
+      }
+    } catch (e) {}
+
+    // 3) fallback to local template images: product01..product09 (stable by product.id)
+    var idNum = Number(product && product.id);
+    if (!isNaN(idNum) && idNum > 0) {
+      var idx = ((idNum - 1) % 9) + 1;
+      var suffix = idx < 10 ? ('0' + idx) : String(idx);
+      return 'img/product' + suffix + '.png';
+    }
+
     return 'img/product01.png';
   }
 
