@@ -33,10 +33,12 @@
     }).catch(function(err) {
       var message = 'Request failed';
       var error = null;
+      var status = null;
       if (err.response && err.response.data) {
         var d = err.response.data;
         message = d.message || message;
         error = d.error || d;
+        status = err.response.status;
       } else if (err.message) {
         message = err.message;
       }
@@ -44,9 +46,27 @@
         success: false,
         message: message,
         data: null,
-        error: error
+        error: error,
+        status: status
       };
     });
+  }
+
+  function getAuthToken() {
+    try {
+      return window.localStorage.getItem('accessToken')
+        || window.localStorage.getItem('token')
+        || window.localStorage.getItem('jwt')
+        || '';
+    } catch (_) {
+      return '';
+    }
+  }
+
+  function authConfig() {
+    var token = getAuthToken();
+    if (!token) return {};
+    return { headers: { Authorization: 'Bearer ' + token } };
   }
 
   // --------- Global helpers exposed to app.js ----------
@@ -54,7 +74,7 @@
   // Simple user identifier for demo/frontend only (no auth flow yet)
   function getCurrentUserId() {
     try {
-      var stored = window.localStorage.getItem('currentUserId');
+      var stored = window.localStorage.getItem('currentUserId') || window.localStorage.getItem('userId');
       if (stored) {
         var n = Number(stored);
         if (!isNaN(n) && n > 0) return n;
@@ -84,13 +104,32 @@
   var ProductAPI = {
     getAll: function() {
       return handleApi(
-        axios.get(baseUrl('/products'))
+        axios.get(baseUrl('/products'), authConfig())
       );
     },
 
     getById: function(id) {
+      // Some builds expose /product/{id}, others use /products/{id}
       return handleApi(
-        axios.get(baseUrl('/product/' + encodeURIComponent(id)))
+        axios.get(baseUrl('/product/' + encodeURIComponent(id)), authConfig())
+      ).then(function(res) {
+        if (res && res.success !== false) return res;
+        return handleApi(
+          axios.get(baseUrl('/products/' + encodeURIComponent(id)), authConfig())
+        );
+      });
+    }
+  };
+
+  var CategoryAPI = {
+    getAll: function() {
+      return handleApi(
+        axios.get(baseUrl('/categories'), authConfig())
+      );
+    },
+    getById: function(id) {
+      return handleApi(
+        axios.get(baseUrl('/category/' + encodeURIComponent(id)), authConfig())
       );
     }
   };
@@ -98,7 +137,7 @@
   var CartAPI = {
     getUserCart: function(userId) {
       return handleApi(
-        axios.get(baseUrl('/cart/' + encodeURIComponent(userId)))
+        axios.get(baseUrl('/cart/' + encodeURIComponent(userId)), authConfig())
       );
     },
 
@@ -108,7 +147,7 @@
           userId: safe(userId, getCurrentUserId()),
           productId: productId,
           quantity: quantity
-        })
+        }, authConfig())
       );
     },
 
@@ -116,19 +155,19 @@
       return handleApi(
         axios.put(baseUrl('/cart/' + encodeURIComponent(cartId)), {
           quantity: quantity
-        })
+        }, authConfig())
       );
     },
 
     removeFromCart: function(cartId) {
       return handleApi(
-        axios.delete(baseUrl('/cart/' + encodeURIComponent(cartId)))
+        axios.delete(baseUrl('/cart/' + encodeURIComponent(cartId)), authConfig())
       );
     },
 
     clearCart: function(userId) {
       return handleApi(
-        axios.delete(baseUrl('/cart/user/' + encodeURIComponent(userId)))
+        axios.delete(baseUrl('/cart/user/' + encodeURIComponent(userId)), authConfig())
       );
     }
   };
@@ -136,7 +175,7 @@
   var ReviewAPI = {
     getProductReviews: function(productId) {
       return handleApi(
-        axios.get(baseUrl('/reviews/product/' + encodeURIComponent(productId)))
+        axios.get(baseUrl('/reviews/product/' + encodeURIComponent(productId)), authConfig())
       );
     },
 
@@ -147,7 +186,7 @@
           userId: safe(userId, getCurrentUserId()),
           rating: rating,
           comment: comment
-        })
+        }, authConfig())
       );
     }
   };
@@ -156,14 +195,14 @@
     getCurrentUser: function(userId) {
       var id = safe(userId, getCurrentUserId());
       return handleApi(
-        axios.get(baseUrl('/user/' + encodeURIComponent(id)))
+        axios.get(baseUrl('/user/' + encodeURIComponent(id)), authConfig())
       );
     },
 
     updateCurrentUser: function(userId, payload) {
       var id = safe(userId, getCurrentUserId());
       return handleApi(
-        axios.put(baseUrl('/user/' + encodeURIComponent(id)), payload)
+        axios.put(baseUrl('/user/' + encodeURIComponent(id)), payload, authConfig())
       );
     }
   };
@@ -172,14 +211,14 @@
     getUserWishlist: function(userId) {
       var id = safe(userId, getCurrentUserId());
       return handleApi(
-        axios.get(baseUrl('/wishlist'), { params: { userId: id } })
+        axios.get(baseUrl('/wishlist'), Object.assign({ params: { userId: id } }, authConfig()))
       );
     },
 
     getWishlistCount: function(userId) {
       var id = safe(userId, getCurrentUserId());
       return handleApi(
-        axios.get(baseUrl('/wishlist/count'), { params: { userId: id } })
+        axios.get(baseUrl('/wishlist/count'), Object.assign({ params: { userId: id } }, authConfig()))
       );
     },
 
@@ -187,7 +226,8 @@
       var id = safe(userId, getCurrentUserId());
       return handleApi(
         axios.post(baseUrl('/wishlist'), null, {
-          params: { userId: id, productId: productId }
+          params: { userId: id, productId: productId },
+          headers: (authConfig().headers || {})
         })
       );
     },
@@ -196,27 +236,61 @@
       var id = safe(userId, getCurrentUserId());
       return handleApi(
         axios.delete(baseUrl('/wishlist'), {
-          params: { userId: id, productId: productId }
+          params: { userId: id, productId: productId },
+          headers: (authConfig().headers || {})
         })
       );
     }
   };
 
   var OrderAPI = {
-    // Backend sample creates a demo order; frontend does not yet send full payload
-    create: function(/* orderData */) {
+    // Create order with payload aligned to api_structure/createOrderAPI.json
+    // Endpoint: POST /api/v1/orders
+    create: function(orderData) {
+      var payload = orderData || {};
+      // Ensure userId exists for current backend (later: replace with JWT user id)
+      if (payload.userId == null) payload.userId = getCurrentUserId();
       return handleApi(
-        axios.post(ORDER_BASE)
+        axios.post(baseUrl('/orders'), payload, authConfig())
+      );
+    },
+
+    // List orders (admin or user scope depends on backend implementation)
+    getAll: function() {
+      return handleApi(
+        axios.get(baseUrl('/orders'), authConfig())
+      );
+    },
+
+    // (optional for next steps) fetch order by id: GET /api/v1/orders/{id}
+    getById: function(id) {
+      return handleApi(
+        axios.get(baseUrl('/orders/' + encodeURIComponent(id)), authConfig())
+      );
+    }
+  };
+
+  var AuthAPI = {
+    login: function(username, password) {
+      return handleApi(
+        axios.post(baseUrl('/auth/login'), { username: username, password: password })
+      );
+    },
+    register: function(payload) {
+      return handleApi(
+        axios.post(baseUrl('/auth/register'), payload)
       );
     }
   };
 
   window.ProductAPI = ProductAPI;
+  window.CategoryAPI = CategoryAPI;
   window.CartAPI = CartAPI;
   window.ReviewAPI = ReviewAPI;
   window.UserAPI = UserAPI;
   window.WishlistAPI = WishlistAPI;
   window.OrderAPI = OrderAPI;
+  window.AuthAPI = AuthAPI;
 
 })(window);
 

@@ -115,6 +115,34 @@
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
             <p>Thông tin chính sách đổi/trả hàng của cửa hàng có thể được mô tả tại đây.</p>
+            <hr>
+            <h4>Your Orders</h4>
+            <div class="table-responsive">
+              <table id="orders-returns-table" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Receiver</th>
+                    <th>Address / Phone</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="5">Đang tải...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4>Track Order</h4>
+            <form id="orders-returns-track-form" class="form-inline" style="margin-bottom: 10px;">
+              <div class="form-group">
+                <label for="orders-returns-track-id" class="sr-only">Order ID</label>
+                <input type="number" min="1" class="form-control" id="orders-returns-track-id" placeholder="Order ID">
+              </div>
+              <button type="submit" class="btn btn-primary">Track</button>
+            </form>
+            <div id="orders-returns-track-result" class="well well-sm" style="display:none;"></div>
           </div>
         </div>
       </div>
@@ -224,6 +252,70 @@
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
+    <script>
+      $(function () {
+        var $tbody = $('#orders-returns-table tbody');
+        var $trackForm = $('#orders-returns-track-form');
+        var $trackResult = $('#orders-returns-track-result');
+
+        function renderOrdersTable(body) {
+          if (!body || body.success === false) {
+            $tbody.html('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');
+            return;
+          }
+          var orders = body.data || [];
+          if (!orders.length) {
+            $tbody.html('<tr><td colspan="5">Chưa có đơn hàng nào.</td></tr>');
+            return;
+          }
+          $tbody.empty();
+          orders.forEach(function (o) {
+            var total = o.totalPrice || 0;
+            var row = '<tr>' +
+              '<td>' + (o.id || '') + '</td>' +
+              '<td>' + (o.shippingName || (o.user && o.user.name) || '') + '</td>' +
+              '<td>' + (o.shippingAddress || '') + '<br>' + (o.shippingPhone || '') + '</td>' +
+              '<td>' + (o.status || '') + '</td>' +
+              '<td>' + window.formatPrice(total) + '</td>' +
+              '</tr>';
+            $tbody.append(row);
+          });
+        }
+
+        // Load orders list
+        window.OrderAPI.getAll()
+          .then(renderOrdersTable)
+          .catch(function () {
+            $tbody.html('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');
+          });
+
+        // Track order by id
+        $trackForm.on('submit', function (e) {
+          e.preventDefault();
+          var id = $('#orders-returns-track-id').val();
+          if (!id) return;
+          $trackResult.show().html('Đang tải thông tin đơn hàng...');
+          window.OrderAPI.getById(id)
+            .then(function (resp) {
+              var order = resp && typeof resp.success === 'boolean' ? resp.data : resp;
+              if (!order || !order.id) {
+                $trackResult.html('Không tìm thấy đơn hàng.');
+                return;
+              }
+              var html = '<p><strong>Order #' + order.id + '</strong></p>' +
+                '<p>Status: ' + (order.status || '') + '</p>' +
+                '<p>Receiver: ' + (order.shippingName || '') + '</p>' +
+                '<p>Address: ' + (order.shippingAddress || '') + '</p>' +
+                '<p>Phone: ' + (order.shippingPhone || '') + '</p>' +
+                '<p>Total: ' + window.formatPrice(order.totalPrice || 0) + '</p>';
+              $trackResult.html(html);
+            })
+            .catch(function () {
+              $trackResult.html('Không tìm thấy đơn hàng hoặc có lỗi xảy ra.');
+            });
+        });
+      });
+    </script>
   </body>
 </html>
 

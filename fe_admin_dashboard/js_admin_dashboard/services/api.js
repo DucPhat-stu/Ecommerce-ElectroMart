@@ -80,19 +80,32 @@ const API = {
 
     // Products
     getProducts: () => apiCall('/products'),
-    getProduct: (id) => apiCall(`/product/${id}`),
+    getProduct: async (id) => {
+        // Some builds expose /product/{id}, others use /products/{id}
+        try { return await apiCall(`/product/${id}`); } catch (_) { return await apiCall(`/products/${id}`); }
+    },
     getProductsByCategory: (categoryId) => apiCall(`/products/category/${categoryId}`),
-    createProduct: (productData) => apiCall('/product', {
-        method: 'POST',
-        body: JSON.stringify(productData)
-    }),
-    updateProduct: (id, productData) => apiCall(`/product/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(productData)
-    }),
-    deleteProduct: (id) => apiCall(`/product/${id}`, {
-        method: 'DELETE'
-    }),
+    createProduct: async (productData) => {
+        try {
+            return await apiCall('/product', { method: 'POST', body: JSON.stringify(productData) });
+        } catch (_) {
+            return await apiCall('/products', { method: 'POST', body: JSON.stringify(productData) });
+        }
+    },
+    updateProduct: async (id, productData) => {
+        try {
+            return await apiCall(`/product/${id}`, { method: 'PUT', body: JSON.stringify(productData) });
+        } catch (_) {
+            return await apiCall(`/products/${id}`, { method: 'PUT', body: JSON.stringify(productData) });
+        }
+    },
+    deleteProduct: async (id) => {
+        try {
+            return await apiCall(`/product/${id}`, { method: 'DELETE' });
+        } catch (_) {
+            return await apiCall(`/products/${id}`, { method: 'DELETE' });
+        }
+    },
 
     // Categories
     getCategories: () => apiCall('/categories'),

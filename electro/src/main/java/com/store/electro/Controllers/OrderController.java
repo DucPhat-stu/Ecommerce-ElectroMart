@@ -24,6 +24,7 @@ import com.store.electro.Repositories.OrderRepository;
 import com.store.electro.Services.IOrderService;
 import com.store.electro.Utils.ApiResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
@@ -37,6 +38,14 @@ public class OrderController {
     public OrderController(OrderRepository orderRepo, IOrderService orderService) {
         this.orderRepo = orderRepo;
         this.orderService = orderService;
+    }
+
+    private Long requireAuthUserId(HttpServletRequest request) {
+        Object userId = request.getAttribute("userId");
+        if (userId instanceof Long) {
+            return (Long) userId;
+        }
+        throw new SecurityException("Unauthorized");
     }
 
     // Get all orders (admin dashboard)
@@ -63,33 +72,28 @@ public class OrderController {
 
     // Get order by ID
     @GetMapping("/orders/{id}")
-    public ResponseEntity<OrderResponse> getOrder(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<OrderResponse>> getOrder(@PathVariable Long id) {
         Order order = orderRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
         // Convert to response DTO with variant options
         OrderResponse response = orderService.convertToOrderResponse(order);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success("Order retrieved successfully", response));
     }
 
     // Create order from cart
     @PostMapping("/orders")
-    public ResponseEntity<ApiResponse<OrderResponse>> createOrder(@Valid @RequestBody OrderRequest orderRequest) {
-        try {
-            Order createdOrder = orderService.createOrderFromCart(orderRequest);
-            // Convert to response DTO with variant options
-            OrderResponse response = orderService.convertToOrderResponse(createdOrder);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(ApiResponse.success("Order created successfully", response));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(ApiResponse.error(e.getMessage()));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ApiResponse.error(e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ApiResponse.error("Error creating order: " + e.getMessage()));
-        }
+    public ResponseEntity<ApiResponse<OrderResponse>> createOrder(
+            @Valid @RequestBody OrderRequest orderRequest,
+            HttpServletRequest request) {
+        Long authUserId = requireAuthUserId(request);
+        // Do NOT trust client userId
+        orderRequest.setUserId(authUserId);
+
+        Order createdOrder = orderService.createOrderFromCart(orderRequest);
+        // Convert to response DTO with variant options
+        OrderResponse response = orderService.convertToOrderResponse(createdOrder);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success("Order created successfully", response));
     }
 
     // Update order status (admin dashboard)
