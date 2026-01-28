@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS inventories (
     variant_id BIGINT PRIMARY KEY,
     total_quantity INT NOT NULL DEFAULT 0,
     reserved_quantity INT NOT NULL DEFAULT 0,
+    version BIGINT NOT NULL DEFAULT 0,
     CONSTRAINT fk_inventories_product 
         FOREIGN KEY (variant_id) 
         REFERENCES product_variants(id) 
