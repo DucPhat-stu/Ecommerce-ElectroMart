@@ -49,6 +49,10 @@ Phạm vi: chỉ áp dụng cho FE trong repo-clone, chạy qua Nginx, backend S
 - Quick View: liên kết tới quick-view.html?id={productId}.
 - Add to Wishlist: gọi WishlistAPI.add(userId, productId), thông báo kết quả và cập nhật wishlist count trên header.
 - Add to Cart: gọi CartAPI.addToCart(userId, productId, 1), cập nhật dropdown giỏ hàng.
+- Compare:
+  - Lưu danh sách productId (tối đa 4) vào localStorage `compareProductIds`.
+  - Click lần 1: thêm vào compare và điều hướng tới compare.html.
+  - Click lần 2 (nếu đã có): xóa khỏi compare.
 
 ## Product Detail (product.html)
 - Nút Add to Cart: thêm theo số lượng nhập, cập nhật dropdown giỏ hàng.
@@ -58,6 +62,16 @@ Phạm vi: chỉ áp dụng cho FE trong repo-clone, chạy qua Nginx, backend S
 ## Quick View (quick-view.html)
 - Tận dụng logic của Product Detail để hiển thị tóm tắt sản phẩm theo id.
 - Có nút Add to Cart (số lượng), Add to Wishlist, và link View full details → product.html?id=...
+
+## Compare (compare.html)
+- Mục tiêu: so sánh nhanh tối đa 4 sản phẩm (client-side).
+- Nguồn dữ liệu:
+  - Danh sách id lấy từ localStorage `compareProductIds`.
+  - Lấy toàn bộ sản phẩm qua ProductAPI.getAll() và lọc theo id (đơn giản, không cần thêm endpoint).
+- Hành vi:
+  - Remove: xóa sản phẩm khỏi compare và reload.
+  - Clear compare: xóa toàn bộ compare.
+  - Add to cart: thêm 1 sản phẩm vào giỏ (qty=1) và cập nhật dropdown cart.
 
 ## Footer
 - Cột Service: My Account, View Cart, Wishlist, Help → điều hướng trang tương ứng.
@@ -80,6 +94,7 @@ Phạm vi: chỉ áp dụng cho FE trong repo-clone, chạy qua Nginx, backend S
 4) Add to Cart từ card → dropdown giỏ hàng hiển thị item mới ở đầu, tối đa 7 item.
 5) Add to Wishlist → tăng wishlist count.
 6) Quick View → mở quick-view.html?id=..., xem, thêm vào giỏ/wishlist, hoặc đi tới product.html.
+7) Compare: bấm compare ở card → chuyển compare.html, remove/clear/add-to-cart hoạt động.
 7) Footer → About/Contact/Privacy/Terms/Service/Categories điều hướng đúng.
 
 Ghi chú: Không thay đổi entities/BE. Toàn bộ thay đổi thực hiện trên FE trong repo-clone.

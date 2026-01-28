@@ -128,13 +128,18 @@
 	var priceInputMax = document.getElementById('price-max'),
 			priceInputMin = document.getElementById('price-min');
 
-	priceInputMax.addEventListener('change', function(){
-		updatePriceSlider($(this).parent() , this.value)
-	});
+	// Some pages don't include price inputs. Guard to avoid null addEventListener errors.
+	if (priceInputMax) {
+		priceInputMax.addEventListener('change', function(){
+			updatePriceSlider($(this).parent() , this.value)
+		});
+	}
 
-	priceInputMin.addEventListener('change', function(){
-		updatePriceSlider($(this).parent() , this.value)
-	});
+	if (priceInputMin) {
+		priceInputMin.addEventListener('change', function(){
+			updatePriceSlider($(this).parent() , this.value)
+		});
+	}
 
 	function updatePriceSlider(elem , value) {
 		if ( elem.hasClass('price-min') ) {
@@ -161,7 +166,12 @@
 
 		priceSlider.noUiSlider.on('update', function( values, handle ) {
 			var value = values[handle];
-			handle ? priceInputMax.value = value : priceInputMin.value = value
+			// Guard: inputs may not exist on some pages
+			if (handle) {
+				if (priceInputMax) priceInputMax.value = value;
+			} else {
+				if (priceInputMin) priceInputMin.value = value;
+			}
 		});
 	}
 

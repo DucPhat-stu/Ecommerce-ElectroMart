@@ -72,6 +72,9 @@
     return 'img/product01.png';
   }
 
+  // Expose for pages that aren't wired into app.js (e.g. compare.html inline script)
+  window.__productImageUrl = productImageUrl;
+
   function renderStars(rating) {
     var html = '';
     for (var i = 1; i <= 5; i++) {
@@ -293,16 +296,36 @@
           }
         });
       });
+
+      // Quick-view page: "add to wishlist" link
+      $(document).off('click', '.btn-add-wishlist').on('click', '.btn-add-wishlist', function(e){
+        e.preventDefault();
+        var id = Number(getParam('id'));
+        if (!id) return;
+        var userId = window.getCurrentUserId();
+        window.WishlistAPI.add(userId, id).then(function(res) {
+          if (res && res.success !== false) {
+            alert('Đã thêm vào wishlist');
+            updateHeaderWishlistCount();
+          } else {
+            alert('Không thể thêm vào wishlist');
+          }
+        });
+      });
     } catch (e) { console.warn('bindGlobalWishlist error', e); }
   }
 
   async function updateHeaderWishlistCount() {
     try {
+      // default state (avoid template hard-code)
+      var $wl0 = $('.header-ctn a[href*="wishlist"] .qty, .header-ctn a:contains("Wishlist") .qty');
+      if ($wl0.length) $wl0.text('0');
+
       var userId = window.getCurrentUserId();
       var res = await window.WishlistAPI.getWishlistCount(userId);
       if (!res || res.success === false) return;
       var count = Number(res.data || 0);
-      var $wl = $('.header-ctn a:contains("Wishlist") .qty');
+      var $wl = $('.header-ctn a[href*="wishlist"] .qty, .header-ctn a:contains("Wishlist") .qty');
       if ($wl.length) $wl.text(count);
     } catch (e) {
       console.warn('updateHeaderWishlistCount error', e);
@@ -310,9 +333,12 @@
   }
 
   function bindAddToCartButtons() {
-    $('.add-to-cart-btn').off('click').on('click', async function() {
+    // Use delegation to work with dynamic DOM (slick, ajax render)
+    $(document).off('click', '.add-to-cart-btn').on('click', '.add-to-cart-btn', async function(e) {
+      // If button is inside a link, avoid navigation
+      if (e && e.preventDefault) e.preventDefault();
       var pid = Number($(this).attr('data-product-id'));
-      if (!pid) return;
+      if (!pid) return; // product page/quick-view handle their own add-to-cart
       var qty = 1;
       var userId = window.getCurrentUserId();
       var resp = await window.CartAPI.addToCart(userId, pid, qty);
@@ -322,6 +348,46 @@
       } else {
         alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
       }
+    });
+  }
+
+  // Compare (client-side) - stores a small list of product ids in localStorage
+  function getCompareIds() {
+    try {
+      var raw = window.localStorage.getItem('compareProductIds');
+      var arr = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(arr)) return [];
+      return arr.map(Number).filter(function(n){ return !isNaN(n) && n > 0; });
+    } catch (_) { return []; }
+  }
+
+  function setCompareIds(ids) {
+    try { window.localStorage.setItem('compareProductIds', JSON.stringify(ids || [])); } catch (_) {}
+  }
+
+  function bindCompareButtons() {
+    $(document).off('click', '.add-to-compare').on('click', '.add-to-compare', function(e){
+      e.preventDefault();
+      // productCard doesn't put data-product-id on compare button → read from sibling wishlist button
+      var pid = Number($(this).closest('.product').find('.add-to-wishlist').attr('data-product-id'));
+      if (!pid) return;
+      var ids = getCompareIds();
+      var idx = ids.indexOf(pid);
+      if (idx >= 0) {
+        ids.splice(idx, 1);
+        setCompareIds(ids);
+        alert('Đã xóa khỏi compare');
+        return;
+      }
+      if (ids.length >= 4) {
+        alert('Compare tối đa 4 sản phẩm');
+        return;
+      }
+      ids.push(pid);
+      setCompareIds(ids);
+      alert('Đã thêm vào compare. Mở trang compare để xem.');
+      // Navigate to compare page for a standard ecommerce flow
+      window.location.href = 'compare.html';
     });
   }
 
@@ -341,7 +407,7 @@
       await loadProductsIntoSlick($topSlick, top);
       renderIndexGrid(products);
       bindShopNowLinks();
-      bindAddToCartButtons();
+      // Add-to-cart is delegated globally; no need to rebind here
     } catch (e) {
       console.error(e);
     }
@@ -378,40 +444,7 @@
     }
   }
 
-  async function loadIndexPage() {
-    try {
-      var res = await window.ProductAPI.getAll();
-      if (!res || res.success === false) {
-        console.warn('Cannot load products:', res && res.message);
-        return;
-      }
-      var products = res.data || [];
-      var top = products.slice(0, 10);
-      var $newSlick = $('#tab1 .products-slick').first();
-      var $topSlick = $('#tab2 .products-slick').first();
-      await loadProductsIntoSlick($newSlick, top);
-      await loadProductsIntoSlick($topSlick, top);
-      bindAddToCartButtons();
-        } catch (e) {
-      console.error(e);
-    }
-  }
-
-  function bindAddToCartButtons() {
-    $('.add-to-cart-btn').off('click').on('click', async function() {
-      var pid = Number($(this).attr('data-product-id'));
-      if (!pid) return;
-      var qty = 1;
-      var userId = window.getCurrentUserId();
-      var resp = await window.CartAPI.addToCart(userId, pid, qty);
-      if (resp && resp.success !== false) {
-        alert('Đã thêm sản phẩm vào giỏ hàng');
-        updateHeaderCart();
-      } else {
-        alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
-      }
-    });
-  }
+  // (removed duplicate loadIndexPage/bindAddToCartButtons block)
 
   async function loadStorePage() {
     try {
@@ -763,6 +796,8 @@
     ensureHeaderLinks();
     bindShopNowLinks();
     bindGlobalWishlist();
+    bindCompareButtons();
+    bindAddToCartButtons();
     // View cart navigation
     var $viewCart = $('.cart-dropdown .cart-btns a').first();
     if ($viewCart.length) $viewCart.attr('href', 'cart.html');
