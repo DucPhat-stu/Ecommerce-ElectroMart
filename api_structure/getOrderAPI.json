@@ -1,0 +1,30 @@
+{
+  "id": null,
+  "userId": null,
+  "totalPrice": null,
+  "status": "",
+  "shippingAddress": "",
+  "shippingPhone": "",
+  "shippingName": "",
+  "orderDetails": [
+    {
+      "id": null,
+      "productId": null,
+      "productName": "",
+      "productPrice": null,
+      "discountPercent": null,
+      "quantity": null,
+      "subtotal": null,
+      "options": [
+        {
+          "optionName": "",
+          "optionValue": "",
+          "extraPrice": null
+        }
+      ],
+      "createdAt": ""
+    }
+  ],
+  "createdAt": "",
+  "updatedAt": ""
+}

@@ -1,0 +1,32 @@
+{
+    "success": true,
+    "message": "",
+    "data": {
+        "userId": null,
+        "items": [
+            {
+                "id": null,
+                "product": {
+                    "discountPercent": null,
+                    "finalPrice": null,
+                    "id": null,
+                    "imageUrl": "",
+                    "name": "",
+                    "options": [
+                        {
+                            "optionCode": "",
+                            "value": "",
+                            "extraPrice": null
+                        }
+                    ],
+                    "price": null
+                },
+                "quantity": null,
+                "subtotal": null
+            }
+        ],
+        "totalItems": null,
+        "totalAmount": null
+    },
+    "timestamp": ""
+}

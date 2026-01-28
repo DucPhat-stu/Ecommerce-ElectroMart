@@ -1,0 +1,7 @@
+{
+  "userId": null,    /* ID of the user placing the order */  /*Replace with JWT user ID*/
+  "shippingName": "",
+  "shippingPhone": "",
+  "shippingAddress": "",
+  "notes": ""
+}
