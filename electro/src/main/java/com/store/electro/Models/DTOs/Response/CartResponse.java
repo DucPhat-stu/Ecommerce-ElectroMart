@@ -107,6 +107,7 @@ public class CartResponse {
         private Integer discountPercent;
         private BigDecimal finalPrice;
         private String imageUrl;
+        private List<VariantOptionDTO> options;
 
         public ProductInfo() {
         }
@@ -157,6 +158,53 @@ public class CartResponse {
 
         public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
+        }
+
+        public List<VariantOptionDTO> getOptions() {
+            return options;
+        }
+
+        public void setOptions(List<VariantOptionDTO> options) {
+            this.options = options;
+        }
+    }
+
+    public static class VariantOptionDTO {
+        private String optionCode;
+        private String value;
+        private BigDecimal extraPrice;
+
+        public VariantOptionDTO() {
+        }
+
+        public VariantOptionDTO(String optionCode, String value, BigDecimal extraPrice) {
+            this.optionCode = optionCode;
+            this.value = value;
+            this.extraPrice = extraPrice;
+        }
+
+        public String getOptionCode() {
+            return optionCode;
+        }
+
+        public void setOptionCode(String optionCode) {
+            this.optionCode = optionCode;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public BigDecimal getExtraPrice() {
+            return extraPrice;
+        }
+
+        public void setExtraPrice(BigDecimal extraPrice) {
+            this.extraPrice = extraPrice;
         }
     }
 }

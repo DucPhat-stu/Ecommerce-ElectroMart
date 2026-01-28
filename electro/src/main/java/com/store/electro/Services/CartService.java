@@ -55,6 +55,15 @@ public class CartService implements ICartService {
             productInfo.setFinalPrice(finalPrice);
             productInfo.setImageUrl(imageUrl);
 
+            // Map variant options
+            List<CartResponse.VariantOptionDTO> optionDTOs = product.getOptions().stream()
+                    .map(option -> new CartResponse.VariantOptionDTO(
+                            option.getOptionCode(),
+                            option.getValue(),
+                            option.getExtraPrice()))
+                    .collect(Collectors.toList());
+            productInfo.setOptions(optionDTOs);
+
             BigDecimal subtotal = finalPrice.multiply(BigDecimal.valueOf(cart.getQuantity()));
 
             return new CartItemDTO(cart.getId(), productInfo, cart.getQuantity(), subtotal);
