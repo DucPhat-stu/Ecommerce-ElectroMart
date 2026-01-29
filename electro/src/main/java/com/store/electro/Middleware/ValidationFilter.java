@@ -15,16 +15,23 @@ public class ValidationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain) throws ServletException, IOException {
 
+		// Skip CORS preflight requests
+		if ("OPTIONS".equals(request.getMethod())) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
 		// Validate Content-Type for POST/PUT requests
 		String method = request.getMethod();
 		if ("POST".equals(method) || "PUT".equals(method)) {
 			String contentType = request.getHeader("Content-Type");
 			
-			if (contentType == null || !contentType.contains("application/json")) {
+			if (contentType == null || 
+				(!contentType.contains("application/json") && !contentType.contains("multipart/form-data"))) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.setContentType("application/json");
 				response.getWriter()
-						.write("{\"success\": false, \"message\": \"Content-Type must be application/json\"}");
+						.write("{\"success\": false, \"message\": \"Content-Type must be application/json or multipart/form-data\"}");
 				return;
 			}
 		}

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,31 +24,30 @@ public class FileStorageService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    public String saveProductImage(MultipartFile file, Long productId) throws IOException {
 
-    public String saveProductImage(
-            MultipartFile file,
-            Long productId
-    ) throws IOException {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty");
+        }
 
         if (!ALLOWED_TYPES.contains(file.getContentType())) {
             throw new IllegalArgumentException("Invalid image type");
         }
 
-        String fileName =
-                UUID.randomUUID() + ".webp";
+        String fileName = UUID.randomUUID() + ".webp";
 
-        Path productDir = Paths.get(
-                uploadDir,
-                "products",
-                productId.toString()
-        );
-
+        Path productDir = Paths.get(uploadDir, "products", productId.toString());
         Files.createDirectories(productDir);
 
         Path filePath = productDir.resolve(fileName);
 
-        return "/img/products/"
-                + productId
-                + "/" + fileName;
+        Files.copy(
+                file.getInputStream(),
+                filePath,
+                StandardCopyOption.REPLACE_EXISTING
+        );
+
+        return "/img/products/" + productId + "/" + fileName;
     }
 }
+

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.store.electro.Middleware.AuthenticationFilter;
+import com.store.electro.Middleware.CorsFilter;
 import com.store.electro.Middleware.ValidationFilter;
 import com.store.electro.Services.UserService;
 
@@ -15,6 +16,15 @@ public class WebFilterConfiguration {
 
 	public WebFilterConfiguration(UserService userService) {
 		this.userService = userService;
+	}
+
+	@Bean
+	public FilterRegistrationBean<CorsFilter> corsFilter() {
+		FilterRegistrationBean<CorsFilter> registrationBean = new FilterRegistrationBean<>();
+		registrationBean.setFilter(new CorsFilter());
+		registrationBean.addUrlPatterns("/api/*");
+		registrationBean.setOrder(0);
+		return registrationBean;
 	}
 
 	@Bean
