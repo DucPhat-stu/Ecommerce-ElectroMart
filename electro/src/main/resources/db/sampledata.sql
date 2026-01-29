@@ -588,7 +588,7 @@ VALUES
  'Pixel Watch 2 integrates Fitbit health features, improved sensors, and all-day battery life with Wear OS performance.',
  'ACTIVE', '2023-10-12 09:00:00', '2024-06-20 10:00:00', 5, 3),
 
-(86, 'Garmin fēnix 7 Pro',
+(86, 'Garmin Fenix 7 Pro',
  '47/51mm MIP - Multi-band GPS - Solar',
  'fēnix 7 Pro adds a brighter flashlight, upgraded heart-rate sensor, and exceptional battery life for outdoor training.',
  'ACTIVE', '2023-05-31 09:00:00', '2024-06-20 10:00:00', 5, 29),
@@ -2097,7 +2097,7 @@ VALUES
 (85, 'Connectivity', 'GPS, Bluetooth 5.0, Wi-Fi, NFC, optional LTE'),
 (85, 'Special Features', 'Google Assistant, Fitbit integration, Temperature sensor'),
 
--- Garmin fēnix 7 Pro (86)
+-- Garmin Fenix 7 Pro (86)
 (86, 'Type', 'Outdoor multisport watch'),
 (86, 'Display Type', 'MIP sunlight-visible'),
 (86, 'Display Size', '1.3 inches (32mm / 43mm)'),
