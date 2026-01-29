@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
 import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Response.ProductResponse;
 import com.store.electro.Models.Entity.Product.Product;
 import com.store.electro.Services.FileStorageService;
 import com.store.electro.Services.IProductService;
@@ -43,8 +44,8 @@ public class ProductController {
 
     // Get product by ID
     @GetMapping("/product/{productId}")
-    public ResponseEntity<ApiResponse<Product>> getProductById(@PathVariable Long productId) {
-        Product product = productService.getProductById(productId);
+    public ResponseEntity<ApiResponse<ProductResponse>> getProductById(@PathVariable Long productId) {
+        ProductResponse product = productService.getProductByIdAsResponse(productId);
         return ResponseEntity
                 .ok(ApiResponse.success("Product found", product));
     }

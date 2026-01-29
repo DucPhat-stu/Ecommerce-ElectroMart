@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import com.store.electro.Exceptions.ResourceNotFoundException;
 import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
 import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Response.ProductDetailDTO;
+import com.store.electro.Models.DTOs.Response.ProductImageDTO;
+import com.store.electro.Models.DTOs.Response.ProductResponse;
+import com.store.electro.Models.DTOs.Response.ProductVariantDTO;
+import com.store.electro.Models.DTOs.Response.VariantOptionDTO;
 import com.store.electro.Models.Entity.Brand;
 import com.store.electro.Models.Entity.Category;
 import com.store.electro.Models.Entity.Product.Product;
@@ -342,6 +347,12 @@ public class ProductService implements IProductService {
         }
 
         @Override
+        public ProductResponse getProductByIdAsResponse(Long productId) {
+                Product product = getProductById(productId);
+                return convertToProductResponse(product);
+        }
+
+        @Override
         public List<Product> getAllProducts() {
                 return productRepository.findAll();
         }
@@ -355,5 +366,65 @@ public class ProductService implements IProductService {
         public Product findProductByName(String productName) {
                 return Optional.ofNullable(productRepository.findByName(productName))
                                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        }
+
+        // Convert Product entity to ProductResponse DTO
+        private ProductResponse convertToProductResponse(Product product) {
+                Set<ProductImageDTO> imageDTOs = product.getProductImages().stream()
+                                .map(img -> new ProductImageDTO(
+                                        img.getId(),
+                                        img.getImageName(),
+                                        img.getImageUrl(),
+                                        img.getPosition(),
+                                        img.isIsPrimary()
+                                ))
+                                .collect(Collectors.toSet());
+
+                Set<ProductDetailDTO> detailDTOs = product.getProductDetails().stream()
+                                .map(detail -> new ProductDetailDTO(
+                                        detail.getId(),
+                                        detail.getAttributeName(),
+                                        detail.getAttributeValue()
+                                ))
+                                .collect(Collectors.toSet());
+
+                Set<ProductVariantDTO> variantDTOs = product.getProductVariants().stream()
+                                .map(variant -> {
+                                        Set<VariantOptionDTO> optionDTOs = variant.getOptions().stream()
+                                                        .map(option -> new VariantOptionDTO(
+                                                                option.getId(),
+                                                                option.getOptionCode(),
+                                                                option.getValue(),
+                                                                option.getExtraPrice()
+                                                        ))
+                                                        .collect(Collectors.toSet());
+
+                                        return new ProductVariantDTO(
+                                                variant.getId(),
+                                                variant.getBasePrice(),
+                                                variant.getFinalPrice(),
+                                                variant.getDiscountPercent(),
+                                                variant.getStatus().toString(),
+                                                optionDTOs,
+                                                variant.getCreatedAt(),
+                                                variant.getUpdatedAt()
+                                        );
+                                })
+                                .collect(Collectors.toSet());
+
+                return new ProductResponse(
+                        product.getId(),
+                        product.getName(),
+                        product.getShortDescription(),
+                        product.getDescription(),
+                        product.getCategoryName(),
+                        product.getBrandName(),
+                        product.getStatus().toString(),
+                        imageDTOs,
+                        detailDTOs,
+                        variantDTOs,
+                        product.getCreatedAt(),
+                        product.getUpdatedAt()
+                );
         }
 }

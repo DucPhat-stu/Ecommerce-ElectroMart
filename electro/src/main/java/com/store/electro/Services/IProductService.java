@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
 import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Response.ProductResponse;
 import com.store.electro.Models.Entity.Product.Product;
 
 public interface IProductService {
@@ -14,6 +15,8 @@ public interface IProductService {
     void deleteProduct(Long productId);
 
     Product getProductById(Long productId);
+
+    ProductResponse getProductByIdAsResponse(Long productId);
 
     List<Product> getAllProducts();
 
