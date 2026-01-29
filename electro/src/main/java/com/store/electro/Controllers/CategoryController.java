@@ -19,7 +19,7 @@ import com.store.electro.Utils.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("${api.prefix}")
+@RequestMapping("${api.prefix}/category")
 public class CategoryController {
 
     private final ICategoryService categoryService;
@@ -29,21 +29,21 @@ public class CategoryController {
     }
 
     // Get all categories
-    @GetMapping("/categories")
+    @GetMapping("")
     public ResponseEntity<ApiResponse<List<Category>>> getAllCategories() {
         List<Category> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(ApiResponse.success("Categories retrieved successfully", categories));
     }
 
     // Get category by ID
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/{categoryId}")
     public ResponseEntity<ApiResponse<Category>> getCategoryById(@PathVariable Long categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
         return ResponseEntity.ok(ApiResponse.success("Category found", category));
     }
 
     // Create new category
-    @PostMapping("/category")
+    @PostMapping("")
     public ResponseEntity<ApiResponse<Category>> createCategory(@Valid @RequestBody Category category) {
         Category createdCategory = categoryService.addCategory(category);
         return ResponseEntity.status(201)
@@ -51,7 +51,7 @@ public class CategoryController {
     }
 
     // Update category
-    @PutMapping("/category/{categoryId}")
+    @PutMapping("/{categoryId}")
     public ResponseEntity<ApiResponse<Category>> updateCategory(
             @Valid @RequestBody Category category,
             @PathVariable Long categoryId) {
@@ -60,7 +60,7 @@ public class CategoryController {
     }
 
     // Delete category
-    @DeleteMapping("/category/{categoryId}")
+    @DeleteMapping("/{categoryId}")
     public ResponseEntity<ApiResponse<Void>> deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.status(204)
