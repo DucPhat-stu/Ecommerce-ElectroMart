@@ -906,6 +906,16 @@ textarea.input {
   z-index: 20;
 }
 
+.product .product-link {
+  display: block;
+  color: inherit;
+}
+
+.product .product-tlink:hover .product-name,
+.product .product-link:focus .product-name {
+  color: #D10024;
+}
+
 .product .product-body .product-category {
   text-transform: uppercase;
   font-size: 12px;
@@ -1007,6 +1017,58 @@ textarea.input {
 }
 
 .product .product-body .product-btns>button:hover .tooltipp {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate(-50%, -5px);
+  -ms-transform: translate(-50%, -5px);
+  transform: translate(-50%, -5px);
+}
+
+/* Product buttons outside .product-body (related products) */
+.product .product-btns {
+  text-align: center;
+  padding: 0 15px 15px;
+}
+
+.product .product-btns>button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background: transparent;
+  border: none;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.product .product-btns>button:hover {
+  background-color: #E4E7ED;
+  color: #D10024;
+  border-radius: 50%;
+}
+
+.product .product-btns>button .tooltipp {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -15px);
+  -ms-transform: translate(-50%, -15px);
+  transform: translate(-50%, -15px);
+  width: 150px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 10px;
+  background: #1e1f29;
+  color: #FFF;
+  text-transform: uppercase;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.product .product-btns>button:hover .tooltipp {
   opacity: 1;
   visibility: visible;
   -webkit-transform: translate(-50%, -5px);
@@ -1512,6 +1574,9 @@ textarea.input {
 .product-details .product-options {
   margin-top: 30px;
   margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
 }
 
 .product-details .product-options label {
@@ -1520,10 +1585,19 @@ textarea.input {
   text-transform: uppercase;
   margin-right: 15px;
   margin-bottom: 0px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .product-details .product-options .input-select {
-  width: 90px;
+  min-width: 120px;
+  width: 160px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .product-details .add-to-cart {

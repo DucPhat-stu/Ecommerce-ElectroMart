@@ -80,7 +80,7 @@
       var suffix = idx < 10 ? ('0' + idx) : String(idx);
       return 'img/product' + suffix + '.png';
     }
-    return 'img/product01.png';
+    return '';
   }
 
   function productPrimaryTemplateFromProductImages(product) {
@@ -869,7 +869,11 @@
     if (path.endsWith('/index.html') || path.endsWith('/') || path === '' ) {
       loadIndexPage();
     } else if (path.endsWith('/store.html')) {
-      loadStorePage();
+      if (typeof window.__storePageHandler === 'function') {
+        window.__storePageHandler();
+      } else {
+        loadStorePage();
+      }
     } else if (path.endsWith('/product.html')) {
       loadProductPage();
     } else if (path.endsWith('/quick-view.html')) {
