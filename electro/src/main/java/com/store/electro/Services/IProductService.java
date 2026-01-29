@@ -2,14 +2,14 @@ package com.store.electro.Services;
 
 import java.util.List;
 
-import com.store.electro.Models.Entity.Product.Product;
 import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
 import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
+import com.store.electro.Models.Entity.Product.Product;
 
 public interface IProductService {
-    Product addProduct(AddProductRequest product);
+    Product addProduct(AddProductRequest product, FileStorageService fileStorageService);
 
-    Product updateProduct(UpdateProductRequest product, Long productId );
+    Product updateProduct(UpdateProductRequest product, Long productId, FileStorageService fileStorageService);
 
     void deleteProduct(Long productId);
 

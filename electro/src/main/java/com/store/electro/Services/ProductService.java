@@ -1,5 +1,6 @@
 package com.store.electro.Services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class ProductService implements IProductService {
         // Creating a new product
         @Override
         @Transactional
-        public Product addProduct(AddProductRequest request) {
+        public Product addProduct(AddProductRequest request, FileStorageService fileStorageService) {
 
                 Category category = categoryRepository.findById(request.getCategoryId())
                                 .orElseThrow(
@@ -65,15 +66,32 @@ public class ProductService implements IProductService {
                 product.setCategory(category);
                 product.setBrand(brand);
 
+                // First save product to get ID
+                product = productRepository.save(product);
+                final Product savedProduct = product;
+                final Long productId = product.getId();
+
                 Set<ProductImage> images = Optional.ofNullable(request.getProductImages())
                                 .orElse(List.of())
                                 .stream()
                                 .map(imgReq -> {
                                         ProductImage imgs = new ProductImage();
-                                        imgs.setImageUrl(imgReq.getImageUrl());
+                                        
+                                        // Handle file upload if imageFile is provided
+                                        if (imgReq.getImageFile() != null && !imgReq.getImageFile().isEmpty()) {
+                                                try {
+                                                        String imageUrl = fileStorageService.saveProductImage(imgReq.getImageFile(), productId);
+                                                        imgs.setImageUrl(imageUrl);
+                                                } catch (IOException e) {
+                                                        throw new RuntimeException("Failed to save image: " + e.getMessage());
+                                                }
+                                        } else if (imgReq.getImageUrl() != null && !imgReq.getImageUrl().isEmpty()) {
+                                                // If imageUrl is provided directly, use it
+                                                imgs.setImageUrl(imgReq.getImageUrl());
+                                        }
+                                        
                                         imgs.setIsPrimary(imgReq.isPrimary());
-
-                                        imgs.setProduct(product);
+                                        imgs.setProduct(savedProduct);
                                         return imgs;
                                 })
                                 .collect(Collectors.toSet());
@@ -87,7 +105,7 @@ public class ProductService implements IProductService {
                                         detail.setAttributeName(detailReq.getAttributeName());
                                         detail.setAttributeValue(detailReq.getAttributeValue());
 
-                                        detail.setProduct(product);
+                                        detail.setProduct(savedProduct);
                                         return detail;
                                 })
                                 .collect(Collectors.toSet());
@@ -99,7 +117,7 @@ public class ProductService implements IProductService {
                                 .stream()
                                 .map(variantReq -> {
                                         ProductVariant variant = new ProductVariant();
-                                        variant.setProduct(product);
+                                        variant.setProduct(savedProduct);
                                         variant.setBasePrice(variantReq.getBasePrice());
                                         variant.setDiscountPercent(variantReq.getDiscountPercent());
                                         variant.setStatus(variantReq.getStatus());
@@ -135,7 +153,7 @@ public class ProductService implements IProductService {
         // Updating an existing product
         @Override
         @Transactional
-        public Product updateProduct(UpdateProductRequest request, Long productId) {
+        public Product updateProduct(UpdateProductRequest request, Long productId, FileStorageService fileStorageService) {
 
                 Product product = productRepository.findById(productId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -166,11 +184,36 @@ public class ProductService implements IProductService {
                                         throw new ResourceNotFoundException(
                                                         "ProductImage not found with id: " + imgReq.getId());
                                 }
-                                img.setImageUrl(imgReq.getImageUrl());
+                                
+                                // Handle file upload if new file is provided
+                                if (imgReq.getImageFile() != null && !imgReq.getImageFile().isEmpty()) {
+                                        try {
+                                                String imageUrl = fileStorageService.saveProductImage(imgReq.getImageFile(), productId);
+                                                img.setImageUrl(imageUrl);
+                                        } catch (IOException e) {
+                                                throw new RuntimeException("Failed to save image: " + e.getMessage());
+                                        }
+                                } else if (imgReq.getImageUrl() != null && !imgReq.getImageUrl().isEmpty()) {
+                                        // If imageUrl is provided, update it
+                                        img.setImageUrl(imgReq.getImageUrl());
+                                }
+                                
                                 img.setIsPrimary(imgReq.isPrimary());
                         } else {
                                 ProductImage img = new ProductImage();
-                                img.setImageUrl(imgReq.getImageUrl());
+                                
+                                // Handle file upload for new image
+                                if (imgReq.getImageFile() != null && !imgReq.getImageFile().isEmpty()) {
+                                        try {
+                                                String imageUrl = fileStorageService.saveProductImage(imgReq.getImageFile(), productId);
+                                                img.setImageUrl(imageUrl);
+                                        } catch (IOException e) {
+                                                throw new RuntimeException("Failed to save image: " + e.getMessage());
+                                        }
+                                } else if (imgReq.getImageUrl() != null && !imgReq.getImageUrl().isEmpty()) {
+                                        img.setImageUrl(imgReq.getImageUrl());
+                                }
+                                
                                 img.setIsPrimary(imgReq.isPrimary());
                                 img.setProduct(product);
                                 product.getProductImages().add(img);

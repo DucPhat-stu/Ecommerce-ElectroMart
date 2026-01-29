@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.store.electro.Models.Enums.ProductStatus;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class AddProductRequest {
     private String description;
 
     // Status
+    @NotNull
     private ProductStatus status;
 
     // Category ID
@@ -32,14 +34,18 @@ public class AddProductRequest {
 
     // Brand ID
     @NotNull(message = "Brand ID is required")
+    @Min(value = 1)
     private Long brandId;
 
     // List of details
+    @Valid
     private List<ProductDetailRequest> productDetails;
 
     // List of Images
+    @Valid
     private List<ProductImageRequest> productImages;
 
     // List of Variants
+    @Valid
     private List<ProductVariantRequest> productVariants;
 }

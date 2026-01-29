@@ -1,17 +1,20 @@
 package com.store.electro.Models.DTOs.Request.ProductRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class ProductImageRequest {
 
-    @NotNull(message = "Image ID is required")
     @Min(value = 1)
     private Long id;
 
-    // Image URL
+    // Image file to upload
+    private MultipartFile imageFile;
+
+    // Image URL (used for existing images during update)
     private String imageUrl;
 
     // Is Primary
