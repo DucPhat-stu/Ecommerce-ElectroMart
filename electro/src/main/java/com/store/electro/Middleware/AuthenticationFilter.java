@@ -75,8 +75,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
 	private boolean isPublicEndpoint(String path) {
 		// Public endpoints that don't require authentication
-		return path.contains("/api/v1/auth/login") || 
-		       path.contains("/api/v1/auth/register") ||
+		return path.contains("/api/v1/auth") || 
 		       path.contains("/api/v1/products") ||  // public access for testing
 				path.contains("/api/v1/product") ||  // public access for testing
 				path.contains("/api/v1/cart") ||
