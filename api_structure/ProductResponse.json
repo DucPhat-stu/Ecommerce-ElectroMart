@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "message": "",
+  "data": {
+    "id": 0,
+    "name": "",
+    "shortDescription": "",
+    "description": "",
+    "categoryName": "",
+    "brandName": "",
+    "status": "",
+    "createdAt": "",
+    "updatedAt": "",
+    "images": [
+      {
+        "id": 0,
+        "imageName": "",
+        "imageUrl": "",
+        "position": 0,
+        "isPrimary": false
+      }
+    ],
+    "details": [
+      {
+        "id": 0,
+        "attributeName": "",
+        "attributeValue": ""
+      }
+    ],
+    "variants": [
+      {
+        "id": 0,
+        "basePrice": 0,
+        "finalPrice": 0,
+        "discountPercent": 0,
+        "status": "",
+        "options": [
+          {
+            "id": 0,
+            "optionCode": "",
+            "value": "",
+            "extraPrice": 0
+          }
+        ],
+        "createdAt": "",
+        "updatedAt": ""
+      }
+    ]
+  },
+  "timestamp": ""
+}
