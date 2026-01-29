@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.store.electro.Models.DTOs.Request.ProductRequest.AddProductRequest;
 import com.store.electro.Models.DTOs.Request.ProductRequest.UpdateProductRequest;
+import com.store.electro.Models.DTOs.Request.StockUpdateRequest;
 import com.store.electro.Models.DTOs.Response.ProductResponse;
 import com.store.electro.Models.Entity.Product.Product;
+import com.store.electro.Models.Entity.Product.ProductVariant;
+import com.store.electro.Repositories.ProductVariantRepository;
 import com.store.electro.Services.FileStorageService;
 import com.store.electro.Services.IProductService;
 import com.store.electro.Utils.ApiResponse;
@@ -28,10 +31,13 @@ public class ProductController {
 
     private final IProductService productService;
     private final FileStorageService fileStorageService;
+    private final ProductVariantRepository productVariantRepository;
 
-    public ProductController(IProductService productService, FileStorageService fileStorageService) {
+    public ProductController(IProductService productService, FileStorageService fileStorageService,
+            ProductVariantRepository productVariantRepository) {
         this.productService = productService;
         this.fileStorageService = fileStorageService;
+        this.productVariantRepository = productVariantRepository;
     }
 
     // Get all products
@@ -83,5 +89,22 @@ public class ProductController {
         productService.updateProduct(request, productId, fileStorageService);
         return ResponseEntity.status(204)
                 .body(ApiResponse.success("Product updated successfully", null));
+    }
+
+    // Admin: add more stock to a product variant
+    @PostMapping("/admin/product/{variantId}/stock/add")
+    public ResponseEntity<ApiResponse<ProductVariant>> addStock(
+            @PathVariable Long variantId,
+            @Valid @org.springframework.web.bind.annotation.RequestBody StockUpdateRequest request) {
+        if (request.getQuantity() == null || request.getQuantity() <= 0) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error("Quantity must be > 0", "BAD_REQUEST", "Invalid quantity"));
+        }
+        ProductVariant variant = productVariantRepository.findById(variantId)
+                .orElseThrow(() -> new RuntimeException("Product variant not found with id: " + variantId));
+        int current = variant.getStock() != null ? variant.getStock() : 0;
+        variant.setStock(current + request.getQuantity());
+        productVariantRepository.save(variant);
+        return ResponseEntity.ok(ApiResponse.success("Stock added", variant));
     }
 }

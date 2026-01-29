@@ -63,6 +63,9 @@ public class ProductVariant {
     @Column(name = "status", nullable = false)
     private ProductStatus status;
 
+    @Column(name = "stock", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private Integer stock = 0;
+
     @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<VariantOption> options = new HashSet<>();
@@ -133,6 +136,14 @@ public class ProductVariant {
 
     public void setStatus(ProductStatus status) {
         this.status = status;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock != null ? stock : 0;
     }
 
     public LocalDateTime getCreatedAt() {

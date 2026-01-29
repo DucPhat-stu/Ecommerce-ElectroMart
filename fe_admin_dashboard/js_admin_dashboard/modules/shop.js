@@ -13,19 +13,42 @@ function renderShop() {
         return m ? m[1].toLowerCase() : null;
     };
 
+    const stableTemplateById = (product) => {
+        const idNum = Number(product && product.id);
+        if (!isNaN(idNum) && idNum > 0) {
+            const idx = ((idNum - 1) % 9) + 1;
+            const suffix = idx < 10 ? ('0' + idx) : String(idx);
+            return `product${suffix}.png`;
+        }
+        return 'product01.png';
+    };
+
     const productImageSrc = (product) => {
         const imgs = Array.isArray(product?.productImages) ? product.productImages : [];
-        const primary = imgs.find?.(i => i && i.primary) || imgs[0];
-        const key = templateKeyFromAny(primary?.imageUrl) || templateKeyFromAny(product?.imageUrl) || 'product01.png';
-        return `/img/${key}`;
+        const primary = imgs.find?.(i => i && (i.isPrimary || i.primary)) || imgs[0];
+        const fromTemplate = templateKeyFromAny(primary?.imageUrl) || templateKeyFromAny(product?.imageUrl);
+        const file = fromTemplate || stableTemplateById(product);
+        // Nginx phục vụ ảnh template tại /img/...
+        return `/img/${file}`;
     };
 
     const getProducts = async () => {
         try {
             const p = await API.getProducts();
             return Array.isArray(p) ? p : (p?.items || p?.products || []);
-        } catch (_) {
+        } catch (e) {
+            console.warn('shop:getProducts fallback mock', e);
             return Array.isArray(mockData?.products) ? mockData.products : [];
+        }
+    };
+
+    const getCategories = async () => {
+        try {
+            const c = await API.getCategories();
+            return Array.isArray(c) ? c : (c?.items || c?.categories || []);
+        } catch (e) {
+            console.warn('shop:getCategories fallback mock', e);
+            return Array.isArray(mockData?.categories) ? mockData.categories : [];
         }
     };
 
@@ -51,28 +74,27 @@ function renderShop() {
                     <p class="product-price">${formatCurrency(Number(product?.finalPrice ?? product?.price ?? 0))}</p>
                     <div class="product-actions">
                         <button class="btn" onclick="addToWishlist(${Number(id)})" title="Add to wishlist"><i class="fas fa-heart"></i></button>
-                        <button class="btn" onclick="addToCart(${Number(id)})" title="Add to cart"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="btn" onclick="addStock(${Number(id)})" title="Add more stock"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             `;
             grid.appendChild(productCard);
         });
 
-        setupShopFilters();
+        setupShopFilters(await getCategories());
     })();
 }
 
-function setupShopFilters() {
+function setupShopFilters(categories) {
     const searchInput = document.getElementById('shopSearch');
     const categoryFilter = document.getElementById('shopCategoryFilter');
     const minPrice = document.getElementById('minPrice');
     const maxPrice = document.getElementById('maxPrice');
     categoryFilter.innerHTML = '<option value="">All Categories</option>';
-    const cats = Array.isArray(mockData?.categories) ? mockData.categories : [];
-    cats.forEach(cat => {
+    (categories || []).forEach(cat => {
         const option = document.createElement('option');
-        option.value = cat.name;
-        option.textContent = cat.name;
+        option.value = cat.name || cat.categoryName || cat.id;
+        option.textContent = cat.name || cat.categoryName || `Category ${cat.id}`;
         categoryFilter.appendChild(option);
     });
     const filterShop = () => {
@@ -96,7 +118,22 @@ function setupShopFilters() {
     maxPrice.addEventListener('input', filterShop);
 }
 
-function addToCart(productId) {
-    const product = mockData.products.find(p => p.id === productId);
-    if (product) { showNotification(`Added "${product.name}" to cart`, 'success'); }
+async function addStock(productId) {
+    const delta = parseInt(prompt('Nhập số lượng cần nhập thêm:'), 10);
+    if (!delta || isNaN(delta) || delta <= 0) return;
+    try {
+        // call new backend endpoint to add stock on variant/product
+        // Ưu tiên variant đầu tiên nếu có
+        const prod = await API.getProduct(productId);
+        const variantId = (prod?.variants && prod.variants[0] && prod.variants[0].id) ? prod.variants[0].id : productId;
+        await API.addStock(variantId, delta);
+        showNotification(`Đã nhập thêm ${delta} đơn vị cho sản phẩm ID ${productId}`, 'success');
+    } catch (e) {
+        console.warn('addStock fallback mock', e);
+        if (Array.isArray(mockData?.products)) {
+            const p = mockData.products.find(x => Number(x.id) === Number(productId));
+            if (p) p.stock = (p.stock || 0) + delta;
+        }
+        showNotification('Không gọi được API, đã cập nhật tạm thời mock data', 'warning');
+    }
 }

@@ -26,11 +26,17 @@ const API_BASE_URL = (() => {
 async function apiCall(endpoint, options = {}) {
     try {
         const url = `${API_BASE_URL}${endpoint}`;
+        const token = (() => {
+            try {
+                return localStorage.getItem('accessToken') || localStorage.getItem('token') || localStorage.getItem('jwt') || '';
+            } catch (_) { return ''; }
+        })();
+
         const config = {
-            headers: {
+            headers: Object.assign({
                 'Content-Type': 'application/json',
-                ...options.headers
-            },
+                ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+            }, options.headers || {}),
             ...options
         };
 
@@ -84,6 +90,10 @@ const API = {
         // Some builds expose /product/{id}, others use /products/{id}
         try { return await apiCall(`/product/${id}`); } catch (_) { return await apiCall(`/products/${id}`); }
     },
+    addStock: (variantId, quantity) => apiCall(`/admin/product/${variantId}/stock/add`, {
+        method: 'POST',
+        body: JSON.stringify({ quantity })
+    }),
     getProductsByCategory: (categoryId) => apiCall(`/products/category/${categoryId}`),
     createProduct: async (productData) => {
         try {

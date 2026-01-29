@@ -41,9 +41,17 @@ async function renderStatistics() {
     );
 
     if (revenueEl) revenueEl.textContent = formatCurrency(totalRevenue);
+    if (revenueEl) revenueEl.nextElementSibling?.remove();
+    if (revenueEl) revenueEl.insertAdjacentHTML('afterend','<small class="text-muted">Revenue = Σ order totals</small>');
     if (costEl) costEl.textContent = formatCurrency(totalCost);
+    if (costEl) costEl.nextElementSibling?.remove();
+    if (costEl) costEl.insertAdjacentHTML('afterend','<small class="text-muted">Cost = Σ cost per order/product</small>');
     if (profitEl) profitEl.textContent = formatCurrency(totalProfit);
+    if (profitEl) profitEl.nextElementSibling?.remove();
+    if (profitEl) profitEl.insertAdjacentHTML('afterend','<small class="text-muted">Profit = Revenue - Cost</small>');
     if (rateEl) rateEl.textContent = `${profitRate.toFixed(2)}%`;
+    if (rateEl) rateEl.nextElementSibling?.remove();
+    if (rateEl) rateEl.insertAdjacentHTML('afterend','<small class="text-muted">Profit Rate = Profit / Revenue</small>');
 
     await renderProfitDetail();
 }
@@ -99,4 +107,3 @@ async function renderProfitDetail() {
         tableBody.appendChild(row);
     });
 }
-

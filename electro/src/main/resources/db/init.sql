@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS product_variants (
     price DECIMAL(10,2) NOT NULL,
     discount_percent INT DEFAULT 0,
     status VARCHAR(50) NOT NULL,
+    stock INT DEFAULT 0,
     created_at DATETIME,
     updated_at DATETIME,
     version BIGINT DEFAULT 0,

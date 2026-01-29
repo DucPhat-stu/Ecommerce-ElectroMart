@@ -330,6 +330,13 @@
               localStorage.setItem('currentUserId', String(res.data.userId || ''));
               localStorage.setItem('username', res.data.username || '');
               if (window.setAxiosAuthHeader) window.setAxiosAuthHeader();
+              // check role to redirect admin
+              window.UserAPI.getCurrentUser(res.data.userId).then(function(uRes){
+                var user = uRes && uRes.data ? uRes.data : null;
+                if (user && Number(user.roleId) === 2) {
+                  window.location.href = '../fe_admin_dashboard/index.html';
+                }
+              });
             } catch (_) {}
             showProfile();
             await loadProfile();
