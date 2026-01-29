@@ -32,9 +32,10 @@ public class CorsFilter extends OncePerRequestFilter {
 	}
 
 	private boolean isAllowedOrigin(String origin) {
-		return origin.equals("http://localhost:5500") ||
-		       origin.equals("http://127.0.0.1:5500") ||
-		       origin.equals("http://localhost:3000") ||
-		       origin.equals("http://127.0.0.1:3000");
+		return 
+			   origin.equals("http://127.0.0.1") ||
+			   origin.equals("http://localhost") ||
+			   origin.equals("http://localhost:80") ||
+		       origin.equals("http://127.0.0.1:80");
 	}
 }
