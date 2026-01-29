@@ -66,7 +66,7 @@ public class ProductController {
     }
 
     // Deleting a product
-    @DeleteMapping("product/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<ApiResponse<Void>> deleteProductById(@PathVariable Long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.status(204)
@@ -74,7 +74,7 @@ public class ProductController {
     }
 
     // Updating existing product
-    @PutMapping("product/{productId}")
+    @PutMapping("/products/{productId}")
     public ResponseEntity<ApiResponse<Product>> updateProduct(
             @Valid
             @ModelAttribute UpdateProductRequest request,

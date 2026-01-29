@@ -8,6 +8,8 @@ public interface ICategoryService {
 
     Category getCategoryById(Long categoryId);
 
+    Category getCategoryByName(String name);
+
     List<Category> getAllCategories();
 
     Category addCategory(Category category);

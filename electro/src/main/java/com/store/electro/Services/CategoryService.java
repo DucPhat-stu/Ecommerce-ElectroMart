@@ -24,6 +24,12 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
+    public Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with name: " + name));
+    }
+
+    @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }

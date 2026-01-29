@@ -72,14 +72,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Laptop Dell XPS 15\",\n    \"price\": 25000000,\n    \"discountPercent\": 10,\n    \"shortDescription\": \"High-performance laptop\",\n    \"description\": \"Dell XPS 15 with Intel i7, 16GB RAM, 512GB SSD\",\n    \"stockQuantity\": 50,\n    \"categoryId\": 1\n}"
+							"raw": "{\n    \"name\": \"Laptop Dell XPS 15\",\n    \"shortDescription\": \"High-performance laptop\",\n    \"description\": \"Dell XPS 15 with Intel i7, 16GB RAM, 512GB SSD\",\n    \"status\": \"active\",\n    \"categoryId\": 1,\n    \"brandId\": 10,\n    \"productImages\": [\n        {\n            \"imageUrl\": \"https://example.com/laptop.jpg\",\n            \"primary\": true\n        }\n    ],\n    \"productDetails\": [\n        {\n            \"attributeName\": \"RAM\",\n            \"attributeValue\": \"16GB\"\n        },\n        {\n            \"attributeName\": \"Storage\",\n            \"attributeValue\": \"512GB SSD\"\n        }\n    ],\n    \"productVariants\": [\n        {\n            \"basePrice\": 25000000,\n            \"discountPercent\": 10,\n            \"status\": \"active\",\n            \"options\": [\n                {\n                    \"optionId\": 1,\n                    \"value\": \"Silver\",\n                    \"extraPrice\": 0\n                }\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/products",
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "products"]
 						},
-						"description": "Create a new product"
+						"description": "Create a new product. Required fields: name, categoryId, brandId, productVariants with basePrice"
 					}
 				},
 				{
@@ -94,7 +94,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Laptop Dell XPS 15 Updated\",\n    \"price\": 24000000,\n    \"discountPercent\": 15,\n    \"shortDescription\": \"High-performance laptop (Updated)\",\n    \"description\": \"Dell XPS 15 with Intel i7, 16GB RAM, 512GB SSD - Updated\",\n    \"stockQuantity\": 45,\n    \"categoryId\": 1\n}"
+							"raw": "{\n    \"name\": \"Laptop Dell XPS 15 Updated\",\n    \"shortDescription\": \"High-performance laptop (Updated)\",\n    \"description\": \"Dell XPS 15 with Intel i7, 16GB RAM, 512GB SSD - Updated\",\n    \"status\": \"active\",\n    \"categoryId\": 1,\n    \"brandId\": 10,\n    \"productImages\": [\n        {\n            \"imageUrl\": \"https://example.com/laptop-updated.jpg\",\n            \"primary\": true\n        }\n    ],\n    \"productDetails\": [\n        {\n            \"attributeName\": \"RAM\",\n            \"attributeValue\": \"16GB\"\n        }\n    ],\n    \"productVariants\": [\n        {\n            \"basePrice\": 24000000,\n            \"discountPercent\": 15,\n            \"status\": \"active\",\n            \"options\": [\n                {\n                    \"optionId\": 1,\n                    \"value\": \"Silver\",\n                    \"extraPrice\": 0\n                }\n            ]\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/products/:id",
@@ -107,7 +107,7 @@
 								}
 							]
 						},
-						"description": "Update product by ID"
+						"description": "Update product by ID. Required fields: name, categoryId, brandId, productVariants with basePrice"
 					}
 				},
 				{

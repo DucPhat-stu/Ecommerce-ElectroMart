@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum OrderStatus {
     PENDING("pending"),             // Đang chờ xử lý
+    CONFIRMED("confirmed"),         // Đã xác nhận
     PROCESSING("processing"),       // Đang xử lý
     SHIPPED("shipped"),             // Đã giao hàng
     DELIVERED("delivered"),         // Đã nhận hàng
