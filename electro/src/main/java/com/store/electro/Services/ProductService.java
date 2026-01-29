@@ -19,6 +19,7 @@ import com.store.electro.Models.Entity.Product.ProductImage;
 import com.store.electro.Models.Entity.Product.ProductOption;
 import com.store.electro.Models.Entity.Product.ProductVariant;
 import com.store.electro.Models.Entity.Product.VariantOption;
+import com.store.electro.Models.Enums.ProductStatus;
 import com.store.electro.Repositories.BrandRepository;
 import com.store.electro.Repositories.CategoryRepository;
 import com.store.electro.Repositories.ProductOptionRepository;
@@ -155,11 +156,12 @@ public class ProductService implements IProductService {
                 product.setBrand(brand);
 
                 // ================= IMAGES =================
-                Map<Long, ProductImage> dbImages = product.getProductImages()
+                Map<Long, ProductImage> dbImages = Optional.ofNullable(product.getProductImages())
+                                .orElse(Set.of())
                                 .stream()
                                 .collect(Collectors.toMap(ProductImage::getId, i -> i));
 
-                for (var imgReq : request.getProductImages()) {
+                for (var imgReq : Optional.ofNullable(request.getProductImages()).orElse(List.of())) {
                         if (imgReq.getId() != null) {
                                 ProductImage img = dbImages.remove(imgReq.getId());
                                 if (img == null) {
@@ -179,11 +181,12 @@ public class ProductService implements IProductService {
                 dbImages.values().forEach(product.getProductImages()::remove);
 
                 // ================= DETAILS =================
-                Map<Long, ProductDetail> dbDetails = product.getProductDetails()
+                Map<Long, ProductDetail> dbDetails = Optional.ofNullable(product.getProductDetails())
+                                .orElse(Set.of())
                                 .stream()
                                 .collect(Collectors.toMap(ProductDetail::getId, d -> d));
 
-                for (var dReq : request.getProductDetails()) {
+                for (var dReq : Optional.ofNullable(request.getProductDetails()).orElse(List.of())) {
                         if (dReq.getId() != null) {
                                 ProductDetail detail = dbDetails.remove(dReq.getId());
                                 if (detail == null) {
@@ -203,11 +206,12 @@ public class ProductService implements IProductService {
                 dbDetails.values().forEach(product.getProductDetails()::remove);
 
                 // ================= VARIANTS =================
-                Map<Long, ProductVariant> dbVariants = product.getProductVariants()
+                Map<Long, ProductVariant> dbVariants = Optional.ofNullable(product.getProductVariants())
+                                .orElse(Set.of())
                                 .stream()
                                 .collect(Collectors.toMap(ProductVariant::getId, v -> v));
 
-                for (var vReq : request.getProductVariants()) {
+                for (var vReq : Optional.ofNullable(request.getProductVariants()).orElse(List.of())) {
 
                         ProductVariant variant;
 
@@ -228,11 +232,12 @@ public class ProductService implements IProductService {
                         variant.setStatus(vReq.getStatus());
 
                         // -------- VARIANT OPTIONS (CHUẨN) --------
-                        Map<Long, VariantOption> dbOptions = variant.getOptions()
+                        Map<Long, VariantOption> dbOptions = Optional.ofNullable(variant.getOptions())
+                                        .orElse(Set.of())
                                         .stream()
                                         .collect(Collectors.toMap(VariantOption::getId, o -> o));
 
-                        for (var oReq : vReq.getOptions()) {
+                        for (var oReq : Optional.ofNullable(vReq.getOptions()).orElse(List.of())) {
                                 VariantOption option;
 
                                 // UPDATE
@@ -265,8 +270,10 @@ public class ProductService implements IProductService {
                         dbOptions.values().forEach(variant.getOptions()::remove);
                 }
 
-                // DELETE VARIANTS NOT IN REQUEST
-                dbVariants.values().forEach(product.getProductVariants()::remove);
+                // DEACTIVATE VARIANTS NOT IN REQUEST (Instead of deleting to preserve foreign keys)
+                dbVariants.values().forEach(variant -> {
+                        variant.setStatus(ProductStatus.INACTIVE);
+                });
 
                 return productRepository.save(product);
         }
@@ -276,7 +283,12 @@ public class ProductService implements IProductService {
                 Product product = productRepository.findById(productId)
                                 .orElseThrow(() -> new ResourceNotFoundException(
                                                 "Product not found with id: " + productId));
-                productRepository.delete(product);
+                // Soft delete: Mark product and all variants as INACTIVE instead of deleting
+                product.setStatus(ProductStatus.INACTIVE);
+                product.getProductVariants().forEach(variant -> 
+                        variant.setStatus(ProductStatus.INACTIVE)
+                );
+                productRepository.save(product);
         }
 
         @Override

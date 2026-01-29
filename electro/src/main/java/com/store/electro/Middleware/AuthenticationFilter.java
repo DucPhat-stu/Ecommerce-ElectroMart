@@ -79,6 +79,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		       path.contains("/api/v1/auth/register") ||
 		       path.contains("/api/v1/products") ||  // public access for testing
 				path.contains("/api/v1/product") ||  // public access for testing
+		       path.contains("/api/v1/dashboard") || // admin dashboard public access
+		       path.contains("/api/v1/admin") ||    // admin endpoints public access
+		       path.contains("/api/v1/categories") || // categories for frontend/admin
+		       path.contains("/api/v1/category/name") || // get category by name (public)
+		       path.contains("/api/v1/brands") || // brands for frontend/admin
 		       path.contains("/api/v1/reviews");
 	}
 }

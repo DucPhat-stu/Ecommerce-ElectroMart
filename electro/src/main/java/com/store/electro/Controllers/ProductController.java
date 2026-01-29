@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     // Get product by ID
-    @GetMapping("/product/{productId}")
+    @GetMapping("/products/{productId}")
     public ResponseEntity<ApiResponse<Product>> getProductById(@PathVariable Long productId) {
         Product product = productService.getProductById(productId);
         return ResponseEntity
@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     // Creating a new product
-    @PostMapping("/product")
+    @PostMapping("/products")
     public ResponseEntity<ApiResponse<Product>> createProduct(@RequestBody AddProductRequest request) {
         Product product = productService.addProduct(request);
         return ResponseEntity.status(201)
@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     // Deleting a product
-    @DeleteMapping("product/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<ApiResponse<Void>> deleteProductById(@PathVariable Long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.status(204)
@@ -63,7 +63,7 @@ public class ProductController {
     }
 
     // Updating existing product
-    @PutMapping("product/{productId}")
+    @PutMapping("/products/{productId}")
     public ResponseEntity<ApiResponse<Product>> updateProduct(
             @Valid
             @RequestBody UpdateProductRequest request,
