@@ -20,7 +20,11 @@ public interface IProductService {
 
     List<Product> getAllProducts();
 
+    List<ProductResponse> getAllProductsAsResponse();
+
     List<Product> getProductsByCategory(Long categoryId);
+
+    List<ProductResponse> getProductsByCategoryAsResponse(Long categoryId);
 
     Product findProductByName(String productName);
 }

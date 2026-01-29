@@ -358,8 +358,22 @@ public class ProductService implements IProductService {
         }
 
         @Override
+        public List<ProductResponse> getAllProductsAsResponse() {
+                return productRepository.findAll().stream()
+                                .map(this::convertToProductResponse)
+                                .collect(Collectors.toList());
+        }
+
+        @Override
         public List<Product> getProductsByCategory(Long categoryId) {
                 return productRepository.findByCategoryId(categoryId);
+        }
+
+        @Override
+        public List<ProductResponse> getProductsByCategoryAsResponse(Long categoryId) {
+                return productRepository.findByCategoryId(categoryId).stream()
+                                .map(this::convertToProductResponse)
+                                .collect(Collectors.toList());
         }
 
         @Override

@@ -36,8 +36,8 @@ public class ProductController {
 
     // Get all products
     @GetMapping("/products")
-    public ResponseEntity<ApiResponse<List<Product>>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
+    public ResponseEntity<ApiResponse<List<ProductResponse>>> getAllProducts() {
+        List<ProductResponse> products = productService.getAllProductsAsResponse();
         return ResponseEntity
                 .ok(ApiResponse.success("Products retrieved successfully", products));
     }
@@ -52,8 +52,8 @@ public class ProductController {
 
     // Get products by category
     @GetMapping("/products/category/{categoryId}")
-    public ResponseEntity<ApiResponse<List<Product>>> getProductsByCategory(@PathVariable Long categoryId) {
-        List<Product> products = productService.getProductsByCategory(categoryId);
+    public ResponseEntity<ApiResponse<List<ProductResponse>>> getProductsByCategory(@PathVariable Long categoryId) {
+        List<ProductResponse> products = productService.getProductsByCategoryAsResponse(categoryId);
         return ResponseEntity
                 .ok(ApiResponse.success("Products retrieved successfully", products));
     }
