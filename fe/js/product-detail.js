@@ -62,7 +62,13 @@ function loadCache(key) {
  */
 function getProductIdFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get("id");
+  const raw = urlParams.get("id");
+  // Treat "undefined", "null", empty, non-number as missing
+  const num = Number(raw);
+  if (!raw || raw === "undefined" || raw === "null" || !Number.isFinite(num) || num <= 0) {
+    return null;
+  }
+  return num;
 }
 
 /**
@@ -652,7 +658,14 @@ function handleAddToCart() {
       selectedOptions: selectedOptionsForLog,
     });
 
-    alert("Product added to cart successfully!");
+    window.CartAPI.addToCart(window.getCurrentUserId(), selectedVariant.id, quantity).then(function(res){
+      if (res && res.success !== false) {
+        if (window.updateHeaderCart) window.updateHeaderCart();
+        alert("Product added to cart successfully!");
+      } else {
+        alert("Failed to add to cart");
+      }
+    });
   });
 }
 
@@ -814,6 +827,7 @@ async function initProductDetailPage() {
 
     if (!productId) {
       showError("Product ID not found in URL");
+      setTimeout(() => { window.location.href = "index.html"; }, 800);
       return;
     }
 
@@ -828,6 +842,7 @@ async function initProductDetailPage() {
 
     renderProductImages(product.images);
     renderProductDetails(product);
+    bindWishlistOnProductPage(product.id);
 
     // ✅ CHỈ CẦN variants (DYNAMIC)
     renderProductVariants(product.variants);
@@ -846,3 +861,19 @@ async function initProductDetailPage() {
 }
 
 document.addEventListener("DOMContentLoaded", initProductDetailPage);
+
+/**
+ * Gắn hành vi wishlist cho trang product (nút không có data-product-id sẵn trong template)
+ */
+function bindWishlistOnProductPage(productId) {
+  try {
+    const wishlistLink = document.querySelector(".product-btns li:first-child a");
+    if (!wishlistLink || !productId) return;
+
+    wishlistLink.dataset.productId = productId;
+    wishlistLink.classList.add("add-to-wishlist");
+    // Rely on global delegated handler in app.js (avoids duplicate listeners)
+  } catch (e) {
+    console.warn("bindWishlistOnProductPage error", e);
+  }
+}

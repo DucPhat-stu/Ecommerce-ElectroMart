@@ -868,10 +868,19 @@ textarea.input {
 
 .product .product-img {
   position: relative;
+  height: 160px; /* slightly taller for better vertical balance */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .product .product-img>img {
-  width: 100%;
+  width: 110px !important;
+  height: 90px !important;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
 .product .product-img .product-label {

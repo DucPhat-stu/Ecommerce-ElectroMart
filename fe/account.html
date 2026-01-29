@@ -366,6 +366,7 @@
             localStorage.removeItem('jwt');
             localStorage.removeItem('currentUserId');
             localStorage.removeItem('username');
+            if (window.setAxiosAuthHeader) window.setAxiosAuthHeader();
           } catch (_) {}
           location.reload();
         });

@@ -512,7 +512,7 @@
                 : items.map((p) => (state.view === "grid" ? productCardGrid(p) : productCardList(p))).join("");
 
         // events for wishlist/cart/quick view
-        dom.storeProducts.querySelectorAll(".product").forEach((el) => {
+       dom.storeProducts.querySelectorAll(".product").forEach((el) => {
             const id = Number(el.getAttribute("data-id"));
             const p = state.products.find((x) => x.id === id);
 
@@ -556,9 +556,10 @@
 
             el.querySelector(".quick-view")?.addEventListener("click", () => {
                 if (!p) return;
-                alert(
-                    `${p.name}\n\n${p.shortDescription || ""}\n\nBrand: ${p.brandName}\nCategory: ${p.categoryName}`
-                );
+                // lấy giá chính xác từ variants
+                const { price, oldPrice } = getPriceInfo(p);
+                const detail = `${p.name}\n\n${p.shortDescription || ""}\n\nBrand: ${p.brandName || ""}\nCategory: ${p.categoryName || ""}\nPrice: ${formatMoney(price)}${oldPrice ? ` (old: ${formatMoney(oldPrice)})` : ""}`;
+                alert(detail);
             });
         });
     }

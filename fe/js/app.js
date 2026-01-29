@@ -84,7 +84,7 @@
   }
 
   function productPrimaryTemplateFromProductImages(product) {
-    var imgs = safeArray(product && product.productImages);
+    var imgs = safeArray(product && (product.productImages || product.images));
     if (!imgs.length) return null;
 
     // Prefer primary=true then first
@@ -103,7 +103,8 @@
     if (fromSingle) return fromSingle;
 
     // 3) Stable fallback (works for sampledata too)
-    return stableTemplateById(product);
+    var fallback = stableTemplateById(product);
+    return fallback || 'img/product01.png';
   }
 
   // Expose for pages that aren't wired into app.js (e.g. compare.html inline script)
@@ -118,19 +119,38 @@
   }
 
   function productCard(product) {
-    var price = product.finalPrice != null ? Number(product.finalPrice) : Number(product.price || 0);
-    var hasDiscount = product.discountPercent && Number(product.discountPercent) > 0;
-    var oldPriceHtml = hasDiscount ? '<del class="product-old-price">' + window.formatPrice(price / (1 - (product.discountPercent/100))) + '</del>' : '';
-    var saleLabel = hasDiscount ? '<span class="sale">-' + escapeHtml(product.discountPercent) + '%</span>' : '';
+    var price = 0;
+    var basePrice = 0;
+    var discountPercent = 0;
+    if (product && Array.isArray(product.variants)) {
+      product.variants.forEach(function(v){
+        var fp = Number(v && v.finalPrice);
+        var bp = Number(v && v.basePrice);
+        if (isFinite(fp)) price = price === 0 ? fp : Math.min(price, fp);
+        if (isFinite(bp)) basePrice = basePrice === 0 ? bp : Math.min(basePrice, bp);
+        if (v && v.discountPercent) discountPercent = Math.max(discountPercent, Number(v.discountPercent));
+      });
+    } else if (product.finalPrice != null || product.price != null) {
+      price = Number(product.finalPrice != null ? product.finalPrice : product.price);
+    }
+    var hasDiscount = discountPercent > 0 || (basePrice > price && price > 0);
+    if (!discountPercent && hasDiscount && basePrice > 0 && price > 0) {
+      discountPercent = Math.round((1 - price / basePrice) * 100);
+    }
+    var oldPriceHtml = hasDiscount && basePrice > 0 ? '<del class="product-old-price">' + window.formatPrice(basePrice) + '</del>' : '';
+    var saleLabel = hasDiscount && discountPercent > 0 ? '<span class="sale">-' + escapeHtml(discountPercent) + '%</span>' : '';
+    var variantId = (product && product.variants && product.variants[0] && product.variants[0].id) ? product.variants[0].id : product.id;
     var image = productImageUrl(product);
     var category = product.categoryName || 'Category';
     var name = escapeHtml(product.name || 'No name');
-    var productUrl = 'product.html?id=' + encodeURIComponent(product.id);
+    if (!product || !product.id) return '';
+    var productUrl = product && product.id ? ('product.html?id=' + encodeURIComponent(product.id)) : '#';
 
+    var imgStyle = 'style=\"width:110px;height:90px;object-fit:contain;display:block;margin:0 auto;\"';
     return (
-      '<div class="product">' +
+      '<div class="product" data-id="' + (product.id || '') + '">' +
         '<div class="product-img">' +
-          '<a href="' + productUrl + '"><img src="' + image + '" alt="' + name + '"></a>' +
+          '<a href="' + productUrl + '"><img ' + imgStyle + ' src="' + image + '" alt="' + name + '"></a>' +
           '<div class="product-label">' + saleLabel + '<span class="new">NEW</span></div>' +
         '</div>' +
         '<div class="product-body">' +
@@ -145,7 +165,7 @@
           '</div>' +
         '</div>' +
         '<div class="add-to-cart">' +
-          '<button class="add-to-cart-btn" data-product-id="' + product.id + '"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+          '<button class="add-to-cart-btn" data-variant-id="' + variantId + '"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
         '</div>' +
       '</div>'
     );
@@ -374,11 +394,27 @@
     $(document).off('click', '.add-to-cart-btn').on('click', '.add-to-cart-btn', async function(e) {
       // If button is inside a link, avoid navigation
       if (e && e.preventDefault) e.preventDefault();
-      var pid = Number($(this).attr('data-product-id'));
-      if (!pid) return; // product page/quick-view handle their own add-to-cart
+      var variantId = Number($(this).attr('data-variant-id'));
+      var productId = Number($(this).attr('data-product-id') || $(this).closest('.product').attr('data-id'));
+
+      // Fallback: fetch first variant when variantId missing but productId available
+      if (!variantId && productId) {
+        try {
+          var res = await window.ProductAPI.getById(productId);
+          if (res && res.success !== false && res.data && res.data.variants && res.data.variants.length) {
+            variantId = res.data.variants[0].id;
+          }
+        } catch (_) {}
+      }
+
+      if (!variantId) {
+        alert('Không thể thêm vì thiếu variant');
+        return;
+      }
+
       var qty = 1;
       var userId = window.getCurrentUserId();
-      var resp = await window.CartAPI.addToCart(userId, pid, qty);
+      var resp = await window.CartAPI.addToCart(userId, variantId, qty);
       if (resp && resp.success !== false) {
         alert('Đã thêm sản phẩm vào giỏ hàng');
         updateHeaderCart();
@@ -441,7 +477,7 @@
         console.warn('Cannot load products:', res && res.message);
         return;
       }
-      var products = res.data || [];
+      var products = (res.data || []).filter(function(p){ return p && p.id; });
       var top = products.slice(0, 10);
       var $newSlick = $('#tab1 .products-slick').first();
       var $topSlick = $('#tab2 .products-slick').first();
@@ -799,8 +835,12 @@
         var prod = it.product || it;
         var priceNum = prod && (prod.finalPrice != null ? Number(prod.finalPrice) : Number(prod.price || 0));
         subtotal += priceNum * qty;
+        var opts = '';
+        if (prod && Array.isArray(prod.options) && prod.options.length) {
+          opts = ' (' + prod.options.map(function(o){ return o.optionCode + ': ' + o.value; }).join(', ') + ')';
+        }
         var row = '<tr>' +
-          '<td><a href="product.html?id=' + encodeURIComponent(prod.id) + '">' + escapeHtml(prod.name || 'Product') + '</a></td>' +
+          '<td><a href="product.html?id=' + encodeURIComponent(prod.id) + '">' + escapeHtml(prod.name || 'Product') + '</a>' + escapeHtml(opts) + '</td>' +
           '<td>' + window.formatPrice(priceNum) + '</td>' +
           '<td><input type="number" class="form-control cart-qty" min="1" value="' + qty + '" data-cart-id="' + (it.id || it.cartId || '') + '"></td>' +
           '<td>' + window.formatPrice(priceNum * qty) + '</td>' +

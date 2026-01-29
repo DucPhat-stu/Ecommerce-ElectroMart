@@ -240,25 +240,42 @@
         return 'img/product01.png';
       }
 
-      function renderWishlistItem(item) {
-        var p = item.product || {};
-        var price = p.finalPrice != null ? Number(p.finalPrice) : Number(p.price || 0);
-        var url = 'product.html?id=' + encodeURIComponent(p.id);
-        var image = wishlistProductImageUrl(p);
+      function computePriceInfo(p) {
+        var price = 0, basePrice = 0, variantId = null;
+        if (p && Array.isArray(p.variants) && p.variants.length) {
+          p.variants.forEach(function(v){
+            if (!variantId) variantId = v.id;
+            var fp = Number(v && v.finalPrice);
+            var bp = Number(v && v.basePrice);
+            if (isFinite(fp)) price = price === 0 ? fp : Math.min(price, fp);
+            if (isFinite(bp)) basePrice = basePrice === 0 ? bp : Math.min(basePrice, bp);
+          });
+        } else {
+          price = p && p.finalPrice != null ? Number(p.finalPrice) : Number(p && p.price || 0);
+        }
+        return { price: price, basePrice: basePrice, variantId: variantId };
+      }
+
+      function renderWishlistItem(p, itemId) {
+        var pid = p.id || p.productId;
+        if (!pid) return '';
+        var info = computePriceInfo(p);
+        var url = 'product.html?id=' + encodeURIComponent(pid);
+        var image = wishlistProductImageUrl(Object.assign({}, p, { id: pid }));
         return '' +
           '<div class="col-md-3 col-sm-6">' +
-          '  <div class="product">' +
+          '  <div class="product" data-id="' + pid + '">' +
           '    <div class="product-img">' +
-          '      <a href="' + url + '"><img src="' + image + '" alt=""></a>' +
+          '      <a href="' + url + '"><img src="' + image + '" alt="" style="width:110px;height:90px;object-fit:contain;display:block;margin:0 auto;"></a>' +
           '    </div>' +
           '    <div class="product-body">' +
           '      <p class="product-category">' + (p.categoryName || "Category") + '</p>' +
           '      <h3 class="product-name"><a href="' + url + '">' + (p.name || "Product") + '</a></h3>' +
-          '      <h4 class="product-price">' + window.formatPrice(price) + '</h4>' +
+          '      <h4 class="product-price">' + window.formatPrice(info.price) + (info.basePrice>info.price? ' <del class=\"product-old-price\">'+window.formatPrice(info.basePrice)+'</del>':'') + '</h4>' +
           '    </div>' +
           '    <div class="add-to-cart">' +
-          '      <button class="add-to-cart-btn" data-product-id="' + p.id + '"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
-          '      <button class="btn btn-link btn-sm btn-remove-wishlist" data-wishlist-id="' + item.id + '" data-product-id="' + p.id + '"><i class="fa fa-trash"></i></button>' +
+          '      <button class="add-to-cart-btn" data-product-id="' + pid + '" data-variant-id="' + (info.variantId || '') + '"><i class="fa fa-shopping-cart"></i> add to cart</button>' +
+          '      <button class="btn btn-link btn-sm btn-remove-wishlist" data-wishlist-id="' + itemId + '" data-product-id="' + pid + '"><i class="fa fa-trash"></i></button>' +
           '    </div>' +
           '  </div>' +
           '</div>';
@@ -266,7 +283,7 @@
 
       $(function () {
         var $list = $('#wishlist-list');
-        window.WishlistAPI.getUserWishlist().then(function(res) {
+        window.WishlistAPI.getUserWishlist().then(async function(res) {
           if (!res || res.success === false) {
             $list.html('<p>Không thể tải wishlist.</p>');
             return;
@@ -276,10 +293,22 @@
             $list.html('<p>Chưa có sản phẩm nào trong wishlist.</p>');
             return;
           }
-          var html = '<div class="row">';
-          items.forEach(function(it) { html += renderWishlistItem(it); });
-          html += '</div>';
-          $list.html(html);
+          // Fetch missing product info to show đúng tên/giá
+          var rendered = [];
+          for (const it of items) {
+            var p = it.product || {};
+            var pid = p.id || it.productId;
+            if (!p.name && pid) {
+              try {
+                var pr = await window.ProductAPI.getById(pid);
+                if (pr && pr.success !== false && pr.data) {
+                  p = pr.data;
+                }
+              } catch (_) {}
+            }
+            rendered.push(renderWishlistItem(p, it.id));
+          }
+          $list.html('<div class="row">' + rendered.join('') + '</div>');
 
           $list.on('click', '.btn-remove-wishlist', function () {
             var pid = $(this).data('product-id');
@@ -296,4 +325,3 @@
     </script>
   </body>
 </html>
-

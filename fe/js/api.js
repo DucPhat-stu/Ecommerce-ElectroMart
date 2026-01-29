@@ -67,10 +67,8 @@
     var token = getAuthToken();
     if (token) {
       axios.defaults.headers.common.Authorization = 'Bearer ' + token;
-      axios.defaults.headers.common['Content-Type'] = 'application/json';
     } else {
       delete axios.defaults.headers.common.Authorization;
-      delete axios.defaults.headers.common['Content-Type'];
     }
   }
 
