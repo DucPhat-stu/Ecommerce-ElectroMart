@@ -35,6 +35,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123123
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_JPA_SHOW_SQL: true
+      APP_JWT_SECRET: b6a9f486d1b64c0fa9ad1abe3c3e9e5f8d25a1c4f84f0b52e2b7d49b1e9b6c3d
+      APP_JWT_EXPIRATION: 86400000
     ports:
       - "8080:8080"
     networks:

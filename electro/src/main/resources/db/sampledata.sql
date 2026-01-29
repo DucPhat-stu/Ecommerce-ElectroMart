@@ -25,12 +25,12 @@ INSERT INTO users (
     last_login
     ) 
 VALUES
-('john_smith', 'john.smith@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'John Smith', '0901234567', '123 Main Street, District 1, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-10 10:00:00', '2024-01-10 10:00:00', '2024-06-15 14:30:00'),
-('sarah_johnson', 'sarah.johnson@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Sarah Johnson', '0902345678', '456 Oak Avenue, District 2, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-11 10:00:00', '2024-01-11 10:00:00', '2024-06-14 09:15:00'),
-('michael_brown', 'michael.brown@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Michael Brown', '0903456789', '789 Pine Road, District 3, Ho Chi Minh City', 1, 'ACTIVE', FALSE, '2024-01-12 10:00:00', '2024-01-12 10:00:00', NULL),
-('emily_davis', 'emily.davis@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Emily Davis', '0904567890', '321 Maple Lane, District 4, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-13 10:00:00', '2024-01-13 10:00:00', '2024-06-10 11:45:00'),
-('jessica_wilson', 'jessica.wilson@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Jessica Wilson', '0905678901', '654 Cedar Street, District 5, Ho Chi Minh City', 1, 'INACTIVE', TRUE, '2024-01-14 10:00:00', '2024-01-14 10:00:00', NULL),
-('admin_user', 'admin@example.com', '$2a$10$qeSuTpqJ3JhzRxLa7WGn7.6VDrqSHJRgr.6V2j3jUQzO4WvqP2Q3a', 'Admin User', '0910000000', '999 Admin Street, District 1, Ho Chi Minh City', 2, 'ACTIVE', TRUE, '2024-01-01 00:00:00', '2024-01-01 00:00:00', '2024-06-20 16:20:00');
+('john_smith', 'john.smith@example.com', '$2a$10$lOOgeAJskylBegPt2lJjGO0ckylKOIUMMEijHsSOXEkdQnEvPXeEy', 'John Smith', '0901234567', '123 Main Street, District 1, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-10 10:00:00', '2024-01-10 10:00:00', '2024-06-15 14:30:00'),
+('sarah_johnson', 'sarah.johnson@example.com', '$2a$10$lOOgeAJskylBegPt2lJjGO0ckylKOIUMMEijHsSOXEkdQnEvPXeEy', 'Sarah Johnson', '0902345678', '456 Oak Avenue, District 2, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-11 10:00:00', '2024-01-11 10:00:00', '2024-06-14 09:15:00'),
+('michael_brown', 'michael.brown@example.com', '$2a$10$lOOgeAJskylBegPt2lJjGO0ckylKOIUMMEijHsSOXEkdQnEvPXeEy', 'Michael Brown', '0903456789', '789 Pine Road, District 3, Ho Chi Minh City', 1, 'ACTIVE', FALSE, '2024-01-12 10:00:00', '2024-01-12 10:00:00', NULL),
+('emily_davis', 'emily.davis@example.com', '$2a$10$lOOgeAJskylBegPt2lJjGO0ckylKOIUMMEijHsSOXEkdQnEvPXeEy', 'Emily Davis', '0904567890', '321 Maple Lane, District 4, Ho Chi Minh City', 1, 'ACTIVE', TRUE, '2024-01-13 10:00:00', '2024-01-13 10:00:00', '2024-06-10 11:45:00'),
+('jessica_wilson', 'jessica.wilson@example.com', '$2a$10$lOOgeAJskylBegPt2lJjGO0ckylKOIUMMEijHsSOXEkdQnEvPXeEy', 'Jessica Wilson', '0905678901', '654 Cedar Street, District 5, Ho Chi Minh City', 1, 'INACTIVE', TRUE, '2024-01-14 10:00:00', '2024-01-14 10:00:00', NULL),
+('admin_user', 'admin@example.com', '$2a$10$lOOgeAJskylBegPt2lJjGO0ckylKOIUMMEijHsSOXEkdQnEvPXeEy', 'Admin User', '0910000000', '999 Admin Street, District 1, Ho Chi Minh City', 2, 'ACTIVE', TRUE, '2024-01-01 00:00:00', '2024-01-01 00:00:00', '2024-06-20 16:20:00');
 
 -- ============================================
 -- CATEGORIES DATA

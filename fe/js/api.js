@@ -63,6 +63,17 @@
     }
   }
 
+  function setAxiosAuthHeader() {
+    var token = getAuthToken();
+    if (token) {
+      axios.defaults.headers.common.Authorization = 'Bearer ' + token;
+      axios.defaults.headers.common['Content-Type'] = 'application/json';
+    } else {
+      delete axios.defaults.headers.common.Authorization;
+      delete axios.defaults.headers.common['Content-Type'];
+    }
+  }
+
   function authConfig() {
     var token = getAuthToken();
     if (!token) return {};
@@ -225,10 +236,14 @@
     add: function(userId, productId) {
       var id = safe(userId, getCurrentUserId());
       return handleApi(
-        axios.post(baseUrl('/wishlist'), null, {
-          params: { userId: id, productId: productId },
-          headers: (authConfig().headers || {})
-        })
+        axios.post(
+          baseUrl('/wishlist'),
+          {}, // empty JSON body to satisfy ValidationFilter (expects application/json)
+          {
+            params: { userId: id, productId: productId },
+            headers: Object.assign({ 'Content-Type': 'application/json' }, authConfig().headers || {})
+          }
+        )
       );
     },
 
@@ -291,6 +306,12 @@
   window.WishlistAPI = WishlistAPI;
   window.OrderAPI = OrderAPI;
   window.AuthAPI = AuthAPI;
+
+  // Initialize default Authorization header (if token already stored)
+  setAxiosAuthHeader();
+
+  // Expose helper so app.js can refresh header after login/logout
+  window.setAxiosAuthHeader = setAxiosAuthHeader;
 
 })(window);
 

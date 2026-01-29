@@ -329,6 +329,7 @@
               localStorage.setItem('accessToken', res.data.accessToken);
               localStorage.setItem('currentUserId', String(res.data.userId || ''));
               localStorage.setItem('username', res.data.username || '');
+              if (window.setAxiosAuthHeader) window.setAxiosAuthHeader();
             } catch (_) {}
             showProfile();
             await loadProfile();
@@ -372,4 +373,3 @@
     </script>
   </body>
 </html>
-
