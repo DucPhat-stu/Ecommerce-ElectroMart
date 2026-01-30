@@ -260,12 +260,12 @@
 
         function renderOrdersTable(body) {
           if (!body || body.success === false) {
-            $tbody.html('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');
+            $tbody.html('<tr><td colspan="5">Unable to load orders.</td></tr>');
             return;
           }
           var orders = body.data || [];
           if (!orders.length) {
-            $tbody.html('<tr><td colspan="5">Chưa có đơn hàng nào.</td></tr>');
+            $tbody.html('<tr><td colspan="5">No orders yet.</td></tr>');
             return;
           }
           $tbody.empty();
@@ -286,7 +286,7 @@
         window.OrderAPI.getAll()
           .then(renderOrdersTable)
           .catch(function () {
-            $tbody.html('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');
+            $tbody.html('<tr><td colspan="5">Unable to load orders.</td></tr>');
           });
 
         // Track order by id
@@ -294,12 +294,12 @@
           e.preventDefault();
           var id = $('#orders-returns-track-id').val();
           if (!id) return;
-          $trackResult.show().html('Đang tải thông tin đơn hàng...');
+          $trackResult.show().html('Loading order details...');
           window.OrderAPI.getById(id)
             .then(function (resp) {
               var order = resp && typeof resp.success === 'boolean' ? resp.data : resp;
               if (!order || !order.id) {
-                $trackResult.html('Không tìm thấy đơn hàng.');
+                $trackResult.html('Order not found.');
                 return;
               }
               var html = '<p><strong>Order #' + order.id + '</strong></p>' +
@@ -311,7 +311,7 @@
               $trackResult.html(html);
             })
             .catch(function () {
-              $trackResult.html('Không tìm thấy đơn hàng hoặc có lỗi xảy ra.');
+              $trackResult.html('Order not found or an error occurred.');
             });
         });
       });

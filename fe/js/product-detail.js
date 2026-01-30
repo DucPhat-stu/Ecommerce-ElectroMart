@@ -56,6 +56,11 @@ function loadCache(key) {
   }
 }
 
+function formatMoneyUSD(value) {
+  const num = Math.round(Number(value || 0));
+  return "$" + num.toLocaleString("en-US");
+}
+
 /**
  * Lấy product ID từ URL query parameter
  * @returns {string|null} Product ID hoặc null nếu không tìm thấy
@@ -242,9 +247,9 @@ function renderProductDetails(product) {
 
   const priceEl = document.getElementById("product-price");
   if (priceEl) {
-    let priceHTML = `$${prices.currentPrice.toFixed(2)}`;
+    let priceHTML = `${formatMoneyUSD(prices.currentPrice)}`;
     if (prices.basePrice > prices.currentPrice) {
-      priceHTML += ` <del class="product-old-price">$${prices.basePrice.toFixed(2)}</del>`;
+      priceHTML += ` <del class="product-old-price">${formatMoneyUSD(prices.basePrice)}</del>`;
     }
     priceEl.innerHTML = priceHTML;
   }
@@ -596,9 +601,9 @@ function updatePrice() {
   if (!priceEl) return;
 
   if (selectedVariant) {
-    let priceHTML = `$${Number(selectedVariant.finalPrice || 0).toFixed(2)}`;
+    let priceHTML = `${formatMoneyUSD(Number(selectedVariant.finalPrice || 0))}`;
     if (selectedVariant.basePrice > selectedVariant.finalPrice) {
-      priceHTML += ` <del class="product-old-price">$${Number(selectedVariant.basePrice || 0).toFixed(2)}</del>`;
+      priceHTML += ` <del class="product-old-price">${formatMoneyUSD(Number(selectedVariant.basePrice || 0))}</del>`;
     }
     priceEl.innerHTML = priceHTML;
 
@@ -748,11 +753,11 @@ function renderRelatedProducts(products) {
 
   products.slice(0, 4).forEach((product) => {
     let discountLabel = "";
-    let priceDisplay = "$0.00";
+    let priceDisplay = "$0";
 
     if (product.variants && product.variants.length > 0) {
       const minVariant = product.variants.reduce((min, v) => (v.finalPrice < min.finalPrice ? v : min), product.variants[0]);
-      priceDisplay = `$${Number(minVariant.finalPrice || 0).toFixed(2)}`;
+      priceDisplay = `${formatMoneyUSD(Number(minVariant.finalPrice || 0))}`;
       if (minVariant.discountPercent > 0) discountLabel = `<span class="sale">-${minVariant.discountPercent}%</span>`;
     }
 

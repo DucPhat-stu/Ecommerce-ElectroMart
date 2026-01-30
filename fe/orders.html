@@ -245,22 +245,34 @@
     <script>
       $(function () {
         var $tbody = $('#orders-table tbody');
+        var currentUserId = typeof window.getCurrentUserId === 'function'
+          ? window.getCurrentUserId()
+          : null;
+
         window.OrderAPI.getAll()
           .then(function (body) {
             if (!body || body.success === false) {
-              $tbody.append('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');
+              $tbody.append('<tr><td colspan="5">Unable to load orders.</td></tr>');
               return;
             }
+
             var orders = body.data || [];
+            if (currentUserId != null) {
+              orders = orders.filter(function (o) {
+                return String(o.userId) === String(currentUserId);
+              });
+            }
+
             if (!orders.length) {
-              $tbody.append('<tr><td colspan="5">Chưa có đơn hàng nào.</td></tr>');
+              $tbody.append('<tr><td colspan="5">No orders yet.</td></tr>');
               return;
             }
+
             orders.forEach(function (o) {
               var total = o.totalPrice || 0;
               var row = '<tr>' +
                 '<td>' + o.id + '</td>' +
-                '<td>' + (o.shippingName || (o.user && o.user.name) || '') + '</td>' +
+                '<td>' + (o.shippingName || '') + '</td>' +
                 '<td>' + (o.shippingAddress || '') + '<br>' + (o.shippingPhone || '') + '</td>' +
                 '<td>' + (o.status || '') + '</td>' +
                 '<td>' + window.formatPrice(total) + '</td>' +
@@ -268,7 +280,7 @@
               $tbody.append(row);
             });
           }).catch(function () {
-            $tbody.append('<tr><td colspan="5">Không thể tải danh sách đơn hàng.</td></tr>');
+            $tbody.append('<tr><td colspan="5">Unable to load orders.</td></tr>');
           });
       });
     </script>

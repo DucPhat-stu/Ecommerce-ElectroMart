@@ -1,4 +1,6 @@
 (() => {
+    // Prevent app.js from overriding store rendering
+    window.__storePageHandler = function () {};
     const API_BASE = "http://localhost:8080/api/v1";
 
     // ---------- DOM ----------
@@ -76,7 +78,7 @@
 
     const formatMoney = (n) => {
         const num = Number(n || 0);
-        return "$" + num.toFixed(2);
+        return "$" + Math.round(num).toLocaleString("en-US");
     };
 
     const debounce = (fn, ms = 300) => {
@@ -88,6 +90,11 @@
     };
 
     const unique = (arr) => [...new Set(arr.filter(Boolean))];
+
+    function getFirstVariantId(product) {
+        const v = product?.variants?.[0];
+        return v?.id || product?.id || null;
+    }
 
     function getPrimaryImageUrl(product) {
         const imgs = product?.images || [];
@@ -390,6 +397,7 @@
         const newTag = isNewProduct(p);
 
         const detailUrl = `product.html?id=${encodeURIComponent(p.id)}`;
+        const variantId = getFirstVariantId(p) || "";
 
         const labelHtml = `
     <div class="product-label">
@@ -424,7 +432,7 @@
 
         <!-- buttons giữ riêng -->
         <div class="product-btns">
-          <button class="add-to-wishlist" type="button">
+                    <button class="add-to-wishlist" type="button" data-product-id="${escapeHtml(p.id)}">
             <i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span>
           </button>
 
@@ -435,7 +443,7 @@
         </div>
 
         <div class="add-to-cart">
-          <button class="add-to-cart-btn" type="button">
+                    <button class="add-to-cart-btn" type="button" data-variant-id="${escapeHtml(variantId)}" data-product-id="${escapeHtml(p.id)}">
             <i class="fa fa-shopping-cart"></i> add to cart
           </button>
         </div>
@@ -452,6 +460,7 @@
         const newTag = isNewProduct(p);
 
         const detailUrl = `product.html?id=${encodeURIComponent(p.id)}`;
+        const variantId = getFirstVariantId(p) || "";
 
         return `
     <div class="col-md-12 col-xs-12">
@@ -484,7 +493,7 @@
           </h4>
 
           <div class="product-btns" style="margin-top:12px;">
-            <button class="add-to-wishlist" type="button">
+                        <button class="add-to-wishlist" type="button" data-product-id="${escapeHtml(p.id)}">
               <i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span>
             </button>
             <button class="quick-view" type="button" data-detail-url="${escapeHtml(detailUrl)}">
@@ -494,7 +503,7 @@
         </div>
 
         <div class="add-to-cart" style="display:flex;align-items:center;padding-right:10px;">
-          <button class="add-to-cart-btn" type="button">
+                    <button class="add-to-cart-btn" type="button" data-variant-id="${escapeHtml(variantId)}" data-product-id="${escapeHtml(p.id)}">
             <i class="fa fa-shopping-cart"></i> add to cart
           </button>
         </div>
@@ -511,48 +520,10 @@
                 ? `<div class="col-md-12"><p>No products found.</p></div>`
                 : items.map((p) => (state.view === "grid" ? productCardGrid(p) : productCardList(p))).join("");
 
-        // events for wishlist/cart/quick view
-       dom.storeProducts.querySelectorAll(".product").forEach((el) => {
+                // events for quick view only (cart/wishlist handled globally in app.js)
+                dom.storeProducts.querySelectorAll(".product").forEach((el) => {
             const id = Number(el.getAttribute("data-id"));
             const p = state.products.find((x) => x.id === id);
-
-            el.querySelector(".add-to-cart-btn")?.addEventListener("click", () => {
-                if (!p) return;
-
-                const { price } = getPriceInfo(p);
-                state.cartCount += 1;
-                state.cartSubtotal += price;
-
-                if (dom.cartQty) dom.cartQty.textContent = String(state.cartCount);
-                if (dom.cartSummaryCount) dom.cartSummaryCount.textContent = `${state.cartCount} Item(s) selected`;
-                if (dom.cartSummarySubtotal) dom.cartSummarySubtotal.textContent = `SUBTOTAL: ${formatMoney(state.cartSubtotal)}`;
-
-                // demo item list
-                if (dom.cartList) {
-                    const item = document.createElement("div");
-                    item.className = "product-widget";
-                    item.innerHTML = `
-            <div class="product-img">
-              <img src="${escapeHtml(getPrimaryImageUrl(p))}" alt="">
-            </div>
-            <div class="product-body">
-              <h3 class="product-name"><a href="#">${escapeHtml(p.name)}</a></h3>
-              <h4 class="product-price"><span class="qty">1x</span>${formatMoney(price)}</h4>
-            </div>
-            <button class="delete"><i class="fa fa-close"></i></button>
-          `;
-                    item.querySelector(".delete")?.addEventListener("click", () => {
-                        item.remove();
-                        // demo: không trừ subtotal để đơn giản (muốn trừ thì cần lưu cart items)
-                    });
-                    dom.cartList.prepend(item);
-                }
-            });
-
-            el.querySelector(".add-to-wishlist")?.addEventListener("click", () => {
-                state.wishlistCount += 1;
-                if (dom.wishlistQty) dom.wishlistQty.textContent = String(state.wishlistCount);
-            });
 
             el.querySelector(".quick-view")?.addEventListener("click", () => {
                 if (!p) return;
@@ -705,7 +676,7 @@
             applyAndRender();
         } catch (err) {
             console.error(err);
-            alert("Không load được dữ liệu từ API. Kiểm tra server chạy + CORS + endpoint.");
+            alert("Unable to load data from API. Check server, CORS, and endpoints.");
         }
     }
 

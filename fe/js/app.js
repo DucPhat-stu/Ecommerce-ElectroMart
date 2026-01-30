@@ -343,10 +343,10 @@
         // Toggle wishlist on backend
         window.WishlistAPI.add(userId, id).then(function(res) {
           if (res && res.success !== false) {
-            alert('Đã thêm vào wishlist');
+            alert('Added to wishlist');
             updateHeaderWishlistCount();
           } else {
-            alert('Không thể thêm vào wishlist');
+            alert('Unable to add to wishlist');
           }
         });
       });
@@ -359,10 +359,10 @@
         var userId = window.getCurrentUserId();
         window.WishlistAPI.add(userId, id).then(function(res) {
           if (res && res.success !== false) {
-            alert('Đã thêm vào wishlist');
+            alert('Added to wishlist');
             updateHeaderWishlistCount();
           } else {
-            alert('Không thể thêm vào wishlist');
+            alert('Unable to add to wishlist');
           }
         });
       });
@@ -408,7 +408,7 @@
       }
 
       if (!variantId) {
-        alert('Không thể thêm vì thiếu variant');
+        alert('Unable to add: missing variant');
         return;
       }
 
@@ -416,17 +416,30 @@
       var userId = window.getCurrentUserId();
       var resp = await window.CartAPI.addToCart(userId, variantId, qty);
       if (resp && resp.success !== false) {
-        alert('Đã thêm sản phẩm vào giỏ hàng');
+        alert('Added to cart');
         updateHeaderCart();
       } else {
         if (resp && resp.status === 401) {
-          alert('Bạn cần đăng nhập để thêm vào giỏ hàng');
+          alert('Please sign in to add to cart');
           window.location.href = 'account.html';
           return;
         }
-        alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
+        alert('Unable to add to cart: ' + (resp && resp.message ? resp.message : 'Unknown error'));
       }
     });
+  }
+
+  function normalizeCurrencyText() {
+    try {
+      var pattern = /\$([0-9][0-9,]*)\.(\d{2})/g;
+      var $targets = $('.product-price, .product-old-price, .cart-summary, .cart-list, .order-summary, .order-total');
+      $targets.each(function(){
+        var html = $(this).html();
+        if (!html) return;
+        var next = html.replace(pattern, function(_, num){ return '$' + num; });
+        if (next !== html) $(this).html(next);
+      });
+    } catch (e) { console.warn('normalizeCurrencyText error', e); }
   }
 
   // Compare (client-side) - stores a small list of product ids in localStorage
@@ -454,16 +467,16 @@
       if (idx >= 0) {
         ids.splice(idx, 1);
         setCompareIds(ids);
-        alert('Đã xóa khỏi compare');
+        alert('Removed from compare');
         return;
       }
       if (ids.length >= 4) {
-        alert('Compare tối đa 4 sản phẩm');
+        alert('Compare supports up to 4 products');
         return;
       }
       ids.push(pid);
       setCompareIds(ids);
-      alert('Đã thêm vào compare. Mở trang compare để xem.');
+      alert('Added to compare. Open the compare page to view.');
       // Navigate to compare page for a standard ecommerce flow
       window.location.href = 'compare.html';
     });
@@ -551,7 +564,7 @@
       if ($grid.length) {
         $grid.empty();
         if (!filtered.length) {
-          $grid.append('<div class="col-md-12"><p>Không tìm thấy sản phẩm phù hợp.</p></div>');
+          $grid.append('<div class="col-md-12"><p>No matching products found.</p></div>');
         }
         filtered.forEach(function(p) {
           var html = '<div class="col-md-3 col-xs-6">' + productCard(p) + '</div>';
@@ -611,10 +624,10 @@
         var userId = window.getCurrentUserId();
         var resp = await window.CartAPI.addToCart(userId, p.id, qty);
         if (resp && resp.success !== false) {
-          alert('Đã thêm vào giỏ hàng');
+          alert('Added to cart');
           updateHeaderCart();
         } else {
-          alert('Không thể thêm vào giỏ hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
+          alert('Unable to add to cart: ' + (resp && resp.message ? resp.message : 'Unknown error'));
         }
       });
       // Reviews
@@ -663,21 +676,21 @@
           var rating = Number($form.find('input[name="rating"]:checked').val() || 0);
           var comment = $form.find('textarea').val() || '';
           if (!(rating >= 1 && rating <= 5)) {
-            alert('Vui lòng chọn điểm đánh giá từ 1 đến 5');
+            alert('Please select a rating from 1 to 5');
             return;
           }
           if (comment.trim().length < 5) {
-            alert('Nội dung đánh giá quá ngắn');
+            alert('Review is too short');
             return;
           }
           var userId = window.getCurrentUserId();
           var resp = await window.ReviewAPI.create(productId, userId, rating, comment);
           if (resp && resp.success !== false) {
-            alert('Gửi đánh giá thành công');
+            alert('Review submitted successfully');
             await loadReviews(productId);
             $form[0].reset();
           } else {
-            alert('Không thể gửi đánh giá: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
+            alert('Unable to submit review: ' + (resp && resp.message ? resp.message : 'Unknown error'));
           }
         });
       }
@@ -743,6 +756,9 @@
     }
   }
 
+  // Expose to other scripts (e.g., product-detail.js)
+  window.updateHeaderCart = updateHeaderCart;
+
   async function loadCheckoutPage() {
     try {
       await renderOrderSummary();
@@ -750,14 +766,14 @@
       $('.order-submit').off('click').on('click', async function(e){
         e.preventDefault();
         if (!$('#terms').is(':checked')) {
-          alert('Bạn cần đồng ý điều khoản');
+          alert('You must accept the terms');
           return;
         }
         // Basic form validation
         var required = ['input[name="first-name"]','input[name="last-name"]','input[name="address"]','input[name="tel"]'];
         for (var i=0;i<required.length;i++) {
           if ($(required[i]).val().trim() === '') {
-            alert('Vui lòng nhập đầy đủ thông tin giao hàng');
+            alert('Please complete all shipping fields');
             return;
           }
         }
@@ -781,10 +797,10 @@
           // clear cart
           await window.CartAPI.clearCart(window.getCurrentUserId());
           updateHeaderCart();
-          alert('Đặt hàng thành công');
+          alert('Order placed successfully');
           window.location.href = 'index.html';
         } else {
-          alert('Không thể đặt hàng: ' + (resp && resp.message ? resp.message : 'Lỗi không xác định'));
+          alert('Unable to place order: ' + (resp && resp.message ? resp.message : 'Unknown error'));
         }
       });
     } catch (e) {
@@ -844,7 +860,7 @@
           '<td>' + window.formatPrice(priceNum) + '</td>' +
           '<td><input type="number" class="form-control cart-qty" min="1" value="' + qty + '" data-cart-id="' + (it.id || it.cartId || '') + '"></td>' +
           '<td>' + window.formatPrice(priceNum * qty) + '</td>' +
-          '<td><button class="btn btn-sm btn-danger btn-remove" data-cart-id="' + (it.id || it.cartId || '') + '">Xóa</button></td>' +
+          '<td><button class="btn btn-sm btn-danger btn-remove" data-cart-id="' + (it.id || it.cartId || '') + '">Remove</button></td>' +
         '</tr>';
         $tbody.append(row);
       });
@@ -859,7 +875,7 @@
           await loadCartPage();
           updateHeaderCart();
         } else {
-          alert('Cập nhật thất bại');
+          alert('Update failed');
         }
       });
       $tbody.find('.btn-remove').off('click').on('click', async function(){
@@ -869,7 +885,7 @@
           await loadCartPage();
           updateHeaderCart();
         } else {
-          alert('Xóa thất bại');
+          alert('Remove failed');
         }
       });
       $('#btn-clear-cart').off('click').on('click', async function(){
@@ -896,6 +912,7 @@
     bindGlobalWishlist();
     bindCompareButtons();
     bindAddToCartButtons();
+    normalizeCurrencyText();
     // View cart navigation
     var $viewCart = $('.cart-dropdown .cart-btns a').first();
     if ($viewCart.length) $viewCart.attr('href', 'cart.html');

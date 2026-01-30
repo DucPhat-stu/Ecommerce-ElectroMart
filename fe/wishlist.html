@@ -285,12 +285,12 @@
         var $list = $('#wishlist-list');
         window.WishlistAPI.getUserWishlist().then(async function(res) {
           if (!res || res.success === false) {
-            $list.html('<p>Không thể tải wishlist.</p>');
+            $list.html('<p>Unable to load wishlist.</p>');
             return;
           }
           var items = res.data || [];
           if (!items.length) {
-            $list.html('<p>Chưa có sản phẩm nào trong wishlist.</p>');
+            $list.html('<p>No items in your wishlist yet.</p>');
             return;
           }
           // Fetch missing product info to show đúng tên/giá
@@ -316,7 +316,7 @@
               if (res && res.success !== false) {
                 location.reload();
               } else {
-                alert('Xóa khỏi wishlist thất bại');
+                alert('Failed to remove from wishlist');
               }
             });
           });

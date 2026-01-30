@@ -95,13 +95,13 @@
   function formatPrice(value) {
     var num = Number(value || 0);
     try {
-      return new Intl.NumberFormat('vi-VN', {
+      return new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'VND',
+        currency: 'USD',
         maximumFractionDigits: 0
-      }).format(num);
+      }).format(Math.round(num));
     } catch (_) {
-      return num.toLocaleString('vi-VN') + ' ₫';
+      return '$' + Math.round(num).toLocaleString('en-US');
     }
   }
 
