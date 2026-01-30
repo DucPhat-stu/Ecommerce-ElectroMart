@@ -56,8 +56,11 @@
     if (!value) return null;
     var s = String(value).trim();
 
-    // Reject remote/data URLs to avoid DB/image dependency
-    if (/^(https?:)?\/\//i.test(s) || /^data:/i.test(s)) return null;
+    // Allow absolute or data URLs when provided by backend
+    if (/^(https?:)?\/\//i.test(s) || /^data:/i.test(s)) return s;
+
+    // Allow uploads path
+    if (/^(?:\/?uploads\/?)/i.test(s)) return s;
 
     // Accept "img/product01.png"
     var m1 = s.match(/(?:^|\/)img\/(product0[1-9]\.png)$/i);
@@ -88,7 +91,7 @@
     if (!imgs.length) return null;
 
     // Prefer primary=true then first
-    var primary = imgs.find ? imgs.find(function(i){ return i && i.primary; }) : null;
+    var primary = imgs.find ? imgs.find(function(i){ return i && (i.primary || i.isPrimary); }) : null;
     var candidate = primary || imgs[0];
     return templateSrcFromAny(candidate && candidate.imageUrl);
   }
@@ -146,11 +149,10 @@
     if (!product || !product.id) return '';
     var productUrl = product && product.id ? ('product.html?id=' + encodeURIComponent(product.id)) : '#';
 
-    var imgStyle = 'style=\"width:110px;height:90px;object-fit:contain;display:block;margin:0 auto;\"';
     return (
       '<div class="product" data-id="' + (product.id || '') + '">' +
         '<div class="product-img">' +
-          '<a href="' + productUrl + '"><img ' + imgStyle + ' src="' + image + '" alt="' + name + '"></a>' +
+          '<a href="' + productUrl + '"><img src="' + image + '" alt="' + name + '"></a>' +
           '<div class="product-label">' + saleLabel + '<span class="new">NEW</span></div>' +
         '</div>' +
         '<div class="product-body">' +
@@ -169,6 +171,75 @@
         '</div>' +
       '</div>'
     );
+  }
+
+  function getMinPriceInfo(product) {
+    var price = 0;
+    var basePrice = 0;
+    if (product && Array.isArray(product.variants) && product.variants.length) {
+      product.variants.forEach(function(v){
+        var fp = Number(v && v.finalPrice);
+        var bp = Number(v && v.basePrice);
+        if (isFinite(fp)) price = price === 0 ? fp : Math.min(price, fp);
+        if (isFinite(bp)) basePrice = basePrice === 0 ? bp : Math.min(basePrice, bp);
+      });
+    } else if (product && (product.finalPrice != null || product.price != null)) {
+      price = Number(product.finalPrice != null ? product.finalPrice : product.price);
+    }
+    return { price: price || 0, basePrice: basePrice || 0 };
+  }
+
+  function productWidget(product) {
+    if (!product || !product.id) return '';
+    var image = productImageUrl(product);
+    var name = escapeHtml(product.name || 'Product');
+    var category = escapeHtml(product.categoryName || 'Category');
+    var priceInfo = getMinPriceInfo(product);
+    var oldPriceHtml = priceInfo.basePrice > priceInfo.price
+      ? '<del class="product-old-price">' + window.formatPrice(priceInfo.basePrice) + '</del>'
+      : '';
+    var productUrl = 'product.html?id=' + encodeURIComponent(product.id);
+    return (
+      '<div class="product-widget">' +
+        '<div class="product-img"><a href="' + productUrl + '"><img src="' + image + '" alt="' + name + '"></a></div>' +
+        '<div class="product-body">' +
+          '<p class="product-category">' + category + '</p>' +
+          '<h3 class="product-name"><a href="' + productUrl + '">' + name + '</a></h3>' +
+          '<h4 class="product-price">' + window.formatPrice(priceInfo.price) + ' ' + oldPriceHtml + '</h4>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderWidgetSlick($container, products) {
+    try {
+      if (!$container || !$container.length) return;
+      var list = (products || []).slice(0, 6);
+      if (!list.length) return;
+
+      if ($container.hasClass('slick-initialized')) {
+        $container.slick('unslick');
+      }
+
+      var slides = [];
+      for (var i = 0; i < list.length; i += 3) {
+        var chunk = list.slice(i, i + 3);
+        slides.push('<div>' + chunk.map(productWidget).join('') + '</div>');
+      }
+      $container.html(slides.join(''));
+
+      var nav = $container.attr('data-nav');
+      $container.slick({
+        infinite: true,
+        autoplay: true,
+        speed: 300,
+        dots: false,
+        arrows: true,
+        appendArrows: nav ? nav : false,
+      });
+    } catch (e) {
+      console.warn('renderWidgetSlick error', e);
+    }
   }
 
   // -------------------- Global Bindings --------------------
@@ -497,6 +568,15 @@
       await loadProductsIntoSlick($newSlick, top);
       await loadProductsIntoSlick($topSlick, top);
       renderIndexGrid(products);
+      var $widgets = $('.products-widget-slick');
+      if ($widgets.length) {
+        $widgets.each(function(idx){
+          var start = idx * 6;
+          var subset = products.slice(start, start + 6);
+          if (!subset.length) subset = products.slice(0, 6);
+          renderWidgetSlick($(this), subset);
+        });
+      }
       bindShopNowLinks();
       // Add-to-cart is delegated globally; no need to rebind here
     } catch (e) {

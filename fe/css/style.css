@@ -868,19 +868,27 @@ textarea.input {
 
 .product .product-img {
   position: relative;
-  height: 160px; /* slightly taller for better vertical balance */
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 10px;
 }
 
-.product .product-img>img {
-  width: 110px !important;
-  height: 90px !important;
+.product .product-img a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.product .product-img img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
 }
 
 .product .product-img .product-label {
@@ -1162,10 +1170,18 @@ textarea.input {
   left: 0px;
   top: 0px;
   width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .product-widget .product-img>img {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .product-widget .product-body {

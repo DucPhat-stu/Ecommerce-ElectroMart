@@ -61,6 +61,69 @@ function formatMoneyUSD(value) {
   return "$" + num.toLocaleString("en-US");
 }
 
+function isTemplateImageKey(key) {
+  return /^product0[1-9]\.png$/i.test(String(key || "").trim());
+}
+
+function templateSrcFromAny(value) {
+  if (!value) return null;
+  const s = String(value).trim();
+  if (/^(https?:)?\/\//i.test(s) || /^data:/i.test(s)) return s;
+  if (/^(?:\/?uploads\/?)/i.test(s)) return s;
+  const m = s.match(/(?:^|\/)(?:img\/)?(product0[1-9]\.png)$/i);
+  if (m && isTemplateImageKey(m[1])) return "img/" + m[1].toLowerCase();
+  if (isTemplateImageKey(s)) return "img/" + s.toLowerCase();
+  return null;
+}
+
+function stableTemplateById(product) {
+  const idNum = Number(product && product.id);
+  if (!isNaN(idNum) && idNum > 0) {
+    const idx = ((idNum - 1) % 9) + 1;
+    const suffix = idx < 10 ? "0" + idx : String(idx);
+    return "img/product" + suffix + ".png";
+  }
+  return "";
+}
+
+function productImageUrl(product) {
+  const fromImages = (product?.productImages || product?.images || []).map((img) => templateSrcFromAny(img?.imageUrl)).find(Boolean);
+  if (fromImages) return fromImages;
+  const fromSingle = templateSrcFromAny(product?.imageUrl);
+  if (fromSingle) return fromSingle;
+  const fallback = stableTemplateById(product);
+  return fallback || "img/product01.png";
+}
+
+function resolveProductImages(product) {
+  const raw = product?.productImages || product?.images || [];
+  const mapped = raw
+    .map((img, index) => {
+      const url = templateSrcFromAny(img?.imageUrl) || img?.imageUrl || null;
+      if (!url) return null;
+      return {
+        id: img?.id ?? index,
+        imageUrl: url,
+        imageName: img?.imageName || "Product image",
+        isPrimary: Boolean(img?.isPrimary || img?.primary),
+        position: img?.position || 0,
+      };
+    })
+    .filter(Boolean);
+
+  if (mapped.length) return mapped;
+
+  return [
+    {
+      id: product?.id || 1,
+      imageUrl: productImageUrl(product || {}),
+      imageName: "Product image",
+      isPrimary: true,
+      position: 0,
+    },
+  ];
+}
+
 /**
  * Lấy product ID từ URL query parameter
  * @returns {string|null} Product ID hoặc null nếu không tìm thấy
@@ -112,7 +175,8 @@ async function fetchProductDetail(productId) {
  * Hiển thị hình ảnh sản phẩm
  * @param {Array} images - Mảng các hình ảnh sản phẩm
  */
-function renderProductImages(images) {
+function renderProductImages(product) {
+  const images = resolveProductImages(product);
   if (!Array.isArray(images) || images.length === 0) return;
 
   // RESET DOM tuyệt đối (FIX ảnh thừa khi F5)
@@ -761,7 +825,7 @@ function renderRelatedProducts(products) {
       if (minVariant.discountPercent > 0) discountLabel = `<span class="sale">-${minVariant.discountPercent}%</span>`;
     }
 
-    const imgUrl = product.images && product.images[0] ? product.images[0].imageUrl : "./img/product01.png";
+    const imgUrl = productImageUrl(product || {});
 
     const productHTML = `
       <div class="col-md-3 col-xs-6">
@@ -845,7 +909,7 @@ async function initProductDetailPage() {
       return;
     }
 
-    renderProductImages(product.images);
+    renderProductImages(product);
     renderProductDetails(product);
     bindWishlistOnProductPage(product.id);
 
